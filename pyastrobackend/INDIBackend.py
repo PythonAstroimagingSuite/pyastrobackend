@@ -19,8 +19,6 @@ warnings.filterwarnings('always', category=DeprecationWarning)
 
 
 class DeviceBackend(BaseDeviceBackend):
-
-
     # INDI client connection
 #    indiclient=None
 
@@ -49,11 +47,11 @@ class DeviceBackend(BaseDeviceBackend):
             self.eventQueue.put(d)
 
         def newProperty(self, p):
-            print('newprop:', p.getName(), ' type =', indihelper.strGetType(p))
+            #print('newprop:', p.getName(), ' type =', indihelper.strGetType(p))
             self.eventQueue.put(p)
 
         def removeProperty(self, p):
-            print('delprop:', p.getName(), ' type =', indihelper.strGetType(p))
+            #print('delprop:', p.getName(), ' type =', indihelper.strGetType(p))
             self.eventQueue.put(p)
 
         def newBLOB(self, bp):
@@ -64,8 +62,8 @@ class DeviceBackend(BaseDeviceBackend):
             self.blobEvent = bp
 
         def newSwitch(self, svp):
-            print('newSwitch:', svp.name)
-            print(indihelper.dump_ISwitchVectorProperty(svp))
+            #print('newSwitch:', svp.name)
+            #print(indihelper.dump_ISwitchVectorProperty(svp))
             self.eventQueue.put(svp)
 
         def newNumber(self, nvp):
@@ -107,6 +105,8 @@ class DeviceBackend(BaseDeviceBackend):
 
         self.indiclient = self.IndiClient()
         self.indiclient.setServer('localhost', 7624)
+
+        logging.info(f'self.indiclient = {self.indiclient}')
 
         if not self.indiclient.connectServer():
             logging.error('connect() failed to connect to Indi server!')
