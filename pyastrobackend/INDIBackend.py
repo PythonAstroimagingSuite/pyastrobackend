@@ -629,6 +629,7 @@ class Camera(BaseCamera):
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
+        logging.info(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} {ccd_y.value} {ccd_w.value} {ccd_h.value}')
         if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
             return False
         ccd_x.value = minx
