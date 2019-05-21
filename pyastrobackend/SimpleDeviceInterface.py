@@ -121,6 +121,7 @@ class SimpleDeviceInterface:
         return cam
 
     # take exposure
+    # roi is (xleft, ytop, width, height)
     def take_exposure(self, cam, focus_expos, output_filename, roi=None):
 
         focus_expos = 1
@@ -132,7 +133,8 @@ class SimpleDeviceInterface:
             width, height = cam.get_size()
             cam.set_frame(0, 0, width, height)
         else:
-            cam.set_frame(*roi)
+            cam.set_frame(roi[0], roi[1], roi[2], roi[3])
+
         cam.start_exposure(focus_expos)
 
         # give things time to happen (?) I get Maxim not ready errors so slowing it down
