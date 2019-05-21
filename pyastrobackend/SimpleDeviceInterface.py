@@ -124,9 +124,7 @@ class SimpleDeviceInterface:
     # roi is (xleft, ytop, width, height)
     def take_exposure(self, cam, focus_expos, output_filename, roi=None):
 
-        focus_expos = 1
-
-        # reset frame to full sensor
+        # reset frame to desired roi
         cam.set_binning(1, 1)
 
         if roi is None:
