@@ -207,7 +207,7 @@ def connectDevice(indiclient, devicename, timeout=2):
     logging.debug(f'Connecting to device: {devicename}')
     cnt = 0
     device = None
-    logging.debug('connectDevice: searching for ', devicename)
+    logging.debug(f'connectDevice: searching for {devicename}')
     while device is None and cnt < (timeout/0.1):
         time.sleep(0.1)
         device = indiclient.getDevice(devicename)

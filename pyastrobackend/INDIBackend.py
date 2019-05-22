@@ -42,8 +42,8 @@ class DeviceBackend(BaseDeviceBackend):
             return self.eventQueue
 
         def newDevice(self, d):
-            logging.info('newDevice: ')
-            logging.info(indihelper.dump_Device(d))
+            #logging.debug('newDevice: ')
+            #logging.debug(indihelper.dump_Device(d))
             self.eventQueue.put(d)
 
         def newProperty(self, p):
@@ -117,7 +117,8 @@ class DeviceBackend(BaseDeviceBackend):
         return True
 
     def disconnect(self):
-        pass
+        self.indiclient.disconnectServer()
+        self.indiclient = None
 
     def isConnected(self):
         return self.connected
@@ -971,21 +972,27 @@ class Mount(BaseMount):
 
     def sync(self, ra, dec):
         """Sync to ra/dec with ra in decimal hours and dec in degrees"""
+        logging.debug(f'sync to {ra} {dec}')
+        logging.debug('finding) ON_COORD_SET switch')
         indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
                                       'ON_COORD_SET', 'SYNC', True)
-
+        logging.debug('getNumber EQUATORIAL_EOD_COORD')
         eq_coord = indihelper.getNumber(self.mount, 'EQUATORIAL_EOD_COORD')
         if eq_coord is None:
             return False
-
+        logging.debug('findNumber "RA"')
         ra_coord = indihelper.findNumber(eq_coord,'RA')
         if ra_coord is None:
             return False
+        logging.debug('findNumber "DEC"')
         dec_coord = indihelper.findNumber(eq_coord, 'DEC')
         if dec_coord is None:
             return False
+        logging.debug(f'{ra_coord.value} {dec_coord.value}')
         ra_coord.value = ra
         dec_coord.value = dec
+        logging.debug(f'{ra_coord.value} {dec_coord.value}')
+        logging.debug('sending Number')
         self.backend.indiclient.sendNewNumber(eq_coord)
         return True
 
