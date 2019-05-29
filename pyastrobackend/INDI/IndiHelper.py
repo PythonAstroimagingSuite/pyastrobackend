@@ -204,14 +204,14 @@ def setfindLightState(indiclient, device, propname, lightname, state):
 # device routines
 
 def connectDevice(indiclient, devicename, timeout=2):
-    logging.debug(f'Connecting to device: {devicename}')
+    #logging.debug(f'Connecting to device: {devicename}')
     cnt = 0
     device = None
-    logging.debug(f'connectDevice: searching for {devicename}')
+    #logging.debug(f'connectDevice: searching for {devicename}')
     while device is None and cnt < (timeout/0.1):
         time.sleep(0.1)
         device = indiclient.getDevice(devicename)
-        logging.debug(f'getDevice({devicename}) = {device}')
+        #logging.debug(f'getDevice({devicename}) = {device}')
         cnt += 1
     if device is None:
         print('could not find ', devicename)

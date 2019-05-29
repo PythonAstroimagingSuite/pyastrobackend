@@ -57,7 +57,7 @@ class DeviceBackend(BaseDeviceBackend):
         def newBLOB(self, bp):
 # FIXME Global is BAD
             #global blobEvent
-            print('blob')
+            #print('blob')
             #self.eventQueue.put(bp)
             self.blobEvent = bp
 
@@ -222,7 +222,7 @@ class Camera(BaseCamera):
 
         cam = indihelper.connectDevice(self.backend.indiclient, name)
 
-        logging.info(f'connectDevice returned {cam}')
+        #logging.info(f'connectDevice returned {cam}')
 
         if cam is not None:
             self.name = name
@@ -333,9 +333,9 @@ class Camera(BaseCamera):
         i = 0
         sw_prop = None
         while i < retries:
-            logging.info('Trying to get CCD_ABORT_EXPOSURE')
+            #logging.info('Trying to get CCD_ABORT_EXPOSURE')
             sw_prop = indihelper.getSwitch(self.cam, 'CCD_ABORT_EXPOSURE')
-            logging.info(f'sw_prop = {sw_prop}')
+            #logging.info(f'sw_prop = {sw_prop}')
             if sw_prop is not None:
                 break
             time.sleep(0.1)
@@ -593,12 +593,12 @@ class Camera(BaseCamera):
 #        return None
         if self.cam:
             ccd_bin = indihelper.getNumber(self.cam, 'CCD_BINNING')
-            logging.info(f'ccd_bin={ccd_bin}')
+            #logging.info(f'ccd_bin={ccd_bin}')
             if ccd_bin is None:
                 return None
 
             ccd_hbin = indihelper.findNumber(ccd_bin, 'HOR_BIN')
-            logging.info(f'ccd_hbin={indihelper.dump_Number(ccd_hbin)}')
+            #logging.info(f'ccd_hbin={indihelper.dump_Number(ccd_hbin)}')
             if ccd_hbin is None:
                 return None
 
@@ -668,7 +668,7 @@ class Focuser(BaseFocuser):
 
         focuser = indihelper.connectDevice(self.backend.indiclient, name)
 
-        logging.info(f'connectDevice returned {focuser}')
+        #logging.info(f'connectDevice returned {focuser}')
 
         if focuser is not None:
             self.name = name
@@ -759,7 +759,7 @@ class FilterWheel(BaseFilterWheel):
 
         fw = indihelper.connectDevice(self.backend.indiclient, name)
 
-        logging.info(f'connectDevice returned {fw}')
+        #logging.info(f'connectDevice returned {fw}')
 
         if fw is not None:
             self.name = name
@@ -883,7 +883,7 @@ class Mount(BaseMount):
 
         mount = indihelper.connectDevice(self.backend.indiclient, name)
 
-        logging.info(f'connectDevice returned {mount}')
+        #logging.debug(f'connectDevice returned {mount}')
 
         if mount is not None:
             self.name = name
@@ -973,26 +973,26 @@ class Mount(BaseMount):
     def sync(self, ra, dec):
         """Sync to ra/dec with ra in decimal hours and dec in degrees"""
         logging.debug(f'sync to {ra} {dec}')
-        logging.debug('finding) ON_COORD_SET switch')
+        #logging.debug('finding) ON_COORD_SET switch')
         indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
                                       'ON_COORD_SET', 'SYNC', True)
-        logging.debug('getNumber EQUATORIAL_EOD_COORD')
+        #logging.debug('getNumber EQUATORIAL_EOD_COORD')
         eq_coord = indihelper.getNumber(self.mount, 'EQUATORIAL_EOD_COORD')
         if eq_coord is None:
             return False
-        logging.debug('findNumber "RA"')
+        #logging.debug('findNumber "RA"')
         ra_coord = indihelper.findNumber(eq_coord,'RA')
         if ra_coord is None:
             return False
-        logging.debug('findNumber "DEC"')
+        #logging.debug('findNumber "DEC"')
         dec_coord = indihelper.findNumber(eq_coord, 'DEC')
         if dec_coord is None:
             return False
-        logging.debug(f'{ra_coord.value} {dec_coord.value}')
+        #logging.debug(f'{ra_coord.value} {dec_coord.value}')
         ra_coord.value = ra
         dec_coord.value = dec
-        logging.debug(f'{ra_coord.value} {dec_coord.value}')
-        logging.debug('sending Number')
+        #logging.debug(f'{ra_coord.value} {dec_coord.value}')
+        #logging.debug('sending Number')
         self.backend.indiclient.sendNewNumber(eq_coord)
         return True
 
