@@ -4,6 +4,16 @@
 #BACKEND = 'INDI'
 
 def get_backend_for_os():
+    """
+    Return the backend matching the current system.
+
+    If the environmental variable "PYASTROBACKEND" is defined it will override
+    the default value.
+
+    :returns:
+        'ASCOM' or 'INDI'.
+    :rtype: str
+    """
     import os
 
     if 'PYASTROBACKEND' in os.environ:

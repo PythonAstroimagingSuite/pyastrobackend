@@ -3,3 +3,6 @@
 *__pycache**
 *.fit
 *.fits
+_templates
+_static
+_build

@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyastrobackend.SimpleDeviceInterface &mdash; pyastrobackend 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pyastrobackend
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyastrobackend</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyastrobackend.SimpleDeviceInterface</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyastrobackend.SimpleDeviceInterface</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<div class="viewcode-block" id="get_backend_for_os"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.get_backend_for_os">[docs]</a><span class="k">def</span> <span class="nf">get_backend_for_os</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="c1"># chose an implementation, depending on os</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span><span class="p">:</span> <span class="c1">#sys.platform == &#39;win32&#39;:</span>
+        <span class="k">return</span> <span class="s1">&#39;ASCOM&#39;</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;posix&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;INDI&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Sorry: no implementation for your platform (&#39;</span><span class="si">%s</span><span class="s2">&#39;) available&quot;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="s1">&#39;PYASTROBACKEND&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+    <span class="n">BACKEND</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYASTROBACKEND&#39;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">BACKEND</span> <span class="o">=</span> <span class="n">get_backend_for_os</span><span class="p">()</span>
+
+<span class="c1">#print(f&#39;SimpleDeviceInterface: BACKEND = {BACKEND}&#39;)</span>
+
+<span class="c1"># debugging override with simulator</span>
+<span class="c1">#BACKEND = &#39;SIMULATOR&#39;</span>
+
+<span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;ASCOM&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.ASCOMBackend</span> <span class="k">import</span> <span class="n">DeviceBackend</span> <span class="k">as</span> <span class="n">Backend</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.INDIBackend</span> <span class="k">import</span> <span class="n">DeviceBackend</span> <span class="k">as</span> <span class="n">Backend</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;SIMULATOR&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers</span> <span class="k">import</span> <span class="n">DeviceBackend</span> <span class="k">as</span> <span class="n">Backend</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Unknown backend </span><span class="si">{BACKEND}</span><span class="s1"> - choose ASCOM or INDI in BackendConfig.py&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;ASCOM&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.ASCOM.Focuser</span> <span class="k">import</span> <span class="n">Focuser</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.INDIBackend</span> <span class="k">import</span> <span class="n">Focuser</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;SIMULATOR&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers</span> <span class="k">import</span> <span class="n">Focuser</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Unknown backend </span><span class="si">{BACKEND}</span><span class="s1"> - choose ASCOM or INDI in BackendConfig.py&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;ASCOM&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.MaximDL.Camera</span> <span class="k">import</span> <span class="n">Camera</span> <span class="k">as</span> <span class="n">MaximDL_Camera</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.INDIBackend</span> <span class="k">import</span> <span class="n">Camera</span> <span class="k">as</span> <span class="n">INDI_Camera</span>
+<span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;SIMULATOR&#39;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers</span> <span class="k">import</span> <span class="n">Camera</span> <span class="k">as</span> <span class="n">Sim_Camera</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Unknown backend </span><span class="si">{BACKEND}</span><span class="s1"> - choose ASCOM or INDI in BackendConfig.py&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SimpleDeviceInterface"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface">[docs]</a><span class="k">class</span> <span class="nc">SimpleDeviceInterface</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backend</span> <span class="o">=</span> <span class="n">Backend</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SimpleDeviceInterface.connect_backend"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_backend">[docs]</a>    <span class="k">def</span> <span class="nf">connect_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Failed to connect to backend!&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rc</span></div>
+
+<div class="viewcode-block" id="SimpleDeviceInterface.connect_focuser"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_focuser">[docs]</a>    <span class="k">def</span> <span class="nf">connect_focuser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">driver</span><span class="p">):</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;ASCOM&#39;</span><span class="p">:</span>
+            <span class="n">focuser</span> <span class="o">=</span> <span class="n">Focuser</span><span class="p">()</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">focuser</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">driver</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+            <span class="n">focuser</span> <span class="o">=</span> <span class="n">Focuser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">)</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="n">focuser</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">driver</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;SIMULATOR&#39;</span><span class="p">:</span>
+            <span class="n">focuser</span> <span class="o">=</span> <span class="n">Focuser</span><span class="p">()</span>
+            <span class="n">rc</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">focuser</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SimpleDeviceInterface.wait_on_focuser_move"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.wait_on_focuser_move">[docs]</a>    <span class="k">def</span> <span class="nf">wait_on_focuser_move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">focuser</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">ts</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;waiting on focuser move - curpos = {focuser.get_absolute_position()}&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">focuser</span><span class="o">.</span><span class="n">is_moving</span><span class="p">():</span>
+                <span class="k">break</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1"># just be sure its done</span></div>
+
+    <span class="c1"># FIXME INDI stuff is broken!!!!</span>
+<div class="viewcode-block" id="SimpleDeviceInterface.connect_camera"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_camera">[docs]</a>    <span class="k">def</span> <span class="nf">connect_camera</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera_driver</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;ASCOM&#39;</span><span class="p">:</span>
+            <span class="c1">#driver = &#39;MaximDL&#39;</span>
+            <span class="n">cam</span> <span class="o">=</span> <span class="n">MaximDL_Camera</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+            <span class="c1">#driver = &#39;INDICamera&#39;</span>
+            <span class="n">cam</span> <span class="o">=</span> <span class="n">INDI_Camera</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">backend</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;SIMULATOR&#39;</span><span class="p">:</span>
+            <span class="c1">#driver = &#39;Simulator&#39;</span>
+            <span class="n">cam</span> <span class="o">=</span> <span class="n">Sim_Camera</span><span class="p">()</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;connect_camera: driver =  </span><span class="si">{camera_driver}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">rc</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">camera_driver</span><span class="p">)</span>
+    <span class="c1">#    if driver == &#39;INDICamera&#39;:</span>
+    <span class="c1">#        rc = cam.connect(camera_driver)</span>
+    <span class="c1">#</span>
+    <span class="c1">##        if &#39;:&#39; in camera_driver:</span>
+    <span class="c1">##            indi_cam_driver = camera_driver.split(&#39;:&#39;)[1]</span>
+    <span class="c1">##            rc = cam.connect(indi_cam_driver)</span>
+    <span class="c1">##        else:</span>
+    <span class="c1">##            logging.error(&#39;connect_camera(): Must configure INDI camera driver first!&#39;)</span>
+    <span class="c1">##            return None</span>
+    <span class="c1">#    else:</span>
+    <span class="c1">#        rc = cam.connect(driver)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;connect_camera(): Unable to connect to camera!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">cam</span></div>
+
+    <span class="c1"># take exposure</span>
+    <span class="c1"># roi is (xleft, ytop, width, height)</span>
+<div class="viewcode-block" id="SimpleDeviceInterface.take_exposure"><a class="viewcode-back" href="../../pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.take_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">take_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam</span><span class="p">,</span> <span class="n">focus_expos</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="c1"># reset frame to desired roi</span>
+        <span class="n">cam</span><span class="o">.</span><span class="n">set_binning</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">roi</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">get_size</span><span class="p">()</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">set_frame</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cam</span><span class="o">.</span><span class="n">set_frame</span><span class="p">(</span><span class="n">roi</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">roi</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+        <span class="n">cam</span><span class="o">.</span><span class="n">start_exposure</span><span class="p">(</span><span class="n">focus_expos</span><span class="p">)</span>
+
+        <span class="c1"># give things time to happen (?) I get Maxim not ready errors so slowing it down</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">cam</span><span class="o">.</span><span class="n">check_exposure</span><span class="p">():</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Taking image with camera </span><span class="si">{elapsed}</span><span class="s2"> of </span><span class="si">{focus_expos}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+            <span class="n">elapsed</span> <span class="o">+=</span> <span class="mf">0.5</span>
+            <span class="k">if</span> <span class="n">elapsed</span> <span class="o">&gt;</span> <span class="n">focus_expos</span><span class="p">:</span>
+                <span class="n">elapsed</span> <span class="o">=</span> <span class="n">focus_expos</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Exposure complete&#39;</span><span class="p">)</span>
+        <span class="c1"># give it some time seems like Maxim isnt ready if we hit it too fast</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="n">ff</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">output_filename</span><span class="p">)</span>
+
+        <span class="n">retries</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Going to save </span><span class="si">{ff}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># FIXME we only call this because the</span>
+            <span class="c1"># MaximDL backend needs it to save to disk</span>
+            <span class="c1"># RPC backend already has saved it to disk by now</span>
+            <span class="k">if</span> <span class="n">BACKEND</span> <span class="o">==</span> <span class="s1">&#39;INDI&#39;</span><span class="p">:</span>
+                <span class="c1"># FIXME need better way to handle saving image to file!</span>
+                <span class="n">image_data</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">get_image_data</span><span class="p">()</span>
+                <span class="c1"># this is an hdulist</span>
+                <span class="n">image_data</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">ff</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">cam</span><span class="o">.</span><span class="n">save_image_data</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Save successful&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+
+            <span class="n">retries</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">retries</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Failed to save </span><span class="si">{ff}</span><span class="s2">!! Aborting!&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Failed to save </span><span class="si">{ff}</span><span class="s2">!! Trying again&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Michael Fulbright
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyastrobackend.INDI.IndiHelper &mdash; pyastrobackend 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyastrobackend
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyastrobackend</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyastrobackend.INDI.IndiHelper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyastrobackend.INDI.IndiHelper</h1><div class="highlight"><pre>
+<span></span><span class="c1"># stuff with no home (yet)</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">PyIndi</span>
+
+
+<span class="n">DEFAULT_TIMEOUT</span><span class="o">=</span><span class="mf">0.5</span>
+
+<span class="c1"># routines for dealing with switch properties</span>
+
+<div class="viewcode-block" id="getSwitch"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getSwitch">[docs]</a><span class="k">def</span> <span class="nf">getSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">):</span>
+    <span class="n">sw</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getSwitch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">sw</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#        print(&#39;S&#39;)</span>
+        <span class="n">sw</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getSwitch</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">sw</span></div>
+
+<div class="viewcode-block" id="findSwitch"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findSwitch">[docs]</a><span class="k">def</span> <span class="nf">findSwitch</span><span class="p">(</span><span class="n">iswvect</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">iswvect</span><span class="o">.</span><span class="n">nsp</span><span class="p">):</span>
+        <span class="c1">#print(i, iswvect[i].name, iswvect[i].s)</span>
+        <span class="k">if</span> <span class="n">iswvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">iswvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="getfindSwitch"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindSwitch">[docs]</a><span class="k">def</span> <span class="nf">getfindSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">swname</span><span class="p">):</span>
+    <span class="n">sw_prop</span> <span class="o">=</span> <span class="n">getSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sw_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">sw</span> <span class="o">=</span> <span class="n">findSwitch</span><span class="p">(</span><span class="n">sw_prop</span><span class="p">,</span> <span class="n">swname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sw</span></div>
+
+<div class="viewcode-block" id="getfindSwitchState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindSwitchState">[docs]</a><span class="k">def</span> <span class="nf">getfindSwitchState</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">swname</span><span class="p">):</span>
+    <span class="n">sw</span> <span class="o">=</span> <span class="n">getfindSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">swname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">sw</span><span class="o">.</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_ON</span></div>
+
+<div class="viewcode-block" id="setfindSwitchState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindSwitchState">[docs]</a><span class="k">def</span> <span class="nf">setfindSwitchState</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">swname</span><span class="p">,</span> <span class="n">onoff</span><span class="p">):</span>
+    <span class="n">sw_prop</span> <span class="o">=</span> <span class="n">getSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sw_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1">#print(&#39;sw_prop = None&#39;)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">sw</span> <span class="o">=</span> <span class="n">findSwitch</span><span class="p">(</span><span class="n">sw_prop</span><span class="p">,</span> <span class="n">swname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1">#print(&#39;sw is None&#39;)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="n">onoff</span><span class="p">:</span>
+        <span class="n">sw</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_ON</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sw</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_OFF</span>
+    <span class="n">indiclient</span><span class="o">.</span><span class="n">sendNewSwitch</span><span class="p">(</span><span class="n">sw_prop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<span class="c1"># routines for number properties</span>
+
+<div class="viewcode-block" id="getNumber"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getNumber">[docs]</a><span class="k">def</span> <span class="nf">getNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">):</span>
+<span class="c1">#    print(&#39;getNumber:&#39;, name)</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getNumber</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#        print(&#39;N&#39;)</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getNumber</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="findNumber"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findNumber">[docs]</a><span class="k">def</span> <span class="nf">findNumber</span><span class="p">(</span><span class="n">invect</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">invect</span><span class="o">.</span><span class="n">nnp</span><span class="p">):</span>
+        <span class="c1">#print(i, invect[i].name, invect[i].s)</span>
+        <span class="k">if</span> <span class="n">invect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">invect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="getfindNumber"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindNumber">[docs]</a><span class="k">def</span> <span class="nf">getfindNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">numname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Combines getNumber() and findNumber() &quot;&quot;&quot;</span>
+    <span class="n">num_prop</span> <span class="o">=</span> <span class="n">getNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">findNumber</span><span class="p">(</span><span class="n">num_prop</span><span class="p">,</span> <span class="n">numname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">num</span></div>
+
+<div class="viewcode-block" id="getfindNumberValue"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindNumberValue">[docs]</a><span class="k">def</span> <span class="nf">getfindNumberValue</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">numname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Combines getNumber() and findNumber() &quot;&quot;&quot;</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">getfindNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">numname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">num</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="getNumberState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getNumberState">[docs]</a><span class="k">def</span> <span class="nf">getNumberState</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">):</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">getNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">num</span><span class="o">.</span><span class="n">s</span></div>
+
+<div class="viewcode-block" id="setfindNumberValue"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindNumberValue">[docs]</a><span class="k">def</span> <span class="nf">setfindNumberValue</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">numname</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">num_prop</span> <span class="o">=</span> <span class="n">getNumber</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="n">findNumber</span><span class="p">(</span><span class="n">num_prop</span><span class="p">,</span> <span class="n">numname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">num</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">indiclient</span><span class="o">.</span><span class="n">sendNewNumber</span><span class="p">(</span><span class="n">num_prop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<span class="c1"># routines for text properties</span>
+
+<div class="viewcode-block" id="getText"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getText">[docs]</a><span class="k">def</span> <span class="nf">getText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#        print(&#39;T&#39;)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">text</span></div>
+
+<div class="viewcode-block" id="findText"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findText">[docs]</a><span class="k">def</span> <span class="nf">findText</span><span class="p">(</span><span class="n">itvect</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">itvect</span><span class="o">.</span><span class="n">ntp</span><span class="p">):</span>
+        <span class="c1">#print(i, invect[i].name, invect[i].s)</span>
+        <span class="k">if</span> <span class="n">itvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">itvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="getfindText"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindText">[docs]</a><span class="k">def</span> <span class="nf">getfindText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">txtname</span><span class="p">):</span>
+    <span class="n">txt_prop</span> <span class="o">=</span> <span class="n">getText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">txt_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">findText</span><span class="p">(</span><span class="n">txt_prop</span><span class="p">,</span> <span class="n">txtname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">txt</span></div>
+
+<div class="viewcode-block" id="getfindTextText"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindTextText">[docs]</a><span class="k">def</span> <span class="nf">getfindTextText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">txtname</span><span class="p">):</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">getfindText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">txtname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">txt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">txt</span><span class="o">.</span><span class="n">text</span></div>
+
+<div class="viewcode-block" id="setfindTextText"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindTextText">[docs]</a><span class="k">def</span> <span class="nf">setfindTextText</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">txtname</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="n">txt_prop</span> <span class="o">=</span> <span class="n">getText</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">txt_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">findText</span><span class="p">(</span><span class="n">txt_prop</span><span class="p">,</span> <span class="n">txtname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">txt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">txt</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">indiclient</span><span class="o">.</span><span class="n">sendNewText</span><span class="p">(</span><span class="n">txt_prop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<span class="c1"># routines for light properties</span>
+
+<div class="viewcode-block" id="getLight"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getLight">[docs]</a><span class="k">def</span> <span class="nf">getLight</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">DEFAULT_TIMEOUT</span><span class="p">):</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getLight</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">light</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#        print(&#39;L&#39;)</span>
+        <span class="n">light</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">getLight</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">light</span></div>
+
+<div class="viewcode-block" id="findLight"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findLight">[docs]</a><span class="k">def</span> <span class="nf">findLight</span><span class="p">(</span><span class="n">ilvect</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ilvect</span><span class="o">.</span><span class="n">nlp</span><span class="p">):</span>
+        <span class="c1">#print(i, invect[i].name, invect[i].s)</span>
+        <span class="k">if</span> <span class="n">ilvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ilvect</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="getfindLight"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindLight">[docs]</a><span class="k">def</span> <span class="nf">getfindLight</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">lightname</span><span class="p">):</span>
+    <span class="n">light_prop</span> <span class="o">=</span> <span class="n">getLight</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">light_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">findLight</span><span class="p">(</span><span class="n">light_prop</span><span class="p">,</span> <span class="n">lightname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">light</span></div>
+
+<div class="viewcode-block" id="getfindLightState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindLightState">[docs]</a><span class="k">def</span> <span class="nf">getfindLightState</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">lightname</span><span class="p">):</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">getfindLight</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">lightname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">light</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">light</span><span class="o">.</span><span class="n">s</span></div>
+
+<div class="viewcode-block" id="setfindLightState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindLightState">[docs]</a><span class="k">def</span> <span class="nf">setfindLightState</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">,</span> <span class="n">lightname</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">light_prop</span> <span class="o">=</span> <span class="n">getLight</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">propname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">light_prop</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">light</span> <span class="o">=</span> <span class="n">findLight</span><span class="p">(</span><span class="n">light_prop</span><span class="p">,</span> <span class="n">lightname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">light</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">light</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">state</span>
+    <span class="n">indiclient</span><span class="o">.</span><span class="n">sendNewLight</span><span class="p">(</span><span class="n">light_prop</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+<span class="c1"># device routines</span>
+
+<div class="viewcode-block" id="connectDevice"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.connectDevice">[docs]</a><span class="k">def</span> <span class="nf">connectDevice</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">devicename</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="c1">#logging.debug(f&#39;Connecting to device: {devicename}&#39;)</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1">#logging.debug(f&#39;connectDevice: searching for {devicename}&#39;)</span>
+    <span class="k">while</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">indiclient</span><span class="o">.</span><span class="n">getDevice</span><span class="p">(</span><span class="n">devicename</span><span class="p">)</span>
+        <span class="c1">#logging.debug(f&#39;getDevice({devicename}) = {device}&#39;)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;could not find &#39;</span><span class="p">,</span> <span class="n">devicename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">connect</span> <span class="o">=</span> <span class="n">getSwitch</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="s1">&#39;CONNECTION&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">connect</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">connect_sw</span> <span class="o">=</span> <span class="n">findSwitch</span><span class="p">(</span><span class="n">connect</span><span class="p">,</span> <span class="s1">&#39;CONNECT&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">connect_sw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">connect_sw</span><span class="o">.</span><span class="n">s</span> <span class="o">=</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_ON</span>
+    <span class="n">connected</span> <span class="o">=</span> <span class="n">connect_sw</span><span class="o">.</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_ON</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">connected</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">indiclient</span><span class="o">.</span><span class="n">sendNewSwitch</span><span class="p">(</span><span class="n">connect</span><span class="p">)</span>
+
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">device</span><span class="o">.</span><span class="n">isConnected</span><span class="p">()</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;W4C&#39;</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">device</span></div>
+
+<div class="viewcode-block" id="strISState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.strISState">[docs]</a><span class="k">def</span> <span class="nf">strISState</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">ISS_OFF</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Off&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;On&quot;</span></div>
+<div class="viewcode-block" id="strIPState"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.strIPState">[docs]</a><span class="k">def</span> <span class="nf">strIPState</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">IPS_IDLE</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Idle&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">IPS_OK</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Ok&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">IPS_BUSY</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Busy&quot;</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">s</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">IPS_ALERT</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Alert&quot;</span></div>
+
+<div class="viewcode-block" id="strGetType"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.strGetType">[docs]</a><span class="k">def</span> <span class="nf">strGetType</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">INDI_TEXT</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;INDI_TEXT:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tpy</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">getText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;None</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpy</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{t.name}</span><span class="s1">  </span><span class="si">{t.label}</span><span class="s1"> = </span><span class="si">{t.text}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">elif</span> <span class="n">o</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">INDI_NUMBER</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;INDI_NUMBER:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tpy</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">getNumber</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;None</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpy</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{t.name}</span><span class="s1">  </span><span class="si">{t.label}</span><span class="s1"> = </span><span class="si">{t.value}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">elif</span> <span class="n">o</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">INDI_SWITCH</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;INDI_SWITCH:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tpy</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">getSwitch</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;None</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpy</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{t.name}</span><span class="s1">  </span><span class="si">{t.label}</span><span class="s1"> = {strISState(t.s)}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">elif</span> <span class="n">o</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">INDI_LIGHT</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;INDI_LIGHT:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tpy</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">getLightr</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;None</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpy</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{t.name}</span><span class="s1">  </span><span class="si">{t.label}</span><span class="s1"> = {strIPState(t.s)}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">elif</span> <span class="n">o</span><span class="o">.</span><span class="n">getType</span><span class="p">()</span> <span class="o">==</span> <span class="n">PyIndi</span><span class="o">.</span><span class="n">INDI_BLOB</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;INDI_BLOB:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">tpy</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">getBLOB</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">tpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;None</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tpy</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{t.name}</span><span class="s1">  (</span><span class="si">{t.label}</span><span class="s1">) = BLOB </span><span class="si">{t.size}</span><span class="s1"> bytes</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;UNKNOWN INDI TYPE!&#39;</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_INumberVectorProperty"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_INumberVectorProperty">[docs]</a><span class="k">def</span> <span class="nf">dump_INumberVectorProperty</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;device: </span><span class="si">{p.device}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;name: </span><span class="si">{p.name}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;label: </span><span class="si">{p.label}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;group: </span><span class="si">{p.group}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;nnp: </span><span class="si">{p.nnp}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">nnp</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{i}</span><span class="s1"> </span><span class="si">{n.name}</span><span class="s1"> </span><span class="si">{n.value}</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_ITextVectorProperty"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_ITextVectorProperty">[docs]</a><span class="k">def</span> <span class="nf">dump_ITextVectorProperty</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;device: </span><span class="si">{p.device}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;name: </span><span class="si">{p.name}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;label: </span><span class="si">{p.label}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;group: </span><span class="si">{p.group}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;ntp: </span><span class="si">{p.ntp}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">ntp</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{i}</span><span class="s1"> </span><span class="si">{t.name}</span><span class="s1"> &quot;</span><span class="si">{t.text}</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_ISwitchVectorProperty"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_ISwitchVectorProperty">[docs]</a><span class="k">def</span> <span class="nf">dump_ISwitchVectorProperty</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;device: </span><span class="si">{p.device}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;name: </span><span class="si">{p.name}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;label: </span><span class="si">{p.label}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;group: </span><span class="si">{p.group}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;state: {strIPState(p.s)}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;nsp: </span><span class="si">{p.nsp}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">nsp</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   </span><span class="si">{i}</span><span class="s1"> </span><span class="si">{t.name}</span><span class="s1"> &quot;{t.s == PyIndi.ISS_ON}&quot;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_Number"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_Number">[docs]</a><span class="k">def</span> <span class="nf">dump_Number</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;Number</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   Name: </span><span class="si">{p.name}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;  Label: </span><span class="si">{p.min}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Min: </span><span class="si">{p.min}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Max: </span><span class="si">{p.max}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;   Step: </span><span class="si">{p.step}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;  Value: </span><span class="si">{p.value}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_Property"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_Property">[docs]</a><span class="k">def</span> <span class="nf">dump_Property</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;Property {p.getName()}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Label: {p.getLabel()}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Type: {p.getType()}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<div class="viewcode-block" id="dump_PropertyVector"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_PropertyVector">[docs]</a><span class="k">def</span> <span class="nf">dump_PropertyVector</span><span class="p">(</span><span class="n">pv</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pv</span><span class="p">,</span> <span class="n">pv</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">pv</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="dump_Device"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.dump_Device">[docs]</a><span class="k">def</span> <span class="nf">dump_Device</span><span class="p">(</span><span class="n">dev</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Device:</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Device name: {dev.getDeviceName()}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="n">f</span><span class="s1">&#39;    Driver name: {dev.getDriverName()}</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">s</span></div>
+
+<span class="c1">#</span>
+<span class="c1"># from https://github.com/GuLinux/indi-lite-tools/blob/e1f6fa52b59474d5d27eba571c87ae67d2cd1724/pyindi_sequence/device.py</span>
+<span class="c1">#</span>
+<div class="viewcode-block" id="findDeviceInterfaces"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDeviceInterfaces">[docs]</a><span class="k">def</span> <span class="nf">findDeviceInterfaces</span><span class="p">(</span><span class="n">indidevice</span><span class="p">):</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="n">indidevice</span><span class="o">.</span><span class="n">getDriverInterface</span><span class="p">()</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+    <span class="n">device_interfaces</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="fm">__int__</span><span class="p">(),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_uint16</span><span class="p">))</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">interface</span><span class="o">.</span><span class="n">disown</span><span class="p">()</span>
+    <span class="n">interfaces</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">GENERAL_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;general&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">TELESCOPE_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;telescope&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">CCD_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;ccd&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">GUIDER_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;guider&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">FOCUSER_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;focuser&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">FILTER_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;filter&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">DOME_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;dome&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">GPS_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;gps&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">WEATHER_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;weather&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">AO_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;ao&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">DUSTCAP_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;dustcap&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">LIGHTBOX_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;lightbox&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">DETECTOR_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;detector&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">ROTATOR_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;rotator&#39;</span><span class="p">,</span>
+        <span class="n">PyIndi</span><span class="o">.</span><span class="n">BaseDevice</span><span class="o">.</span><span class="n">AUX_INTERFACE</span><span class="p">:</span> <span class="s1">&#39;aux&#39;</span>
+    <span class="p">}</span>
+    <span class="n">interfaces</span> <span class="o">=</span> <span class="p">[</span><span class="n">interfaces</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">interfaces</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&amp;</span> <span class="n">device_interfaces</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">interfaces</span></div>
+
+<div class="viewcode-block" id="findDeviceName"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDeviceName">[docs]</a><span class="k">def</span> <span class="nf">findDeviceName</span><span class="p">(</span><span class="n">indidevice</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">indidevice</span><span class="o">.</span><span class="n">getDeviceName</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="findDevices"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDevices">[docs]</a><span class="k">def</span> <span class="nf">findDevices</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">devs</span> <span class="o">=</span> <span class="n">indiclient</span><span class="o">.</span><span class="n">getDevices</span><span class="p">()</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">devs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">devs</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">timeout</span><span class="o">/</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">devs</span> <span class="o">=</span> <span class="n">indiclient</span><span class="o">.</span><span class="n">getDevices</span><span class="p">()</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">devs</span></div>
+
+<div class="viewcode-block" id="findDevicesByClass"><a class="viewcode-back" href="../../../pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDevicesByClass">[docs]</a><span class="k">def</span> <span class="nf">findDevicesByClass</span><span class="p">(</span><span class="n">indiclient</span><span class="p">,</span> <span class="n">device_class</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; class can be &#39;ccd&#39;, &#39;filter&#39;, &#39;focuser&#39;, &#39;guider&#39;, &#39;telescope&#39; &quot;&quot;&quot;</span>
+    <span class="n">devs</span> <span class="o">=</span> <span class="n">indiclient</span><span class="o">.</span><span class="n">getDevices</span><span class="p">()</span>
+    <span class="n">matches</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">devs</span><span class="p">:</span>
+        <span class="n">interfaces</span> <span class="o">=</span> <span class="n">findDeviceInterfaces</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">device_class</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">:</span>
+            <span class="n">matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">findDeviceName</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">matches</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Michael Fulbright
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

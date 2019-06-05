@@ -1,0 +1,538 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyastrobackend.RPC.Camera &mdash; pyastrobackend 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyastrobackend
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../introduction.html">Introduction</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyastrobackend</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>pyastrobackend.RPC.Camera</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyastrobackend.RPC.Camera</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; MaximDL Camera solution &quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtNetwork</span>
+
+<span class="c1"># FIXME YUCK needed to process Qt event loop while blocking on</span>
+<span class="c1"># response from server for certain RPC methods!</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtWidgets</span>
+
+<span class="kn">from</span> <span class="nn">..BaseBackend</span> <span class="k">import</span> <span class="n">BaseCamera</span>
+
+
+<div class="viewcode-block" id="Camera"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera">[docs]</a><span class="k">class</span> <span class="nc">Camera</span><span class="p">(</span><span class="n">BaseCamera</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">camera_has_progress</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">8800</span>
+
+        <span class="c1"># FIXME can only handle one method/response outstanding</span>
+        <span class="c1"># at a time!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">roi</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binning</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Camera.has_chooser"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.has_chooser">[docs]</a>    <span class="k">def</span> <span class="nf">has_chooser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Camera.show_chooser"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.show_chooser">[docs]</a>    <span class="k">def</span> <span class="nf">show_chooser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">last_choice</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warngin</span><span class="p">(</span><span class="s1">&#39;RPC Camera Backend: no show_chooser()!&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="c1"># name is currently ignored</span>
+<div class="viewcode-block" id="Camera.connect"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPC Camera connect: Connecting to RPCServer 127.0.0.1:</span><span class="si">{self.port}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1"># FIXME Does this leak sockets?  Need to investigate why</span>
+        <span class="c1"># setting self.socket = None causes SEGV when disconnected</span>
+        <span class="c1"># (ie PHD2 closes).</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="n">QtNetwork</span><span class="o">.</span><span class="n">QTcpSocket</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">connectToHost</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;waiting&#39;</span><span class="p">)</span>
+
+        <span class="c1"># should be quick so we connect synchronously</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">waitForConnected</span><span class="p">(</span><span class="mi">5000</span><span class="p">):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Could not connect to RPCServer&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">readyRead</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Camera.disconnect"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">disconnectFromHost</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connected</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">socket</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Camera.is_connected"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.is_connected">[docs]</a>    <span class="k">def</span> <span class="nf">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span></div>
+
+<div class="viewcode-block" id="Camera.process"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;server not connected!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;process(): </span><span class="si">{self.socket}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">readLine</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;server sent </span><span class="si">{resp}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPCServer_client_test - exception message was </span><span class="si">{resp}</span><span class="s1">!&#39;</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Exception -&gt;&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;json = </span><span class="si">{j}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s1">&#39;Event&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;Event&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Connection&#39;</span><span class="p">:</span>
+                    <span class="n">servid</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">vers</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="s1">&#39;Server&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="n">servid</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;Server&#39;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s1">&#39;Version&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="n">vers</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Server ack on connection: Server=</span><span class="si">{servid}</span><span class="s1"> Version=</span><span class="si">{vers}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;Event&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Ping&#39;</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Server ping received&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="s1">&#39;jsonrpc&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;result&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="n">reqid</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="s1">&#39;result&#39;</span><span class="p">]</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;result of request </span><span class="si">{reqid}</span><span class="s1"> was </span><span class="si">{result}</span><span class="s1"> {type(result)}&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">reqid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span><span class="p">:</span>
+                        <span class="c1"># FIXME need better way to communicate result!</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_status</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_value</span> <span class="o">=</span> <span class="n">result</span>
+                <span class="k">elif</span> <span class="s1">&#39;error&#39;</span> <span class="ow">in</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="n">reqid</span> <span class="o">=</span><span class="n">j</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+
+                    <span class="c1"># FIXME not sure how this should be handled!</span>
+                    <span class="k">if</span> <span class="n">reqid</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span><span class="p">:</span>
+                        <span class="c1"># FIXME need better way to communicate result!</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_status</span> <span class="o">=</span> <span class="kc">False</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Camera.send_server_request"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.send_server_request">[docs]</a>    <span class="k">def</span> <span class="nf">send_server_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">req</span><span class="p">,</span> <span class="n">paramsdict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">reqdict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">reqdict</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">req</span>
+
+        <span class="k">if</span> <span class="n">paramsdict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">reqdict</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">paramsdict</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__send_json_message</span><span class="p">(</span><span class="n">reqdict</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__send_json_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">):</span>
+        <span class="c1"># don&#39;t use 0 for an id since we return id as success code</span>
+<span class="c1">#        if self.json_id == 0:</span>
+<span class="c1">#            self.json_id = 1</span>
+        <span class="n">cmd</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">json_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">json_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">cmdstr</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;__send_json_message-&gt;{bytes(cmdstr, encoding=&quot;ascii&quot;)}&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">writeData</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">cmdstr</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;__send_json_message - cmd was </span><span class="si">{cmd}</span><span class="s1">!&#39;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Exception -&gt;&#39;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmd</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="Camera.get_camera_name"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_camera_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;RPC&#39;</span></div>
+
+<div class="viewcode-block" id="Camera.get_camera_description"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_description">[docs]</a>    <span class="k">def</span> <span class="nf">get_camera_description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;RPC Camera Driver&#39;</span></div>
+
+<div class="viewcode-block" id="Camera.get_driver_info"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_driver_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_driver_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;RPC Camera Driver&#39;</span></div>
+
+<div class="viewcode-block" id="Camera.get_driver_version"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_driver_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_driver_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;V 0.1&#39;</span></div>
+
+<div class="viewcode-block" id="Camera.get_state"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_state() not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Camera.start_exposure"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.start_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">start_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expos</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPC:Exposing image for </span><span class="si">{expos}</span><span class="s1"> seconds&#39;</span><span class="p">)</span>
+
+        <span class="n">paramdict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">paramdict</span><span class="p">[</span><span class="s1">&#39;exposure&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expos</span>
+        <span class="n">paramdict</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binning</span>
+        <span class="n">paramdict</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_server_request</span><span class="p">(</span><span class="s1">&#39;take_image&#39;</span><span class="p">,</span> <span class="n">paramdict</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;RPC:start_exposure - error&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">reqid</span> <span class="o">=</span> <span class="n">rc</span>
+
+        <span class="c1"># FIXME this is clunky</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span> <span class="o">=</span> <span class="n">reqid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Camera.stop_exposure"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.stop_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">stop_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera stop_exposure() not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Camera.check_exposure"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.check_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">check_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># connect to response from RPC server in process()</span>
+        <span class="c1"># FIXME this could break so many ways as it doesnt</span>
+        <span class="c1"># link up to the actual id expected for method result</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span></div>
+
+<div class="viewcode-block" id="Camera.supports_progress"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.supports_progress">[docs]</a>    <span class="k">def</span> <span class="nf">supports_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera supports_progress() not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<span class="c1"># FIXME returns -1 to indicate progress is not available</span>
+<span class="c1"># FIXME shold use cached value to know if progress is supported</span>
+<div class="viewcode-block" id="Camera.get_exposure_progress"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_exposure_progress">[docs]</a>    <span class="k">def</span> <span class="nf">get_exposure_progress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_exposure_progress() not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="Camera.save_image_data"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.save_image_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPC:Saving image to </span><span class="si">{path}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">paramdict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">paramdict</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_server_request</span><span class="p">(</span><span class="s1">&#39;save_image&#39;</span><span class="p">,</span> <span class="n">paramdict</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;RPC:saveimageCamera - error&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">reqid</span> <span class="o">=</span> <span class="n">rc</span>
+
+        <span class="c1"># FIXME this is clunky</span>
+        <span class="c1"># block and wait on result!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span> <span class="o">=</span> <span class="n">reqid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># FIXME need timeout!</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="c1"># FIXME YUCK wont get response if QtNetwork isnt</span>
+            <span class="c1"># getting cycles</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+
+        <span class="n">status</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_status</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_value</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPC saveimageCamera status/resp = </span><span class="si">{status}</span><span class="s1"> </span><span class="si">{resp}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="c1">#FIXME need to look at result code</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Camera.get_camera_settings"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_camera_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send_server_request</span><span class="p">(</span><span class="s1">&#39;get_camera_info&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">rc</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;RPC get_camera_settigns: error sending json request!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">reqid</span> <span class="o">=</span> <span class="n">rc</span>
+
+        <span class="c1"># I suppose the response could get back before this next</span>
+        <span class="c1"># line is run??  So in process() we&#39;d miss it?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_reqid</span> <span class="o">=</span> <span class="n">reqid</span>
+
+        <span class="c1"># FIXME this shouldn&#39;t be a problem unless RPC Server dies</span>
+        <span class="c1"># FIXME add timeout</span>
+        <span class="c1"># block until we get answer</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_complete</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="c1"># FIXME YUCK wont get response if QtNetwork isnt</span>
+            <span class="c1"># getting cycles</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">processEvents</span><span class="p">()</span>
+
+        <span class="n">status</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_status</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">outstanding_result_value</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;RPC saveimageCamera status/resp = </span><span class="si">{status}</span><span class="s1"> </span><span class="si">{resp}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">status</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC:get_camera_settings() - error getting settings!&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="s1">&#39;framesize&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;framesize&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span> <span class="o">=</span> <span class="n">w</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span> <span class="o">=</span> <span class="n">h</span>
+        <span class="k">if</span> <span class="s1">&#39;binning&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_binning</span><span class="p">(</span><span class="n">resp</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">],</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;roi&#39;</span> <span class="ow">in</span> <span class="n">resp</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">roi</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Camera.get_image_data"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_image_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_image_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_image_data() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_pixelsize"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_pixelsize">[docs]</a>    <span class="k">def</span> <span class="nf">get_pixelsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_pixelsize() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_egain"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_egain">[docs]</a>    <span class="k">def</span> <span class="nf">get_egain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_egain() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_current_temperature"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_current_temperature">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_current_temperature() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_target_temperature"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_target_temperature">[docs]</a>    <span class="k">def</span> <span class="nf">get_target_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_target_temperature() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.set_target_temperature"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_target_temperature">[docs]</a>    <span class="k">def</span> <span class="nf">set_target_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp_c</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera set_target_temperature() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.set_cooler_state"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_cooler_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_cooler_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">onoff</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera set_cooler_state() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_cooler_state"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_cooler_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_cooler_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_cooler_state() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_cooler_power"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_cooler_power">[docs]</a>    <span class="k">def</span> <span class="nf">get_cooler_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_cooler_power() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_binning"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_binning">[docs]</a>    <span class="k">def</span> <span class="nf">get_binning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binning</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">binning</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.set_binning"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_binning">[docs]</a>    <span class="k">def</span> <span class="nf">set_binning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binx</span><span class="p">,</span> <span class="n">biny</span><span class="p">):</span>
+        <span class="c1"># just ignore biny</span>
+        <span class="c1"># cache for when we are going to take an exposure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">binning</span> <span class="o">=</span> <span class="n">binx</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_camera_settings</span><span class="p">():</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;RPC:set_binning - unable to get camera settings!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">roi</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">binning</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">binning</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Camera.get_max_binning"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_max_binning">[docs]</a>    <span class="k">def</span> <span class="nf">get_max_binning</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;RPC Camera get_max_binning() not implemented!&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_size"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_camera_settings</span><span class="p">():</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;RPC:get_size - unable to get camera settings!&#39;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_height</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Camera.get_frame"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_frame">[docs]</a>    <span class="k">def</span> <span class="nf">get_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi</span></div>
+
+<div class="viewcode-block" id="Camera.set_frame"><a class="viewcode-back" href="../../../pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_frame">[docs]</a>    <span class="k">def</span> <span class="nf">set_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">roi</span> <span class="o">=</span> <span class="p">(</span><span class="n">minx</span><span class="p">,</span> <span class="n">miny</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Michael Fulbright
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
