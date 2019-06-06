@@ -95,31 +95,34 @@ class Camera(BaseCamera):
         return True
 
     def get_image_data(self):
-        logging.warning('RPC Camera get_image_data() not implemented!')
+        logging.warning('MaximDL Camera get_image_data() not implemented!')
 
     def get_pixelsize(self):
-        logging.warning('RPC Camera get_pixelsize() not implemented!')
+        logging.warning('MaximDL Camera get_pixelsize() not implemented!')
 
     def get_egain(self):
-        logging.warning('RPC Camera get_egain() not implemented!')
+        logging.warning('MaximDL Camera get_egain() not implemented!')
 
     def get_current_temperature(self):
-        logging.warning('RPC Camera get_current_temperature() not implemented!')
+        #logging.warning('MaximDL Camera get_current_temperature() not implemented!')
+        return self.cam.Temperature
 
     def get_target_temperature(self):
-        logging.warning('RPC Camera get_target_temperature() not implemented!')
+        #logging.warning('MaximDL Camera get_target_temperature() not implemented!')
+        return self.cam.TemperatureSetpoint
 
     def set_target_temperature(self, temp_c):
-        logging.warning('RPC Camera set_target_temperature() not implemented!')
+        #logging.warning('MaximDL Camera set_target_temperature() not implemented!')
+        self.cam.TemperatureSetpoint = temp_c
 
     def set_cooler_state(self, onoff):
-        logging.warning('RPC Camera set_cooler_state() not implemented!')
+        logging.warning('MaximDL Camera set_cooler_state() not implemented!')
 
     def get_cooler_state(self):
-        logging.warning('RPC Camera get_cooler_state() not implemented!')
+        logging.warning('MaximDL Camera get_cooler_state() not implemented!')
 
     def get_cooler_power(self):
-        logging.warning('RPC Camera get_cooler_power() not implemented!')
+        logging.warning('MaximDL Camera get_cooler_power() not implemented!')
 
     def get_binning(self):
         return (self.cam.BinX, self.cam.BinY)
@@ -127,11 +130,10 @@ class Camera(BaseCamera):
     def set_binning(self, binx, biny):
         self.cam.BinX = binx
         self.cam.BinY = biny
-
         return True
 
     def get_max_binning(self):
-        logging.warning('RPC Camera get_max_binning() not implemented!')
+        logging.warning('MaximDL Camera get_max_binning() not implemented!')
 
     def get_size(self):
         return (self.cam.CameraXSize, self.cam.CameraYSize)

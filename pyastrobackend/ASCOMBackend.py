@@ -12,6 +12,11 @@ from pyastrobackend.BaseBackend import BaseFilterWheel, BaseMount
 
 warnings.filterwarnings('always', category=DeprecationWarning)
 
+
+warnings.warn('ASCOMBackend is deprecated - use ASCOM.* modules instead!',
+              DeprecationWarning)
+
+
 class DeviceBackend(BaseDeviceBackend):
 
     def __init__(self, mainThread=True):
@@ -337,6 +342,10 @@ class Focuser(BaseFocuser):
 
 class FilterWheel(BaseFilterWheel):
     def __init__(self):
+
+        warnings.warn('ASCOMBackend.Camera is deprecated - use ASCOM.Camera instead!',
+                      DeprecationWarning)
+
         self.filterwheel = None
 
     def show_chooser(self, last_choice):
