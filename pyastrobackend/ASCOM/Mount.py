@@ -12,8 +12,9 @@ class PierSide(Enum):
     WEST = 1
 
 class Mount(BaseMount):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.mount = None
+        #backend ignored for ASCOM
 
     def has_chooser(self):
         return True
@@ -78,12 +79,22 @@ class Mount(BaseMount):
 
     def get_pier_side(self):
         side = self.mount.SideOfPier
-        if side == PierSide.EAST:
+        logging.info(f'ASCOM Mount.get_pier_side() reports {side} {type(side)}')
+        logging.info(f'PierSide.East = {PierSide.EAST} {type(PierSide.EAST)}')
+        if side == PierSide.EAST.value:
             return 'EAST'
-        elif side == PierSide.WEST:
+        elif side == PierSide.WEST.value:
             return 'WEST'
         else:
             return None
+
+    def get_side_physical(self):
+        logging.warning('Mount.get_side_physical() is not implemented for ASCOM!')
+        return None
+
+    def get_side_pointing(self):
+        logging.warning('Mount.get_side_pointing() is not implemented for ASCOM!')
+        return None
 
     def is_slewing(self):
         return self.mount.Slewing

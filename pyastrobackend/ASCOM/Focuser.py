@@ -7,9 +7,10 @@ import pythoncom
 import win32com.client
 
 class Focuser(BaseFocuser):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.focus = None
-
+        # backend ignored for ASCOM
+        
     def has_chooser(self):
         return True
 
@@ -25,6 +26,10 @@ class Focuser(BaseFocuser):
         pythoncom.CoInitialize()
         self.focus = win32com.client.Dispatch(name)
 
+        print('self.focus = ',self.focus)
+        print(self.focus.Description)
+
+        
         if self.focus.Connected:
             logging.info("	-> Focuser was already connected")
         else:

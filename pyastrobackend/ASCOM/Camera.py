@@ -6,9 +6,10 @@ from comtypes.safearray import safearray_as_ndarray
 from pyastrobackend.BaseBackend import BaseCamera
 
 class Camera(BaseCamera):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.cam = None
         self.camera_has_progress = None
+        # backend is ignored for ASCOM
 
     def has_chooser(self):
         return True

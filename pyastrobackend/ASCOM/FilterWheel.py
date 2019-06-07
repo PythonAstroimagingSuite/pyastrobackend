@@ -7,9 +7,13 @@ import pythoncom
 import win32com.client
 
 class FilterWheel(BaseFilterWheel):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.filterwheel = None
-
+        # backend ignore for ASCOM
+        
+    def has_chooser(self):
+        return True
+        
     def show_chooser(self, last_choice):
         pythoncom.CoInitialize()
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")

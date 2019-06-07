@@ -8,10 +8,11 @@ from ..BaseBackend import BaseCamera
 
 
 class Camera(BaseCamera):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.camera_has_progress = None
         self.connected = False
-
+        # backend ignored for MaximDL camera driver
+        
     def has_chooser(self):
         return False
 

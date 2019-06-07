@@ -10,6 +10,11 @@ import win32com.client
 from pyastrobackend.BaseBackend import BaseDeviceBackend, BaseCamera, BaseFocuser
 from pyastrobackend.BaseBackend import BaseFilterWheel, BaseMount
 
+from pyastrobackend.ASCOM.Camera import Camera
+from pyastrobackend.ASCOM.Focuser import Focuser
+from pyastrobackend.ASCOM.FilterWheel import FilterWheel
+from pyastrobackend.ASCOM.Mount import Mount
+
 warnings.filterwarnings('always', category=DeprecationWarning)
 
 class DeviceBackend(BaseDeviceBackend):
@@ -29,18 +34,18 @@ class DeviceBackend(BaseDeviceBackend):
 
     def isConnected(self):
         return self.connected
-#
-#    def newCamera(self):
-#        return Camera(self)
-#
-#    def newFocuser(self):
-#        return Focuser(self)
-#
-#    def newFilterWheel(self):
-#        return FilterWheel(self)
-#
-#    def newMount(self):
-#        return Mount(self)
+
+    def newCamera(self):
+        return Camera(self)
+
+    def newFocuser(self):
+        return Focuser(self)
+
+    def newFilterWheel(self):
+        return FilterWheel(self)
+
+    def newMount(self):
+        return Mount(self)
 
 
 #class Camera(BaseCamera):
