@@ -2,9 +2,14 @@
 from pyastrobackend.BaseBackend import BaseMount
 
 import logging
-
+from enum import Enum
 import pythoncom
 import win32com.client
+
+class PierSide(Enum):
+    EAST = 0
+    UNKNOWN = -1
+    WEST = 1
 
 class Mount(BaseMount):
     def __init__(self):
@@ -70,6 +75,15 @@ class Mount(BaseMount):
         ra = self.mount.RightAscension
         dec = self.mount.Declination
         return (ra, dec)
+
+    def get_pier_side(self):
+        side = self.mount.SideOfPier
+        if side == PierSide.EAST:
+            return 'EAST'
+        elif side == PierSide.WEST:
+            return 'WEST'
+        else:
+            return None
 
     def is_slewing(self):
         return self.mount.Slewing

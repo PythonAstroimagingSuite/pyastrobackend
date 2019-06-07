@@ -935,6 +935,23 @@ class Mount(BaseMount):
                                             'EQUATORIAL_EOD_COORD','DEC')
         return (ra, dec)
 
+    def get_pier_side(self):
+        """Returns 'EAST' or 'WEST' or None if could not be determined."""
+        if indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE', 'PIER_EAST'):
+            return 'EAST'
+        elif indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE', 'PIER_WEST'):
+            return 'WEST'
+        else:
+            return None
+
+    def get_side_physical(self):
+        logging.warning('Mount.get_side_physical() is not implemented for INDI!')
+        return None
+
+    def get_side_pointing(self):
+        logging.warning('Mount.get_side_pointing() is not implemented for INDI!')
+        return None
+
     def is_slewing(self):
         state = indihelper.getNumberState(self.mount, 'EQUATORIAL_EOD_COORD')
         if state is None:

@@ -735,6 +735,47 @@ class BaseMount(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def get_pier_side(self):
+        """
+        Returns backend specific pier side information.
+        **NOTE:** **NOT** recommended for use as ASCOM and INDI may give
+        different results for different drivers - not tested extensively at all
+        so use with caution.
+
+        :returns:
+            'EAST', 'WEST' or None if unknown.
+        """
+        pass
+
+    @abstractmethod
+    def get_side_physical(self):
+        """
+        Get physical side of mount.
+        **NOTE:** **NOT** tested extensively with all INDI drivers so it is recommended
+        to test results for 'normal' and 'through the pole' positions on both side of
+        the pier with a given mount driver!
+
+        :returns:
+            'EAST', 'WEST' or None if unknown.
+        """
+        pass
+
+    @abstractmethod
+    def get_side_pointing(self):
+        """
+        Get side of meridian where mount is pointing.
+        **NOTE** may not be same as result from get_side_physical() if
+        counterweights are pointing up, etc!
+        **NOTE:** **NOT** tested extensively with all INDI drivers so it is recommended
+        to test results for 'normal' and 'through the pole' positions on both side of
+        the pier with a given mount driver!
+
+        :returns:
+            'EAST', 'WEST' or None if unknown.
+        """
+        pass
+
+    @abstractmethod
     def is_slewing(self):
         """
         Test if mount is slewing.
