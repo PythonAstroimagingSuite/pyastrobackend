@@ -439,6 +439,27 @@ class Camera(BaseCamera):
 # FIXME ASCOM get_image_data returns a numpy array of the native camera data type!
         return hdulist
 
+    def save_image_data(self, path):
+        blobEvent = self.backend.indiclient.getBlobEvent()
+        if blobEvent is None:
+            logging.error('Camera.get_image_data() blobEvent is None!')
+            return None
+
+        blob = blobEvent
+        if not isinstance(blob, PyIndi.IBLOB):
+            logging.error('Camera.get_image_data() - no blob ready!')
+            return None
+
+        fits=blob.getblobdata()
+
+        blobfile = BytesIO(fits)
+
+        hdulist = pyfits.open(blobfile)
+
+        hdulist.writeto(path)
+
+        return True
+
     def get_info(self):
         ccd_info = indihelper.getNumber(self.cam, 'CCD_INFO')
 
