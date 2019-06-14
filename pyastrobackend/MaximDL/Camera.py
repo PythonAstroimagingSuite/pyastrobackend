@@ -12,7 +12,7 @@ class Camera(BaseCamera):
         self.camera_has_progress = None
         self.connected = False
         # backend ignored for MaximDL camera driver
-        
+
     def has_chooser(self):
         return False
 
@@ -79,9 +79,12 @@ class Camera(BaseCamera):
         logging.warning('MaximDL Camera get_exposure_progress() not implemented')
         return -1
 
-    def save_image_data(self, path):
+    def save_image_data(self, path, overwrite=False):
+        #
+        # FIXME overwrite probably ignored Maxim doesn't have option
         # FIXME make better temp name
         # FIXME specify cwd as path for file - otherwise not sure where it goes!
+        #
         logging.info(f"saveimageCamera: saving to {path}")
 
         try:
@@ -98,15 +101,15 @@ class Camera(BaseCamera):
     def get_image_data(self):
         logging.warning('MaximDL Camera get_image_data() not implemented!')
         return False
-        
+
     def get_pixelsize(self):
         #logging.warning('MaximDL Camera get_pixelsize() not implemented!')
         return self.cam.PixelSizeX, self.cam.PixelSizeY
-        
+
     def get_egain(self):
         logging.warning('MaximDL Camera get_egain() not implemented!')
         return None
-                
+
     def get_current_temperature(self):
         #logging.warning('MaximDL Camera get_current_temperature() not implemented!')
         return self.cam.Temperature
@@ -119,7 +122,7 @@ class Camera(BaseCamera):
         #logging.warning('MaximDL Camera set_target_temperature() not implemented!')
         self.cam.TemperatureSetpoint = temp_c
         return True
-        
+
     def set_cooler_state(self, onoff):
         #logging.warning('MaximDL Camera set_cooler_state() not implemented!')
         self.cam.CoolerOn = onoff
@@ -128,11 +131,11 @@ class Camera(BaseCamera):
     def get_cooler_state(self):
         #logging.warning('MaximDL Camera get_cooler_state() not implemented!')
         return self.cam.CoolerOn
-        
+
     def get_cooler_power(self):
         #logging.warning('MaximDL Camera get_cooler_power() not implemented!')
         return self.cam.CoolerPower
-        
+
     def get_binning(self):
         return (self.cam.BinX, self.cam.BinY)
 

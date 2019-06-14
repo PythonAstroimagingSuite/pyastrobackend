@@ -148,6 +148,10 @@ class Camera(BaseCamera):
 
         return image_data
 
+    def save_image_data(self, path, overwrite=False):
+        logging.warning('camera.save_image_data() NOT IMPLEMENTED FOR ASCOM CAMERA!')
+        return False
+
     def get_pixelsize(self):
         return self.cam.PixelSizeX, self.cam.PixelSizeY
 

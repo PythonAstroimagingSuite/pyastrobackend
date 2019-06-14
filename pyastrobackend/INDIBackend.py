@@ -439,7 +439,7 @@ class Camera(BaseCamera):
 # FIXME ASCOM get_image_data returns a numpy array of the native camera data type!
         return hdulist
 
-    def save_image_data(self, path):
+    def save_image_data(self, path, overwrite=False):
         blobEvent = self.backend.indiclient.getBlobEvent()
         if blobEvent is None:
             logging.error('Camera.get_image_data() blobEvent is None!')
@@ -456,7 +456,7 @@ class Camera(BaseCamera):
 
         hdulist = pyfits.open(blobfile)
 
-        hdulist.writeto(path)
+        hdulist.writeto(path, overwrite=overwrite)
 
         return True
 
