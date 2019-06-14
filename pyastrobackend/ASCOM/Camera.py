@@ -22,6 +22,7 @@ class Camera(BaseCamera):
         return camera
 
     def connect(self, name):
+        logging.info(f'connect camera {name}')
         self.cam = CreateObject(name)
         try:
             self.cam.Connected = True

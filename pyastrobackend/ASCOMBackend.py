@@ -10,11 +10,13 @@ import win32com.client
 from pyastrobackend.BaseBackend import BaseDeviceBackend, BaseCamera, BaseFocuser
 from pyastrobackend.BaseBackend import BaseFilterWheel, BaseMount
 
-from pyastrobackend.ASCOM.Camera import Camera
+from pyastrobackend.ASCOM.Camera import Camera as ASCOM_Camera
 from pyastrobackend.ASCOM.Focuser import Focuser
 from pyastrobackend.ASCOM.FilterWheel import FilterWheel
 from pyastrobackend.ASCOM.Mount import Mount
 
+# messy but we'll roll MaximDL camera support under ASCOM 
+from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
 warnings.filterwarnings('always', category=DeprecationWarning)
 
 class DeviceBackend(BaseDeviceBackend):
@@ -36,7 +38,7 @@ class DeviceBackend(BaseDeviceBackend):
         return self.connected
 
     def newCamera(self):
-        return Camera(self)
+        return ASCOM_Camera(self)
 
     def newFocuser(self):
         return Focuser(self)
@@ -46,7 +48,10 @@ class DeviceBackend(BaseDeviceBackend):
 
     def newMount(self):
         return Mount(self)
-
+        
+    # FIXME yuck but seems best way for now
+    def newMaximDLCamera(self):
+        return MaximDL_Camera(self)
 
 #class Camera(BaseCamera):
 #    def __init__(self):
