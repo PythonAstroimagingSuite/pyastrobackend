@@ -573,6 +573,7 @@ class BaseFilterWheel(metaclass=ABCMeta):
     def get_position(self):
         """
         Get position of filter wheel.
+        First position is 0!
 
         :return:  Position of filter wheel.
         :rtype: int
@@ -593,6 +594,7 @@ class BaseFilterWheel(metaclass=ABCMeta):
     def set_position(self, abspos):
         """
         Set position of filter wheel.
+        First position is 0!
 
         :param abspos:  New position of filter wheel.
         :return: True on success.

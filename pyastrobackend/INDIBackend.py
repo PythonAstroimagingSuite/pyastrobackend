@@ -823,7 +823,8 @@ class FilterWheel(BaseFilterWheel):
 
         Use is_moving() method to check if its done.
 
-        Positions start at 0!
+        Positions start at 1 so we add one since backend defines position 
+        starting at 0 like ASCOM!
         """
         if pos < self.get_num_positions():
             return indihelper.setfindNumberValue(self.backend.indiclient,
