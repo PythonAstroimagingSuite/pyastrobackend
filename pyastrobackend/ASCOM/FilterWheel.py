@@ -19,7 +19,7 @@ class FilterWheel(BaseFilterWheel):
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
         chooser.DeviceType="FilterWheel"
         filterwheel = chooser.Choose(last_choice)
-        logging.info(f'choice = {filterwheel}')
+        logging.debug(f'choice = {filterwheel}')
         return filterwheel
 
     def connect(self, name):
@@ -27,7 +27,7 @@ class FilterWheel(BaseFilterWheel):
         self.filterwheel = win32com.client.Dispatch(name)
 
         if self.filterwheel.Connected:
-            logging.info("	-> filterwheel was already connected")
+            logging.debug("	-> filterwheel was already connected")
         else:
             try:
                 self.filterwheel.Connected = True
@@ -36,9 +36,9 @@ class FilterWheel(BaseFilterWheel):
                 return False
 
         if self.filterwheel.Connected:
-            logging.info(f"	Connected to filter wheel {name} now")
+            logging.debug(f"	Connected to filter wheel {name} now")
         else:
-            logging.info("	Unable to connect to filter wheel, expect exception")
+            logging.error("	Unable to connect to filter wheel, expect exception")
 
         return True
 

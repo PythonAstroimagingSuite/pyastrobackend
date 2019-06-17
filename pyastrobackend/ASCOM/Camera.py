@@ -18,11 +18,11 @@ class Camera(BaseCamera):
         chooser = CreateObject("ASCOM.Utilities.Chooser")
         chooser.DeviceType="Camera"
         camera = chooser.Choose(last_choice)
-        logging.info(f'choice = {camera}')
+        logging.debug(f'choice = {camera}')
         return camera
 
     def connect(self, name):
-        logging.info(f'connect camera {name}')
+        logging.debug(f'connect camera {name}')
         self.cam = CreateObject(name)
         try:
             self.cam.Connected = True
@@ -35,7 +35,7 @@ class Camera(BaseCamera):
         # have it continually doing this so we cache result
         if self.cam.Connected:
             self.camera_has_progress = self.supports_progress()
-            logging.info(f'camera:connect camera_has_progress={self.camera_has_progress}')
+            logging.debug(f'camera:connect camera_has_progress={self.camera_has_progress}')
 
         return self.cam.Connected
 
@@ -78,7 +78,7 @@ class Camera(BaseCamera):
             return self.cam.CameraState
 
     def start_exposure(self, expos):
-        logging.info(f'Exposing image for {expos} seconds')
+        logging.debug(f'Exposing image for {expos} seconds')
 
         # FIXME currently always requesting a light frame
         if self.cam:

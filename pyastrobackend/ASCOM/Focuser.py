@@ -10,7 +10,7 @@ class Focuser(BaseFocuser):
     def __init__(self, backend=None):
         self.focus = None
         # backend ignored for ASCOM
-        
+
     def has_chooser(self):
         return True
 
@@ -19,19 +19,15 @@ class Focuser(BaseFocuser):
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
         chooser.DeviceType="Focuser"
         focuser = chooser.Choose(last_choice)
-        logging.info(f'choice = {focuser}')
+        logging.debug(f'choice = {focuser}')
         return focuser
 
     def connect(self, name):
         pythoncom.CoInitialize()
         self.focus = win32com.client.Dispatch(name)
 
-        print('self.focus = ',self.focus)
-        print(self.focus.Description)
-
-        
         if self.focus.Connected:
-            logging.info("	-> Focuser was already connected")
+            logging.debug("	-> Focuser was already connected")
         else:
             try:
                 self.focus.Connected = True
@@ -40,13 +36,13 @@ class Focuser(BaseFocuser):
                 return False
 
         if self.focus.Connected:
-            logging.info(f"	Connected to focuser {name} now")
+            logging.debug(f"	Connected to focuser {name} now")
         else:
-            logging.info("	Unable to connect to focuser, expect exception")
+            logging.error("	Unable to connect to focuser, expect exception")
 
         # check focuser works in absolute position
         if not self.focus.Absolute:
-            logging.info("ERROR - focuser does not use absolute position!")
+            logging.error("ERROR - focuser does not use absolute position!")
 
         return True
 

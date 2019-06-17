@@ -22,7 +22,7 @@ class Camera(BaseCamera):
 
     # name is currently ignored
     def connect(self, name):
-        logging.info(f'MaximDL Camera connect: ')
+        logging.debug(f'MaximDL Camera connect: ')
 
         self.cam = win32com.client.Dispatch("MaxIm.CCDCamera")
         self.cam.LinkEnabled = True
@@ -56,7 +56,7 @@ class Camera(BaseCamera):
         return None
 
     def start_exposure(self, expos):
-        logging.info(f'MaximDL:Exposing image for {expos} seconds')
+        logging.debug(f'MaximDL: Exposing image for {expos} seconds')
 
         self.cam.Expose(expos, 1, -1)
 
@@ -85,13 +85,13 @@ class Camera(BaseCamera):
         # FIXME make better temp name
         # FIXME specify cwd as path for file - otherwise not sure where it goes!
         #
-        logging.info(f"saveimageCamera: saving to {path}")
+        logging.debug(f"saveimageCamera: saving to {path}")
 
         try:
             self.cam.SaveImage(path)
         except:
             exc_type, exc_value = sys.exc_info()[:2]
-            logging.info('saveimageCamera %s exception with message "%s" in ' % \
+            logging.error('saveimageCamera %s exception with message "%s" in ' % \
                               (exc_type.__name__, exc_value))
             logging.error(f"Error saving {path} in saveimageCamera()!")
             return False

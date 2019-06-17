@@ -24,7 +24,7 @@ class Mount(BaseMount):
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
         chooser.DeviceType="Telescope"
         mount = chooser.Choose(last_choice)
-        logging.info(f'choice = {mount}')
+        logging.debug(f'choice = {mount}')
         return mount
 
     def connect(self, name):
@@ -32,7 +32,7 @@ class Mount(BaseMount):
         self.mount = win32com.client.Dispatch(name)
 
         if self.mount.Connected:
-            logging.info("	-> mount was already connected")
+            logging.debug("	-> mount was already connected")
         else:
             try:
                 self.mount.Connected = True
@@ -41,9 +41,9 @@ class Mount(BaseMount):
                 return False
 
         if self.mount.Connected:
-            logging.info(f"	Connected to mount {name} now")
+            logging.debug(f"	Connected to mount {name} now")
         else:
-            logging.info("	Unable to connect to mount, expect exception")
+            logging.error("	Unable to connect to mount, expect exception")
 
         return True
 
@@ -79,8 +79,8 @@ class Mount(BaseMount):
 
     def get_pier_side(self):
         side = self.mount.SideOfPier
-        logging.info(f'ASCOM Mount.get_pier_side() reports {side} {type(side)}')
-        logging.info(f'PierSide.East = {PierSide.EAST} {type(PierSide.EAST)}')
+        logging.debug(f'ASCOM Mount.get_pier_side() reports {side} {type(side)}')
+        logging.debug(f'PierSide.East = {PierSide.EAST} {type(PierSide.EAST)}')
         if side == PierSide.EAST.value:
             return 'EAST'
         elif side == PierSide.WEST.value:
