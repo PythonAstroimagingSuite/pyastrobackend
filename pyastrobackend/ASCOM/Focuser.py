@@ -26,23 +26,43 @@ class Focuser(BaseFocuser):
         pythoncom.CoInitialize()
         self.focus = win32com.client.Dispatch(name)
 
-        if self.focus.Connected:
-            logging.debug("	-> Focuser was already connected")
-        else:
+        # FIXME
+        #
+        # Found I had to use Generic Hub for MoonliteDRO driver or else it would
+        # eventually hang from all the open/close events from running the
+        # autofocus routine as a separate shoft lived application
+        #
+        # For some reason the generic hub returns an error if you try to access
+        # the .Connected property!
+        #
+        # Looking at this code:
+        #   https://github.com/ASCOMInitiative/ASCOMPlatform/blob/master/ASCOM.DriverConnect/ConnectForm.cs
+        #
+        # Around line 245 they try 'Connected' and then 'Link' and use the one which work.
+        #
+
+        try:
+            logging.debug('Connecting focuser trying "Connected"')
+            self.focus.Connected = True
+            logging.debug('Connecting focuser "Connected" worked')
+        except:
             try:
-                self.focus.Connected = True
+                logging.debug('Connecting focuser trying "Link"')
+                self.focus.Link = True
+                logging.debug('Connecting focuser "Link" worked')
             except Exception as e:
+                logging.error('Both "Connected" and "Link" failed!')
                 logging.error('ASCOMBackend:focuser:connect() Exception ->', exc_info=True)
                 return False
 
-        if self.focus.Connected:
-            logging.debug(f"	Connected to focuser {name} now")
+        if self.is_connected():
+            logging.debug(f'Connected to focuser {name} now')
         else:
-            logging.error("	Unable to connect to focuser, expect exception")
+            logging.error('Unable to connect to focuser, expect exception')
 
         # check focuser works in absolute position
         if not self.focus.Absolute:
-            logging.error("ERROR - focuser does not use absolute position!")
+            logging.error('ERROR - focuser does not use absolute position!')
 
         return True
 
@@ -54,7 +74,19 @@ class Focuser(BaseFocuser):
 
     def is_connected(self):
         if self.focus:
-            return self.focus.Connected
+            connected = False
+            try:
+                logging.debug('Focuser is_connected trying "Connected"')
+                connected = self.focus.Connected
+            except:
+                try:
+                    logging.debug('Focuser is_connected trying "Link"')
+                    connected = self.focus.Link
+                except Exception as e:
+                    logging.error('Both "Connected" and "Link" failed!')
+                    logging.error('ASCOMBackend:focuser:is_connected() Exception ->', exc_info=True)
+                    return False
+            return connected
         else:
             return False
 
