@@ -214,7 +214,7 @@ def connectDevice(indiclient, devicename, timeout=2):
         #logging.debug(f'getDevice({devicename}) = {device}')
         cnt += 1
     if device is None:
-        print('could not find ', devicename)
+        logging.error('could not find ', devicename)
         return None
     connect = getSwitch(device, 'CONNECTION')
     if connect is None:
@@ -231,7 +231,7 @@ def connectDevice(indiclient, devicename, timeout=2):
     cnt = 0
     while not device.isConnected() and cnt < (timeout/0.1):
         time.sleep(0.1)
-        print('W4C')
+        #print('W4C')
         cnt += 1
 
     return device

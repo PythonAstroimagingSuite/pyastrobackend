@@ -106,7 +106,7 @@ class DeviceBackend(BaseDeviceBackend):
         self.indiclient = self.IndiClient()
         self.indiclient.setServer('localhost', 7624)
 
-        logging.info(f'self.indiclient = {self.indiclient}')
+        logging.debug(f'self.indiclient = {self.indiclient}')
 
         if not self.indiclient.connectServer():
             logging.error('connect() failed to connect to Indi server!')
@@ -295,7 +295,7 @@ class Camera(BaseCamera):
 
     def start_exposure(self, expos):
  #       global blobEvent
-        logging.info(f'Exposing image for {expos} seconds')
+        logging.debug(f'Exposing image for {expos} seconds')
 
         # FIXME currently always requesting a light frame
         # FIXME need to check return codes of all steps
@@ -346,9 +346,9 @@ class Camera(BaseCamera):
         sw = None
         i = 0
         while i < retries:
-             logging.info('Trying to get ABORT')
+             logging.debug('Trying to get ABORT')
              sw = indihelper.findSwitch(sw_prop, 'ABORT')
-             logging.info(f'sw = {sw}')
+             logging.debug(f'sw = {sw}')
              if sw is not None:
                  break
              time.sleep(0.1)
@@ -651,7 +651,7 @@ class Camera(BaseCamera):
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
-        logging.info(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} {ccd_y.value} {ccd_w.value} {ccd_h.value}')
+        logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} {ccd_y.value} {ccd_w.value} {ccd_h.value}')
         if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
             return False
         ccd_x.value = minx
@@ -823,7 +823,7 @@ class FilterWheel(BaseFilterWheel):
 
         Use is_moving() method to check if its done.
 
-        Positions start at 1 so we add one since backend defines position 
+        Positions start at 1 so we add one since backend defines position
         starting at 0 like ASCOM!
         """
         if pos < self.get_num_positions():
