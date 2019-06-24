@@ -1038,3 +1038,19 @@ class Mount(BaseMount):
     def unpark(self):
         logging.warning('Mount.unpark() is not implemented for INDI!')
         return None
+
+    def set_tracking(self, onoff):
+        rc = indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                          'TELESCOPE_TRACK_STATE', 'TRACK_ON',
+                                           onoff)
+        if not rc:
+            return rc
+
+        rc = indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                          'TELESCOPE_TRACK_STATE', 'TRACK_OFF',
+                                           not onoff)
+        return rc
+
+    def get_tracking(self):
+        return indihelper.getfindSwitchState(self.mount,
+                                             'TELESCOPE_TRACK_STATE', 'TRACK_ON')

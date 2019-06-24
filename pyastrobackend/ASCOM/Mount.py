@@ -115,3 +115,11 @@ class Mount(BaseMount):
 
     def unpark(self):
         self.mount.Unpark()
+
+    def set_tracking(self, onoff):
+        rc = self.mount.Tracking = onoff
+        return rc
+
+    def get_trackign(self):
+        return self.mount.Tracking
+

@@ -840,3 +840,24 @@ class BaseMount(metaclass=ABCMeta):
         :rtype: bool
         """
         pass
+
+    @abstractmethod
+    def set_tracking(self, onoff):
+        """
+        Enable/disable mount tracking.
+
+        :param onoff: Flag to turn tracking on/off.
+        :return: True on success.
+        :rtype: bool
+        """
+        pass
+
+    @abstractmethod
+    def get_tracking(self):
+        """
+        Get mount tracking state.
+
+        :return: True if tracking.
+        :rtype: bool
+        """
+        pass
