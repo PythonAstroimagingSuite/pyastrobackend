@@ -79,8 +79,8 @@ class Mount(BaseMount):
 
     def get_pier_side(self):
         side = self.mount.SideOfPier
-        logging.debug(f'ASCOM Mount.get_pier_side() reports {side} {type(side)}')
-        logging.debug(f'PierSide.East = {PierSide.EAST} {type(PierSide.EAST)}')
+        #logging.debug(f'ASCOM Mount.get_pier_side() reports {side} {type(side)}')
+        #logging.debug(f'PierSide.East = {PierSide.EAST} {type(PierSide.EAST)}')
         if side == PierSide.EAST.value:
             return 'EAST'
         elif side == PierSide.WEST.value:
@@ -120,6 +120,6 @@ class Mount(BaseMount):
         rc = self.mount.Tracking = onoff
         return rc
 
-    def get_trackign(self):
+    def get_tracking(self):
         return self.mount.Tracking
 
