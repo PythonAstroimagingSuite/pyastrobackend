@@ -214,7 +214,7 @@ def connectDevice(indiclient, devicename, timeout=2):
         #logging.debug(f'getDevice({devicename}) = {device}')
         cnt += 1
     if device is None:
-        logging.error('could not find ', devicename)
+        logging.error(f'INDIHelper:connectDevice(): could not find {devicename}')
         return None
     connect = getSwitch(device, 'CONNECTION')
     if connect is None:
