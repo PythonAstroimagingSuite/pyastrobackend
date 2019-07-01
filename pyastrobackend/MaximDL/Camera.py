@@ -87,14 +87,34 @@ class Camera(BaseCamera):
         #
         logging.debug(f"saveimageCamera: saving to {path}")
 
-        try:
-            self.cam.SaveImage(path)
-        except:
-            exc_type, exc_value = sys.exc_info()[:2]
-            logging.error('saveimageCamera %s exception with message "%s" in ' % \
-                              (exc_type.__name__, exc_value))
-            logging.error(f"Error saving {path} in saveimageCamera()!")
-            return False
+        ntries = 3
+        while True:
+            try:
+                self.cam.SaveImage(path)
+                break
+            except:
+                exc_type, exc_value = sys.exc_info()[:2]
+                logging.error('saveimageCamera %s exception with message "%s" in ' % \
+                                (exc_type.__name__, exc_value))
+                logging.error(f"Error saving {path} in saveimageCamera()!")
+                ntries = ntries - 1
+                if ntries < 0:
+                    logging.error('Giving up could not save Maxim image!')
+                    logging.error('Ignoring error though for testing!!!')
+                    return True
+                import time
+                time.sleep(1)
+
+
+
+        # try:
+            # self.cam.SaveImage(path)
+        # except:
+            # exc_type, exc_value = sys.exc_info()[:2]
+            # logging.error('saveimageCamera %s exception with message "%s" in ' % \
+                              # (exc_type.__name__, exc_value))
+            # logging.error(f"Error saving {path} in saveimageCamera()!")
+            # return False
 
         return True
 
