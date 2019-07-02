@@ -13,6 +13,10 @@ class Camera(BaseCamera):
         self.connected = False
         # backend ignored for MaximDL camera driver
 
+        # try to throttle these
+        self.last_check_exposure = 0
+        self.last_check_exposure_value = False
+
     def has_chooser(self):
         return False
 
@@ -24,20 +28,31 @@ class Camera(BaseCamera):
     def connect(self, name):
         logging.debug(f'MaximDL Camera connect: ')
 
-        self.cam = win32com.client.Dispatch("MaxIm.CCDCamera")
-        self.cam.LinkEnabled = True
-        self.cam.DisableAutoShutDown = True
+        try:
+            self.cam = win32com.client.Dispatch("MaxIm.CCDCamera")
+            self.cam.LinkEnabled = True
+            self.cam.DisableAutoShutDown = True
+        except:
+            logging.error('MaximDLCamera:connect() FAILED', exc_info=True)
+            return False
 
         self.connected = True
-
         return True
 
     def disconnect(self):
-        self.cam.LinkEnabled = False
-        self.connected = False
+        try:
+            self.cam.LinkEnabled = False
+            self.connected = False
+        except:
+            logging.error('MaximDLCamera:disconnect() FAILED', exc_info=True)
+            return False
 
     def is_connected(self):
-        return self.connected
+        try:
+            return self.connected
+        except:
+            logging.error('MaximDLCamera:is_connected() FAILED', exc_info=True)
+            return False
 
     def get_camera_name(self):
         return 'MaximDL'
@@ -58,7 +73,11 @@ class Camera(BaseCamera):
     def start_exposure(self, expos):
         logging.debug(f'MaximDL: Exposing image for {expos} seconds')
 
-        self.cam.Expose(expos, 1, -1)
+        try:
+            self.cam.Expose(expos, 1, -1)
+        except:
+            logging.error('MaximDLCamera:start_exposure() FAILED', exc_info=True)
+            return False
 
         return True
 
@@ -67,7 +86,15 @@ class Camera(BaseCamera):
         return None
 
     def check_exposure(self):
-        return self.cam.ImageReady
+        if time.time() - self.last_check_exposure >= 1.0:
+            self.last_check_exposure = time.time()
+            logging.debug('MaximDLCamera:check_exposure()')
+            try:
+                self.last_check_exposure_value = self.cam.ImageReady
+            except:
+                logging.error('MaximDLCamera:check_exposure() FAILED', exc_info=True)
+                return None
+        return self.last_check_exposure_value
 
     def supports_progress(self):
         logging.warning('MaximDL Camera supports_progress() not implemented')
@@ -124,7 +151,11 @@ class Camera(BaseCamera):
 
     def get_pixelsize(self):
         #logging.warning('MaximDL Camera get_pixelsize() not implemented!')
-        return self.cam.PixelSizeX, self.cam.PixelSizeY
+        try:
+            return self.cam.PixelSizeX, self.cam.PixelSizeY
+        except:
+            logging.error('MaximDLCamera:get_pixelsize() FAILED', exc_info=True)
+            return None
 
     def get_egain(self):
         logging.warning('MaximDL Camera get_egain() not implemented!')
@@ -132,50 +163,102 @@ class Camera(BaseCamera):
 
     def get_current_temperature(self):
         #logging.warning('MaximDL Camera get_current_temperature() not implemented!')
-        return self.cam.Temperature
+        try:
+            return self.cam.Temperature
+        except:
+            logging.error('MaximDLCamera:get_current_temperature() FAILED', exc_info=True)
+            return None
 
     def get_target_temperature(self):
         #logging.warning('MaximDL Camera get_target_temperature() not implemented!')
-        return self.cam.TemperatureSetpoint
+        try:
+            return self.cam.TemperatureSetpoint
+        except:
+            logging.error('MaximDLCamera:get_target_temperature() FAILED', exc_info=True)
+            return None
 
     def set_target_temperature(self, temp_c):
         #logging.warning('MaximDL Camera set_target_temperature() not implemented!')
-        self.cam.TemperatureSetpoint = temp_c
+        try:
+            self.cam.TemperatureSetpoint = temp_c
+        except:
+            logging.error('MaximDLCamera:set_target_temperature() FAILED', exc_info=True)
+            return False
+
         return True
 
     def set_cooler_state(self, onoff):
         #logging.warning('MaximDL Camera set_cooler_state() not implemented!')
-        self.cam.CoolerOn = onoff
+        try:
+            self.cam.CoolerOn = onoff
+        except:
+            logging.error('MaximDLCamera:set_cooler_state() FAILED', exc_info=True)
+            return False
+
         return True
 
     def get_cooler_state(self):
         #logging.warning('MaximDL Camera get_cooler_state() not implemented!')
-        return self.cam.CoolerOn
+        try:
+            return self.cam.CoolerOn
+        except:
+            logging.error('MaximDLCamera:get_cooler_state() FAILED', exc_info=True)
+            return None
 
     def get_cooler_power(self):
         #logging.warning('MaximDL Camera get_cooler_power() not implemented!')
-        return self.cam.CoolerPower
+        try:
+            return self.cam.CoolerPower
+        except:
+            logging.error('MaximDLCamera:get_cooler_power() FAILED', exc_info=True)
+            return None
 
     def get_binning(self):
-        return (self.cam.BinX, self.cam.BinY)
+        try:
+            return (self.cam.BinX, self.cam.BinY)
+        except:
+            logging.error('MaximDLCamera:get_binning() FAILED', exc_info=True)
+            return None
 
     def set_binning(self, binx, biny):
-        self.cam.BinX = binx
-        self.cam.BinY = biny
+        try:
+            self.cam.BinX = binx
+            self.cam.BinY = biny
+        except:
+            logging.error('MaximDLCamera:set_binning() FAILED', exc_info=True)
+            return False
+
         return True
 
     def get_max_binning(self):
         logging.warning('MaximDL Camera get_max_binning() not implemented!')
 
     def get_size(self):
-        return (self.cam.CameraXSize, self.cam.CameraYSize)
+        try:
+            return (self.cam.CameraXSize, self.cam.CameraYSize)
+        except:
+            logging.error('MaximDLCamera:get_size() FAILED', exc_info=True)
+            return None
+
+        return True
 
     def get_frame(self):
-        return(self.cam.StartX, self.cam.StartY, self.cam.NumX, self.cam.NumY)
+        try:
+            return(self.cam.StartX, self.cam.StartY, self.cam.NumX, self.cam.NumY)
+        except:
+            logging.error('MaximDLCamera:get_frame() FAILED', exc_info=True)
+            return None
+
+        return True
 
     def set_frame(self, minx, miny, width, height):
-        self.cam.StartX = minx
-        self.cam.StartY = miny
-        self.cam.NumX = width
-        self.cam.NumY = height
+        try:
+            self.cam.StartX = minx
+            self.cam.StartY = miny
+            self.cam.NumX = width
+            self.cam.NumY = height
+        except:
+            logging.error('MaximDLCamera:set_frame() FAILED', exc_info=True)
+            return False
+
         return True
