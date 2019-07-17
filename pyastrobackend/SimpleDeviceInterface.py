@@ -139,7 +139,7 @@ class SimpleDeviceInterface:
         time.sleep(0.25)
 
         elapsed = 0
-        while not cam.check_exposure():
+        while (focus_expos-elapsed > 2) or not cam.check_exposure():
             logging.info(f"Taking image with camera {elapsed} of {focus_expos} seconds")
             time.sleep(0.5)
             elapsed += 0.5
@@ -148,7 +148,7 @@ class SimpleDeviceInterface:
 
         logging.info('Exposure complete')
         # give it some time seems like Maxim isnt ready if we hit it too fast
-        time.sleep(0.5)
+        time.sleep(1)
 
         ff = os.path.join(os.getcwd(), output_filename)
 
@@ -178,6 +178,6 @@ class SimpleDeviceInterface:
                 return False
 
             logging.error(f"Failed to save {ff}!! Trying again")
-            time.sleep(1)
+            time.sleep(2)
 
         return True
