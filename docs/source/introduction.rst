@@ -6,7 +6,7 @@ Introduction
 What is pyastrobackend?
 ----------------------
 
-Pyastrobackend is a abstraction later which presents a singular API to python
+Pyastrobackend is a abstraction later which presents a singular API to Python
 applications allowing the use of ASCOM, MaximDL or INDI device driver frameworks underneath.
 The goal is allow one to have a single source tree for an astronomical application
 and be able to run it on a system using ASCOM, MaximDL or INDI.
