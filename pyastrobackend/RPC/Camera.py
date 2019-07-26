@@ -14,7 +14,7 @@ from ..BaseBackend import BaseCamera
 
 
 class Camera(BaseCamera):
-    def __init__(self):
+    def __init__(self, backend=None):
         self.camera_has_progress = None
         self.connected = False
 
@@ -58,6 +58,8 @@ class Camera(BaseCamera):
             return False
 
         self.socket.readyRead.connect(self.process)
+
+        logging.info('Connected to RPCServer')
 
         self.connected = True
 
@@ -153,6 +155,8 @@ class Camera(BaseCamera):
             logging.error(f'__send_json_message - cmd was {cmd}!')
             logging.error('Exception ->', exc_info=True)
             return False
+
+        logging.info('Wrote json message')
 
         return (True, cmd['id'])
 
