@@ -44,6 +44,7 @@ else:
 
 if BACKEND == 'ASCOM':
     from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
+    from pyastrobackend.RPC.CameraTest import Camera as RPC_Camera
 elif BACKEND == 'INDI':
     from pyastrobackend.INDIBackend import Camera as INDI_Camera
 elif BACKEND == 'SIMULATOR':
@@ -81,10 +82,24 @@ class SimpleDeviceInterface:
 
     def wait_on_focuser_move(self, focuser, timeout=60):
         ts = time.time()
+        lastpos = focuser.get_absolute_position()
+        ntimes = 0
         while (time.time()-ts) < timeout:
             logging.info(f'waiting on focuser move - curpos = {focuser.get_absolute_position()}')
-            if not focuser.is_moving():
+
+            curpos = focuser.get_absolute_position()
+            if abs(curpos - lastpos) < 1:
+                ntimes += 1
+
+            if ntimes > 2:
                 break
+
+            lastpos = curpos
+
+#   FIXME This doesn't seem to work in pyastro37 env under windows????
+#            if not focuser.is_moving():
+#                break
+
             time.sleep(0.5)
         time.sleep(0.5) # just be sure its done
 
@@ -92,7 +107,10 @@ class SimpleDeviceInterface:
     def connect_camera(self, camera_driver):
         if BACKEND == 'ASCOM':
             #driver = 'MaximDL'
-            cam = MaximDL_Camera()
+            if camera_driver == 'MaximDL':
+                cam = MaximDL_Camera()
+            elif camera_driver == 'RPC':
+                cam = RPC_Camera()
         elif BACKEND == 'INDI':
             #driver = 'INDICamera'
             cam = INDI_Camera(self.backend)
@@ -141,8 +159,8 @@ class SimpleDeviceInterface:
         elapsed = 0
         while (focus_expos-elapsed > 2) or not cam.check_exposure():
             logging.info(f"Taking image with camera {elapsed} of {focus_expos} seconds")
-            time.sleep(0.5)
-            elapsed += 0.5
+            time.sleep(0.25)
+            elapsed += 0.25
             if elapsed > focus_expos:
                 elapsed = focus_expos
 

@@ -15,8 +15,10 @@ from pyastrobackend.ASCOM.Focuser import Focuser
 from pyastrobackend.ASCOM.FilterWheel import FilterWheel
 from pyastrobackend.ASCOM.Mount import Mount
 
-# messy but we'll roll MaximDL camera support under ASCOM 
+# messy but we'll roll MaximDL camera support under ASCOM
 from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
+from pyastrobackend.RPC.Camera import Camera as RPC_Camera
+
 warnings.filterwarnings('always', category=DeprecationWarning)
 
 class DeviceBackend(BaseDeviceBackend):
@@ -48,10 +50,14 @@ class DeviceBackend(BaseDeviceBackend):
 
     def newMount(self):
         return Mount(self)
-        
+
     # FIXME yuck but seems best way for now
     def newMaximDLCamera(self):
         return MaximDL_Camera(self)
+
+    # FIXME yuck times two
+    def newRPCCamera(self):
+        return RPC_Camera(self)
 
 #class Camera(BaseCamera):
 #    def __init__(self):

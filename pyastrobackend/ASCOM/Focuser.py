@@ -42,9 +42,9 @@ class Focuser(BaseFocuser):
         #
 
         try:
-            logging.debug('Connecting focuser trying "Connected"')
+            #logging.debug('Connecting focuser trying "Connected"')
             self.focus.Connected = True
-            logging.debug('Connecting focuser "Connected" worked')
+            #logging.debug('Connecting focuser "Connected" worked')
         except:
             try:
                 logging.debug('Connecting focuser trying "Link"')

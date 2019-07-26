@@ -1,3 +1,4 @@
+import time
 import logging
 import numpy as np
 from comtypes.client import CreateObject
@@ -24,6 +25,7 @@ class Camera(BaseCamera):
     def connect(self, name):
         logging.debug(f'connect camera {name}')
         self.cam = CreateObject(name)
+        logging.debug(f'{self.cam}')
         try:
             self.cam.Connected = True
         except Exception as e:
@@ -110,6 +112,9 @@ class Camera(BaseCamera):
         if not self.cam:
             return -1
 
+        if not self.camera_has_progress:
+            return -1
+
         try:
             return self.cam.PercentCompleted
         except Exception as e:
@@ -136,14 +141,26 @@ class Camera(BaseCamera):
         # Transpose to get into row-major
         #image_data = np.array(self.cam.ImageArray, dtype=out_dtype).T
 
-        with safearray_as_ndarray:
-            image_data = self.cam.ImageArray
+        # FIXME this doesnt work with Python 3.7!
+        #       slower workaround below if necessary
+        if True:
+            with safearray_as_ndarray:
+                image_data = self.cam.ImageArray
 
-        image_data = image_data.astype(out_dtype, copy=False)
+            image_data = image_data.astype(out_dtype, copy=False)
 
-        # get it into row/col orientation we want
-        image_data = image_data.T
-
+            # get it into row/col orientation we want
+            image_data = image_data.T
+        else:
+            logging.warning('Using slow ImageArrayVariant workaround in Camera.py')
+            w = self.cam.Numx
+            h = self.cam.Numy
+            logging.debug(f'subframe is {w} x {h}')
+            ts = time.time()
+            image_data = np.array(self.cam.ImageArray, dtype=out_dtype)
+            image_data.reshape(h, w)
+            image_data = image_data.T
+            logging.debug(f'Frame readout took {time.time() - ts} seconds')
 #        logging.info(f'in backend image shape is {image_data.shape}')
 
         return image_data
@@ -157,6 +174,24 @@ class Camera(BaseCamera):
 
     def get_egain(self):
         return self.cam.ElectronsPerADU
+
+    def get_camera_gain(self):
+        """ Looks for camera specific gain - only works for ASI afaik"""
+        ccd_gain = None
+        if self.cam:
+            try:
+                ccd_gain = self.cam.Gain
+                logging.debug(f'camera gain = {ccd_gain}')
+            except:
+                logging.error(f'Unable to read camera gain!', exc_info=True)
+
+        return ccd_gain
+
+    def get_camera_offset(self):
+        return None
+
+    def get_camera_usbbandwidth(self):
+        return None
 
     def get_current_temperature(self):
         return self.cam.CCDTemperature
@@ -196,6 +231,8 @@ class Camera(BaseCamera):
         return True
 
     def get_max_binning(self):
+        if self.cam is None:
+            return None
         return self.cam.MaxBinX
 
     def get_size(self):
@@ -211,3 +248,15 @@ class Camera(BaseCamera):
         self.cam.NumY = height
 
         return True
+
+    def get_min_max_exposure(self):
+        if self.cam:
+            try:
+                exp_min = self.cam.ExposureMin
+                exp_max = self.cam.ExposureMax
+            except:
+                logging.error('Unable to get min/max exposure allowed', exc_info=True)
+                return None
+            return (exp_min, exp_max)
+        else:
+            return None
