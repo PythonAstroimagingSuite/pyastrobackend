@@ -44,7 +44,7 @@ else:
 
 if BACKEND == 'ASCOM':
     from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
-    from pyastrobackend.RPC.CameraTest import Camera as RPC_Camera
+    from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 elif BACKEND == 'INDI':
     from pyastrobackend.INDIBackend import Camera as INDI_Camera
 elif BACKEND == 'SIMULATOR':
