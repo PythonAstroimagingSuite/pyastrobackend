@@ -33,7 +33,8 @@ else:
 
 
 if BACKEND == 'ASCOM':
-    from pyastrobackend.ASCOM.Focuser import Focuser
+    from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
+    from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
 elif BACKEND == 'INDI':
     from pyastrobackend.INDIBackend import Focuser
 elif BACKEND == 'SIMULATOR':
@@ -66,7 +67,10 @@ class SimpleDeviceInterface:
     def connect_focuser(self, driver):
         rc = None
         if BACKEND == 'ASCOM':
-            focuser = Focuser()
+            if driver == 'RPC':
+                focuser = RPC_Focuser()
+            else:
+                focuser = Focuser()
             rc = focuser.connect(driver)
         elif BACKEND == 'INDI':
             focuser = Focuser(self.backend)

@@ -47,9 +47,9 @@ class Focuser(BaseFocuser):
             #logging.debug('Connecting focuser "Connected" worked')
         except:
             try:
-                logging.debug('Connecting focuser trying "Link"')
+                #logging.debug('Connecting focuser trying "Link"')
                 self.focus.Link = True
-                logging.debug('Connecting focuser "Link" worked')
+                #logging.debug('Connecting focuser "Link" worked')
             except Exception as e:
                 logging.error('Both "Connected" and "Link" failed!')
                 logging.error('ASCOMBackend:focuser:connect() Exception ->', exc_info=True)
@@ -67,7 +67,7 @@ class Focuser(BaseFocuser):
         return True
 
     def disconnect(self):
-        if self.focuser:
+        if self.focus:
             if self.focuser.Connected:
                 self.focuser.Connected = False
                 self.focuser = None
@@ -76,11 +76,11 @@ class Focuser(BaseFocuser):
         if self.focus:
             connected = False
             try:
-                logging.debug('Focuser is_connected trying "Connected"')
+                #logging.debug('Focuser is_connected trying "Connected"')
                 connected = self.focus.Connected
             except:
                 try:
-                    logging.debug('Focuser is_connected trying "Link"')
+                    #logging.debug('Focuser is_connected trying "Link"')
                     connected = self.focus.Link
                 except Exception as e:
                     logging.error('Both "Connected" and "Link" failed!')
