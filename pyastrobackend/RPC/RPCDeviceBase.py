@@ -42,9 +42,9 @@ class RPCDeviceThread(Thread):
             self.initialize()
 
     def emit(self, event, *args):
-        logging.debug(f'emit: {self.event_callbacks}')
+        #logging.debug(f'emit: {self.event_callbacks}')
         for cb in self.event_callbacks:
-            logging.debug(f'emit: {cb} {event} {args}')
+            #logging.debug(f'emit: {cb} {event} {args}')
             cb(event, *args)
 
     def run(self):
@@ -76,10 +76,10 @@ class RPCDeviceThread(Thread):
             cdict = { 'Event' : 'Connected' }
             self.event_queue.put(cdict)
 
-            logging.info('Waiting on data')
+            logging.debug('Waiting on data')
             quit = False
             while not quit:
-                #logging.info('A')
+                #logging.debug('A')
 
                 # check if time for status update request
                 # if False and self.status_request_interval > 0:
@@ -91,16 +91,16 @@ class RPCDeviceThread(Thread):
 
                 read_list = [self.rpc_socket]
                 readable, writable, errored = select.select(read_list, [], [], 0.5)
-                #logging.info('B')
+                #logging.debug('B')
 
                 if len(readable) > 0:
-                    logging.info(f'reading data readable={readable}')
+#                    logging.debug(f'reading data readable={readable}')
 
                     with self._lock:
                         try:
                             j = self.read_json()
-                            logging.info(f'length of message = {len(j)}')
-                            logging.debug(f'j = {j}')
+#                            logging.debug(f'length of message = {len(j)}')
+#                            logging.debug(f'j = {j}')
                         except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
                             logging.error('RPCClient: server reset connection!')
                             self.server_disconnected()
@@ -113,12 +113,12 @@ class RPCDeviceThread(Thread):
                             jdict = json.loads(j)
                             event = jdict.get('Event', None)
                             req_id = jdict.get('id', None)
-                            #logging.info(f'{event} {req_id}')
+                            #logging.debug(f'{event} {req_id}')
                             if req_id is not None:
-                                logging.debug(f'Received response {repr(jdict)[:60]}')
-                                logging.debug('appending response to list')
+#                                logging.debug(f'Received response {repr(jdict)[:60]}')
+#                                logging.debug('appending response to list')
                                 self.responses.append(jdict)
-                                logging.debug(f'req_id = {req_id}')
+#                                logging.debug(f'req_id = {req_id}')
                                 self.emit('Response', req_id)
                             elif event is not None:
                                 logging.debug(f'Received event {event}')
@@ -135,12 +135,12 @@ class RPCDeviceThread(Thread):
                     rpccmd = None
 
                 if rpccmd is not None:
-                    logging.debug(f'Recvd command from queue {rpccmd}')
+#                    logging.debug(f'Recvd command from queue {rpccmd}')
                     cmd, edict = rpccmd
                     cdict = { 'method' : cmd }
                     jdict = {**cdict, **edict}
                     jmsg = str.encode(json.dumps(jdict) + '\n')
-                    logging.debug(f'Sending json rpc = {jmsg}')
+#                    logging.debug(f'Sending json rpc = {jmsg}')
                     try:
                         self.rpc_socket.sendall(jmsg)
                     except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
@@ -171,7 +171,7 @@ class RPCDeviceThread(Thread):
 
     # given a received json for an event send a polling response to reset timer
     def send_polling_response(self):
-        logging.info(f'sending_polling_response for event ')
+        logging.debug(f'sending_polling_response for event ')
         #poll_cmd = {}
         #poll_cmd['request'] = 'polling'
         #self.rpc_socket.sendall(str.encode(json.dumps(poll_cmd)+'\n'))
@@ -251,7 +251,7 @@ class RPCDeviceThread(Thread):
 
         for resp in self.responses:
             if resp.get('id', None) == req_id:
-                logging.debug(f'Found response for request id {req_id}')
+#                logging.debug(f'Found response for request id {req_id}')
                 self.responses.remove(resp)
                 return resp
 
@@ -308,10 +308,10 @@ class RPCDevice:
         logging.warning('replace event_callback with custom')
 
     def send_server_request(self, req, paramsdict=None):
-        logging.debug(f'send_server_req: {req} {paramsdict}')
+        #logging.debug(f'send_server_req: {req} {paramsdict}')
         if paramsdict is None:
             paramsdict = {}
 
         rc = self.rpc_manager.queue_rpc_command(req, paramsdict)
-        logging.debug(f'send_server_req: queue_rpc_command returned {rc}')
+        #logging.debug(f'send_server_req: queue_rpc_command returned {rc}')
         return rc

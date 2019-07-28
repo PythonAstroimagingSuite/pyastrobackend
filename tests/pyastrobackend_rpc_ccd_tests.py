@@ -7,15 +7,17 @@ from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
 from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 
 if __name__ == '__main__':
+#    FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
+    FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
     logging.basicConfig(filename='pyastrobackend_rpc_ccd_tests.log',
                         filemode='w',
                         level=logging.DEBUG,
-                        format='%(asctime)s %(levelname)-8s %(message)s',
+                        format=FORMAT,
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # add to screen as well
     LOG = logging.getLogger()
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    formatter = logging.Formatter(FORMAT)
     CH = logging.StreamHandler()
     CH.setLevel(logging.DEBUG)
     CH.setFormatter(formatter)
@@ -62,7 +64,7 @@ if __name__ == '__main__':
     logging.info(f'set_cooler_state returns {rc}')
 
     i = 0
-    while i < 10:
+    while i < 5:
         logging.info('Getting current temp')
         ccd_temp = camera.get_current_temperature()
         logging.info(f'current temp = {ccd_temp}')

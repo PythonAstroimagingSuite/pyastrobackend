@@ -45,10 +45,10 @@ class RPCCameraThread(RPCDeviceThread):
             cdict = { 'Event' : 'Connected' }
             self.event_queue.put(cdict)
 
-            logging.info('Waiting on data')
+            logging.debug('Waiting on data')
             quit = False
             while not quit:
-                #logging.info('A')
+                #logging.debug('A')
 
                 # check if time for status update request
                 # if False and self.status_request_interval > 0:
@@ -60,16 +60,16 @@ class RPCCameraThread(RPCDeviceThread):
 
                 read_list = [self.rpc_socket]
                 readable, writable, errored = select.select(read_list, [], [], 0.5)
-                #logging.info('B')
+                #logging.debug('B')
 
                 if len(readable) > 0:
-                    logging.info(f'reading data readable={readable}')
+#                    logging.debug(f'reading data readable={readable}')
 
                     with self._lock:
                         try:
                             j = self.read_json()
-                            logging.info(f'length of message = {len(j)}')
-                            logging.debug(f'j = {j}')
+#                            logging.debug(f'length of message = {len(j)}')
+#                            logging.debug(f'j = {j}')
                         except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
                             logging.error('RPCClient: server reset connection!')
                             self.server_disconnected()
@@ -82,17 +82,17 @@ class RPCCameraThread(RPCDeviceThread):
                             jdict = json.loads(j)
                             event = jdict.get('Event', None)
                             req_id = jdict.get('id', None)
-                            #logging.info(f'{event} {req_id}')
+                            #logging.debug(f'{event} {req_id}')
                             if req_id is not None:
-                                logging.debug(f'Received response {repr(jdict)[:60]}')
-                                logging.debug('appending response to list')
+#                                logging.debug(f'Received response {repr(jdict)[:60]}')
+#                                logging.debug('appending response to list')
                                 self.responses.append(jdict)
-                                logging.debug(f'req_id = {req_id}')
+#                                logging.debug(f'req_id = {req_id}')
                                 self.emit('Response', req_id)
                             elif event is not None:
-                                logging.debug(f'Received event {event}')
+#                                logging.debug(f'Received event {event}')
                                 if event == 'Connection':
-                                    logging.debug('Recv Connection event')
+#                                    logging.debug('Recv Connection event')
                                     self.emit(event)
                             else:
                                 logging.warning(f'RPCClient: received JSON {jdict} with no event or id!')
@@ -104,12 +104,12 @@ class RPCCameraThread(RPCDeviceThread):
                     rpccmd = None
 
                 if rpccmd is not None:
-                    logging.debug(f'Recvd command from queue {rpccmd}')
+#                    logging.debug(f'Recvd command from queue {rpccmd}')
                     cmd, edict = rpccmd
                     cdict = { 'method' : cmd }
                     jdict = {**cdict, **edict}
                     jmsg = str.encode(json.dumps(jdict) + '\n')
-                    logging.debug(f'Sending json rpc = {jmsg}')
+#                    logging.debug(f'Sending json rpc = {jmsg}')
                     try:
                         self.rpc_socket.sendall(jmsg)
                     except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
@@ -149,27 +149,27 @@ class Camera(RPCDevice, BaseCamera):
         self.rpc_manager.event_callbacks.append(self.event_callback)
 
     def event_callback(self, event, *args):
-        logging.debug(f'Camera event_callback: {event} {args})')
+#        logging.debug(f'Camera event_callback: {event} {args})')
         if event == 'Connection':
             self.connected = True
         elif event == 'Response':
             req_id = args[0]
-            logging.debug(f'event_callback: req_id = {req_id} exposure_reqid = {self.exposure_reqid}')
+#            logging.debug(f'event_callback: req_id = {req_id} exposure_reqid = {self.exposure_reqid}')
             if req_id == self.exposure_reqid:
-                logging.debug(f'exposure reqid = {self.exposure_reqid} response recvd!')
+#                logging.debug(f'exposure reqid = {self.exposure_reqid} response recvd!')
                 resp = self.rpc_manager.check_rpc_command_status(req_id)
-                logging.debug(f'resp = {resp}')
+#                logging.debug(f'resp = {resp}')
                 result = resp.get('result', None)
-                logging.debug(f'result {result}')
+#                logging.debug(f'result {result}')
                 if result is None:
                     logging.error('exposure response has no result!')
                     sys.exit(1)
                 status = result.get('complete', None)
-                logging.debug(f'status {status}')
+#                logging.debug(f'status {status}')
                 if status is None:
                     logging.error('exposure completion status is None!')
                     sys.exit(1)
-                logging.debug(f'setting exposure_complete to {status}')
+#                logging.debug(f'setting exposure_complete to {status}')
                 self.exposure_complete = status
 
     def wait_for_server(self, reqid, timeout=15):
@@ -207,7 +207,7 @@ class Camera(RPCDevice, BaseCamera):
         return None
 
     def start_exposure(self, expos):
-        logging.info(f'RPC:Exposing image for {expos} seconds')
+#        logging.debug(f'RPC:Exposing image for {expos} seconds')
 
         paramdict = {}
         paramdict['params'] = {}
@@ -249,7 +249,7 @@ class Camera(RPCDevice, BaseCamera):
         return -1
 
     def save_image_data(self, path, overwrite=False):
-        logging.info(f'RPC:Saving image to {path}')
+#        logging.debug(f'RPC:Saving image to {path}')
 
         paramdict = {}
         paramdict = {}
@@ -263,7 +263,7 @@ class Camera(RPCDevice, BaseCamera):
 
         reqid = rc
 
-        logging.debug(f'save_image: reqid = {reqid}')
+#        logging.debug(f'save_image: reqid = {reqid}')
 
         resp = None
         while True:
@@ -279,7 +279,7 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME parse out status?
         status = 'result' in resp
 
-        logging.info(f'RPC saveimageCamera status/resp = {status} {resp}')
+#        logging.debug(f'RPC saveimageCamera status/resp = {status} {resp}')
 
         if not status:
             logging.warning('RPC:safe_image) - error getting settings!')
@@ -315,7 +315,7 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME parse out status?
         status = 'result' in resp
 
-        logging.info(f'RPC saveimageCamera status/resp = {status} {resp}')
+#        logging.debug(f'RPC saveimageCamera status/resp = {status} {resp}')
 
         if not status:
             logging.warning('RPC:get_camera_settings() - error getting settings!')
@@ -334,7 +334,7 @@ class Camera(RPCDevice, BaseCamera):
         return True
 
     def get_scalar_value(self, value_method, value_key):
-        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
+#        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
         rc = self.send_server_request(value_method, None)
 
         if not rc:
@@ -350,7 +350,7 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME parse out status?
         status = 'result' in resp
 
-        logging.info(f'RPC {value_method} status/resp = {status} {resp}')
+#        logging.debug(f'RPC {value_method} status/resp = {status} {resp}')
 
         if not status:
             logging.warning(f'RPC:{value_method} - error getting settings!')
@@ -360,7 +360,7 @@ class Camera(RPCDevice, BaseCamera):
         return result.get(value_key, None)
 
     def set_scalar_value(self, value_method, value_key, value):
-        logging.info(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
+#        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
 
         paramdict = {}
         paramdict['params'] = {}
@@ -376,7 +376,7 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME parse out status?
         status = 'result' in resp
 
-        logging.info(f'RPC set_scalar_value status/resp = {status} {resp}')
+#        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
 
         if not status:
             logging.warning('RPC:set_scalar_value - error getting settings!')
@@ -402,167 +402,24 @@ class Camera(RPCDevice, BaseCamera):
     def get_current_temperature(self):
         return self.get_scalar_value('get_current_temperature', 'current_temperature' )
 
-        # rc = self.send_server_request('get_current_temperature', None)
-
-        # if not rc:
-            # logging.error('RPC get_current_temperature: error sending json request!')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # if resp is None:
-            # logging.error('RPC get_current_temperature: resp is None!')
-            # sys.exit(1)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC get_current_temperature status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:get_current_temperature() - error getting settings!')
-            # return False
-
-        # result = resp['result']
-        # return result.get('current_temperature', None)
-
     def get_target_temperature(self):
         return self.get_scalar_value('get_target_temperature', 'target_temperature' )
 
-
-        # rc = self.send_server_request('get_target_temperature', None)
-
-        # if not rc:
-            # logging.error('RPC get_target_temperature: error sending json request!')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # if resp is None:
-            # logging.error('RPC get_target_temperature: resp is None!')
-            # sys.exit(1)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC get_target_temperature status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:get_target_temperature() - error getting settings!')
-            # return False
-
-        # result = resp['result']
-        # return result.get('get_target_temperature', None)
-
     def set_target_temperature(self, temp_c):
-        logging.info(f'RPC:set_target_temperature to {temp_c}')
+#        logging.debug(f'RPC:set_target_temperature to {temp_c}')
 
         self.set_scalar_value('set_target_temperature', 'target_temperature', temp_c)
 
-        # paramdict = {}
-        # paramdict['params'] = {}
-        # paramdict['params']['target_temperature'] = temp_c
-        # rc = self.send_server_request('set_target_temperature', paramdict)
-
-        # if not rc:
-            # logging.error('RPC:set_target_temperature - error')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC set_target_temperature status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:set_target_temperature - error getting settings!')
-            # return False
-
-        # #FIXME need to look at result code
-        # return True
-
     def set_cooler_state(self, onoff):
-        logging.info(f'RPC:set_cooler_state to {onoff}')
+#        logging.debug(f'RPC:set_cooler_state to {onoff}')
 
-        self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
-
-        # paramdict = {}
-        # paramdict['params'] = {}
-        # paramdict['params']['cooler_state'] = onoff
-        # rc = self.send_server_request(''set_cooler_state'', paramdict)
-
-        # if not rc:
-            # logging.error('RPC:set_cooler_state - error')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC set_cooler_state status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:set_cooler_state - error getting settings!')
-            # return False
-
-        # #FIXME need to look at result code
-        # return True
+        return self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
 
     def get_cooler_state(self):
         return self.get_scalar_value('get_cooler_state', 'cooler_state' )
 
-        # rc = self.send_server_request('get_cooler_state', None)
-
-        # if not rc:
-            # logging.error('RPC get_cooler_state: error sending json request!')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # if resp is None:
-            # logging.error('RPC get_cooler_state: resp is None!')
-            # sys.exit(1)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC get_cooler_state status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:get_cooler_state() - error getting settings!')
-            # return False
-
-        # result = resp['result']
-        # return result.get('cooler_state', None)
-
     def get_cooler_power(self):
         return self.get_scalar_value('get_cooler_power', 'cooler_power' )
-
-        # rc = self.send_server_request('get_cooler_power', None)
-
-        # if not rc:
-            # logging.error('RPC get_cooler_power: error sending json request!')
-            # return False
-
-        # resp = self.wait_for_server(rc)
-
-        # if resp is None:
-            # logging.error('RPC get_cooler_power: resp is None!')
-            # sys.exit(1)
-
-        # # FIXME parse out status?
-        # status = 'result' in resp
-
-        # logging.info(f'RPC get_cooler_power status/resp = {status} {resp}')
-
-        # if not status:
-            # logging.warning('RPC:get_cooler_power() - error getting settings!')
-            # return False
-
-        # result = resp['result']
-        # return result.get('cooler_power', None)
 
     def get_binning(self):
         return (self.binning, self.binning)
