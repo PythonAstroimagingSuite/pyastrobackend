@@ -68,9 +68,9 @@ class Focuser(BaseFocuser):
 
     def disconnect(self):
         if self.focus:
-            if self.focuser.Connected:
-                self.focuser.Connected = False
-                self.focuser = None
+            if self.focus.Connected:
+                self.focus.Connected = False
+                self.focus = None
 
     def is_connected(self):
         if self.focus:
