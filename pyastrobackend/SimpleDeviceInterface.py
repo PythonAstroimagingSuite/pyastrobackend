@@ -89,7 +89,7 @@ class SimpleDeviceInterface:
         lastpos = focuser.get_absolute_position()
         ntimes = 0
         while (time.time()-ts) < timeout:
-            logging.info(f'waiting on focuser move - curpos = {focuser.get_absolute_position()}')
+            logging.debug(f'waiting on focuser move - curpos = {focuser.get_absolute_position()}')
 
             curpos = focuser.get_absolute_position()
             if abs(curpos - lastpos) < 1:
@@ -122,7 +122,7 @@ class SimpleDeviceInterface:
             #driver = 'Simulator'
             cam = Sim_Camera()
 
-        logging.info(f'connect_camera: driver =  {camera_driver}')
+        logging.debug(f'connect_camera: driver =  {camera_driver}')
 
         rc = cam.connect(camera_driver)
     #    if driver == 'INDICamera':
@@ -162,21 +162,21 @@ class SimpleDeviceInterface:
 
         elapsed = 0
         while (focus_expos-elapsed > 2) or not cam.check_exposure():
-            logging.info(f"Taking image with camera {elapsed} of {focus_expos} seconds")
+            logging.debug(f"Taking image with camera {elapsed} of {focus_expos} seconds")
             time.sleep(0.25)
             elapsed += 0.25
             if elapsed > focus_expos:
                 elapsed = focus_expos
 
-        logging.info('Exposure complete')
+        logging.debug('Exposure complete')
         # give it some time seems like Maxim isnt ready if we hit it too fast
-        time.sleep(1)
+        #time.sleep(1)
 
         ff = os.path.join(os.getcwd(), output_filename)
 
         retries = 0
         while True:
-            logging.info(f"Going to save {ff}")
+            logging.debug(f"Going to save {ff}")
 
             # FIXME we only call this because the
             # MaximDL backend needs it to save to disk
@@ -191,7 +191,7 @@ class SimpleDeviceInterface:
                 result = cam.save_image_data(ff)
 
             if result is True:
-                logging.info("Save successful")
+                logging.debug("Save successful")
                 break
 
             retries += 1

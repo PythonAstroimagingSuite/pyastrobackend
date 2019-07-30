@@ -12,6 +12,9 @@ from ..BaseBackend import BaseFocuser
 
 from pyastrobackend.RPC.RPCDeviceBase import RPCDeviceThread, RPCDevice
 
+# 0 = none, higher shows more
+LOG_SERVER_TRAFFIC = 1
+
 class RPCFocuserThread(RPCDeviceThread):
     def __init__(self, port, user_data, *args, **kwargs):
         super().__init__(port, user_data, *args, **kwargs)
@@ -68,8 +71,9 @@ class RPCFocuserThread(RPCDeviceThread):
                     with self._lock:
                         try:
                             j = self.read_json()
-#                            logging.info(f'length of message = {len(j)}')
-#                            logging.debug(f'j = {j}')
+                            if LOG_SERVER_TRAFFIC > 2:
+                                logging.debug(f'length of message = {len(j)}')
+                                logging.debug(f'j = {j}')
                         except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
                             logging.error('RPCClient: server reset connection!')
                             self.server_disconnected()
@@ -82,15 +86,19 @@ class RPCFocuserThread(RPCDeviceThread):
                             jdict = json.loads(j)
                             event = jdict.get('Event', None)
                             req_id = jdict.get('id', None)
-                            #logging.info(f'{event} {req_id}')
+                            if LOG_SERVER_TRAFFIC > 2:
+                                logging.debug(f'{event} {req_id}')
                             if req_id is not None:
-#                                logging.debug(f'Received response {repr(jdict)[:60]}')
+                                if LOG_SERVER_TRAFFIC > 0:
+                                    logging.debug(f'Received response {repr(jdict)[:60]}')
 #                                logging.debug('appending response to list')
                                 self.responses.append(jdict)
-#                                logging.debug(f'req_id = {req_id}')
+                                if LOG_SERVER_TRAFFIC > 2:
+                                    logging.debug(f'req_id = {req_id}')
                                 self.emit('Response', req_id)
                             elif event is not None:
-#                                logging.debug(f'Received event {event}')
+                                if LOG_SERVER_TRAFFIC > 0:
+                                    logging.debug(f'Received event {event}')
                                 if event == 'Connection':
 #                                    logging.debug('Recv Connection event')
                                     self.emit(event)
@@ -104,12 +112,14 @@ class RPCFocuserThread(RPCDeviceThread):
                     rpccmd = None
 
                 if rpccmd is not None:
-#                    logging.debug(f'Recvd command from queue {rpccmd}')
+                    if LOG_SERVER_TRAFFIC > 0:
+                        logging.debug(f'Recvd command from queue {rpccmd}')
                     cmd, edict = rpccmd
                     cdict = { 'method' : cmd }
                     jdict = {**cdict, **edict}
                     jmsg = str.encode(json.dumps(jdict) + '\n')
-#                   logging.debug(f'Sending json rpc = {jmsg}')
+                    if LOG_SERVER_TRAFFIC > 0:
+                        logging.debug(f'Sending json rpc = {jmsg}')
                     try:
                         self.rpc_socket.sendall(jmsg)
                     except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
