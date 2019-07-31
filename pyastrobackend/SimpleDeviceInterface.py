@@ -31,7 +31,6 @@ elif BACKEND == 'SIMULATOR':
 else:
     raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
 
-
 if BACKEND == 'ASCOM':
     from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
     from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
@@ -42,6 +41,14 @@ elif BACKEND == 'SIMULATOR':
 else:
     raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
 
+if BACKEND == 'ASCOM':
+    from pyastrobackend.ASCOM.FilterWheel import FilterWheel
+elif BACKEND == 'INDI':
+    from pyastrobackend.INDIBackend import FilterWheel
+elif BACKEND == 'SIMULATOR':
+    raise Exception('SIMULATOR driver not supported for FilterWheel')
+else:
+    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
 
 if BACKEND == 'ASCOM':
     from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
@@ -81,6 +88,23 @@ class SimpleDeviceInterface:
 
         if rc:
             return focuser
+        else:
+            return None
+
+    def connect_filterwheel(self, driver):
+        rc = None
+        if BACKEND == 'ASCOM':
+            wheel = FilterWheel()
+            rc = wheel.connect(driver)
+        elif BACKEND == 'INDI':
+            wheel = FilterWheel(self.backend)
+            rc = wheel.connect(driver)
+        elif BACKEND == 'SIMULATOR':
+            wheel = FilterWheel()
+            rc = True
+
+        if rc:
+            return wheel
         else:
             return None
 

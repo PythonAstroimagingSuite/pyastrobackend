@@ -186,7 +186,7 @@ class RPCDeviceThread(Thread):
             #try:
             if True:
                 data = self.rpc_socket.recv(4096)
-#                logging.debug(f'read_json(): len(data) = {len(data)} data = |{data}|')
+                logging.debug(f'read_json(): len(data) = {len(data)} data = |{data}|')
 
                 if len(data) < 1:
                     logging.warning('socket ran dry')
@@ -216,9 +216,9 @@ class RPCDeviceThread(Thread):
             #print('json start/end = ', json_start, json_start + json_end)
 
             ret = self.buffer[json_start : json_start + json_end]
-            #print('json message      ->', ret, '<-')
+            logging.debug(f'json message      -> {ret} <-')
             self.buffer = self.buffer[ json_start + json_end : ]
-            #print('final read buffer ->', self.buffer, '<-')
+            logging.debug(f'final read buffer -> {self.buffer} <-')
             break
 
         return ret

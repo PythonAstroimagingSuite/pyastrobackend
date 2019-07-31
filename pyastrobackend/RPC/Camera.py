@@ -90,7 +90,8 @@ class RPCCameraThread(RPCDeviceThread):
                                 logging.debug(f'{event} {req_id}')
                             if req_id is not None:
                                 if LOG_SERVER_TRAFFIC > 0:
-                                    logging.debug(f'Received response {repr(jdict)[:60]}')
+                                    logging.debug(f'Received response {repr(jdict)}')
+                                    #logging.debug(f'Received response {repr(jdict)[:60]}')
                                     #logging.debug('appending response to list')
                                 self.responses.append(jdict)
                                 if LOG_SERVER_TRAFFIC > 2:
@@ -196,7 +197,9 @@ class Camera(RPCDevice, BaseCamera):
             time.sleep(0.1)
 
         if resp is None:
-            logging.error('RPC wait for server: resp is None!')
+            logging.error(f'RPC wait for server req_id={reqid}: resp is None!')
+        else:
+            logging.debug(f'Response for req_id={reqid} is {resp}')
 
         return resp
 
