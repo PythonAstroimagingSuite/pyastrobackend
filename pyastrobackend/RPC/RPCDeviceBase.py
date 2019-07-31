@@ -248,10 +248,12 @@ class RPCDeviceThread(Thread):
         See if response available for request id req_id and returns it.
         Removes from list of requests.
         """
-
+        logging.debug(f'check_rpc_command_status: req_id = {req_id}')
+        logging.debug(f'check_rpc_command_status: self.responses={self.responses}')
         for resp in self.responses:
+            logging.debug(f'check_rpc_command_status: checking resp={resp}')
             if resp.get('id', None) == req_id:
-#                logging.debug(f'Found response for request id {req_id}')
+                logging.debug(f'Found response for request id {req_id} = {resp}')
                 self.responses.remove(resp)
                 return resp
 

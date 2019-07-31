@@ -187,12 +187,14 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME this shouldn't be a problem unless RPC Server dies
         # FIXME add timeout
         # block until we get answer
+        logging.debug('Camera.py:wait_for_server: waiting for reqid={reqid} timeout={timeout}')
         resp = None
         waited = time.time()
         while (time.time() - waited) < timeout:
             #logging.debug('waiting...')
             resp = self.rpc_manager.check_rpc_command_status(reqid)
             if resp is not None:
+                logging.debug('Camera.py:wait_for_server: Found resp={resp}')
                 break
             time.sleep(0.1)
 
