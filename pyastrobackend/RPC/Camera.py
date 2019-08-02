@@ -12,134 +12,11 @@ from ..BaseBackend import BaseCamera
 
 from pyastrobackend.RPC.RPCDeviceBase import RPCDeviceThread, RPCDevice
 
-# 0 = none, higher shows more
-LOG_SERVER_TRAFFIC = 1
 
+# not sure we need to do this but leaving it as be for now
 class RPCCameraThread(RPCDeviceThread):
     def __init__(self, port, user_data, *args, **kwargs):
         super().__init__(port, user_data, *args, **kwargs)
-
-    def run(self):
-        logging.info('RPCCameraThread Started!')
-
-        while True:
-            # clear out event queue
-            while True:
-                try:
-                    self.event_queue.get_nowait()
-                except queue.Empty:
-                    break
-
-            logging.info('Connecting to server')
-            while True:
-                try:
-                    self.rpc_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    logging.info('Attempting connect')
-                    self.rpc_socket.connect(('127.0.0.1', self.port))
-                    logging.info('Success!')
-                    break
-                except ConnectionRefusedError:
-                    logging.error('Failed to connect to RPC Server')
-                    self.rpc_socket.close()
-
-                time.sleep(5)
-
-            logging.debug('Sending connect event to queue')
-            cdict = { 'Event' : 'Connected' }
-            self.event_queue.put(cdict)
-
-            logging.debug('Waiting on data')
-            quit = False
-            while not quit:
-                #logging.debug('A')
-
-                # check if time for status update request
-                # if False and self.status_request_interval > 0:
-                    # if time.time() - self.last_status_request_timestamp > self.status_request_interval:
-                        # # request status
-                        # logging.debug('Sending getstatus request')
-                        # self.queue_rpc_command('getstatus', {})
-                        # self.last_status_request_timestamp = time.time()
-
-                read_list = [self.rpc_socket]
-                readable, writable, errored = select.select(read_list, [], [], 0.5)
-                #logging.debug('B')
-
-                if len(readable) > 0:
-#                    logging.debug(f'reading data readable={readable}')
-
-                    with self._lock:
-                        try:
-                            j = self.read_json()
-                            if LOG_SERVER_TRAFFIC > 2:
-                                logging.debug(f'length of message = {len(j)}')
-                                logging.debug(f'j = {j}')
-                        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                            logging.error('RPCClient: server reset connection!')
-                            self.server_disconnected()
-                            quit = True
-                            j = ''
-
-                        if len(j) == 0:
-                            logging.warning('Received select for read 0 bytes!')
-                        else:
-                            jdict = json.loads(j)
-                            event = jdict.get('Event', None)
-                            req_id = jdict.get('id', None)
-                            if LOG_SERVER_TRAFFIC > 2:
-                                logging.debug(f'{event} {req_id}')
-                            if req_id is not None:
-                                if LOG_SERVER_TRAFFIC > 0:
-                                    logging.debug(f'Received response {repr(jdict)}')
-                                    #logging.debug(f'Received response {repr(jdict)[:60]}')
-                                    #logging.debug('appending response to list')
-                                self.responses.append(jdict)
-                                if LOG_SERVER_TRAFFIC > 2:
-                                    logging.debug(f'req_id = {req_id}')
-                                self.emit('Response', req_id)
-                            elif event is not None:
-                                if LOG_SERVER_TRAFFIC > 0:
-                                    logging.debug(f'Received event {event}')
-                                if event == 'Connection':
-#                                    logging.debug('Recv Connection event')
-                                    self.emit(event)
-                            else:
-                                logging.warning(f'RPCClient: received JSON {jdict} with no event or id!')
-
-                # send any commands
-                try:
-                    rpccmd = self.command_queue.get(block=False)
-                except queue.Empty:
-                    rpccmd = None
-
-                if rpccmd is not None:
-                    if LOG_SERVER_TRAFFIC > 0:
-                        logging.debug(f'Recvd command from queue {rpccmd}')
-                    cmd, edict = rpccmd
-                    cdict = { 'method' : cmd }
-                    jdict = {**cdict, **edict}
-                    jmsg = str.encode(json.dumps(jdict) + '\n')
-                    if LOG_SERVER_TRAFFIC > 0:
-                        logging.debug(f'Sending json rpc = {jmsg}')
-                    try:
-                        self.rpc_socket.sendall(jmsg)
-                    except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                        logging.error(f'RPCClient: connection reset sending poll response!')
-                        self.server_disconnected()
-                        quit = True
-                    except Exception as e:
-                        logging.error(f'RPCClient: exception sending poll response!')
-                        self.server_disconnected()
-                        quit = True
-
-
-            # fell out so close socket and try to reconnect
-            logging.debug('RPCClient: Fell out of main loop closing socket')
-            try:
-                self.rpc_socket.close()
-            except:
-                logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}', exc_info=True)
-
 
 class Camera(RPCDevice, BaseCamera):
     def __init__(self, backend=None):
@@ -182,28 +59,6 @@ class Camera(RPCDevice, BaseCamera):
                     sys.exit(1)
 #                logging.debug(f'setting exposure_complete to {status}')
                 self.exposure_complete = status
-
-    def wait_for_server(self, reqid, timeout=15):
-        # FIXME this shouldn't be a problem unless RPC Server dies
-        # FIXME add timeout
-        # block until we get answer
-        logging.debug('Camera.py:wait_for_server: waiting for reqid={reqid} timeout={timeout}')
-        resp = None
-        waited = time.time()
-        while (time.time() - waited) < timeout:
-            #logging.debug('waiting...')
-            resp = self.rpc_manager.check_rpc_command_status(reqid)
-            if resp is not None:
-                logging.debug('Camera.py:wait_for_server: Found resp={resp}')
-                break
-            time.sleep(0.1)
-
-        if resp is None:
-            logging.error(f'RPC wait for server req_id={reqid}: resp is None!')
-        else:
-            logging.debug(f'Response for req_id={reqid} is {resp}')
-
-        return resp
 
     def get_camera_name(self):
         return 'RPC'
@@ -348,7 +203,7 @@ class Camera(RPCDevice, BaseCamera):
 
         return True
 
-    def get_scalar_value(self, value_method, value_key):
+    def get_scalar_value(self, value_method, value_key, value_type):
 #        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
         rc = self.send_server_request(value_method, None)
 
@@ -356,7 +211,7 @@ class Camera(RPCDevice, BaseCamera):
             logging.error(f'RPC {value_method}: error sending json request!')
             return False
 
-        resp = self.wait_for_server(rc)
+        resp = self.wait_for_response(rc)
 
         if resp is None:
             logging.error(f'RPC {value_method}: resp is None!')
@@ -373,7 +228,15 @@ class Camera(RPCDevice, BaseCamera):
             return None
 
         result = resp['result']
-        return result.get(value_key, None)
+
+        result_value = result.get(value_key, None)
+
+        if not isinstance(result_value, value_type):
+            logging.error(f'get_scalar_type: {value_method} {value_key}: ' + \
+                          f'expected {value_type} got {result_value} type {type(result_value)}')
+            return None
+        else:
+            return result_value
 
     def set_scalar_value(self, value_method, value_key, value):
 #        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
@@ -387,7 +250,7 @@ class Camera(RPCDevice, BaseCamera):
             logging.error('RPC:set_scalar_value - error')
             return False
 
-        resp = self.wait_for_server(rc)
+        resp = self.wait_for_response(rc)
 
         # FIXME parse out status?
         status = 'result' in resp
@@ -405,21 +268,21 @@ class Camera(RPCDevice, BaseCamera):
         logging.warning('RPC Camera get_image_data() not implemented!')
 
     def get_pixelsize(self):
-        valx = self.get_scalar_value('get_camera_x_pixelsize', 'camera_x_pixelsize' )
-        valy = self.get_scalar_value('get_camera_y_pixelsize', 'camera_y_pixelsize' )
+        valx = self.get_scalar_value('get_camera_x_pixelsize', 'camera_x_pixelsize', float )
+        valy = self.get_scalar_value('get_camera_y_pixelsize', 'camera_y_pixelsize', float )
         return valx, valy
 
     def get_egain(self):
-        return self.get_scalar_value('get_camera_egain','camera_egain' )
+        return self.get_scalar_value('get_camera_egain','camera_egain', float )
 
-    def get_egain(self):
-        return self.get_scalar_value('get_camera_gain', 'camera_gain' )
+    def get_gain(self):
+        return self.get_scalar_value('get_camera_gain', 'camera_gain', float )
 
     def get_current_temperature(self):
-        return self.get_scalar_value('get_current_temperature', 'current_temperature' )
+        return self.get_scalar_value('get_current_temperature', 'current_temperature', float )
 
     def get_target_temperature(self):
-        return self.get_scalar_value('get_target_temperature', 'target_temperature' )
+        return self.get_scalar_value('get_target_temperature', 'target_temperature', float )
 
     def set_target_temperature(self, temp_c):
 #        logging.debug(f'RPC:set_target_temperature to {temp_c}')
@@ -432,10 +295,10 @@ class Camera(RPCDevice, BaseCamera):
         return self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
 
     def get_cooler_state(self):
-        return self.get_scalar_value('get_cooler_state', 'cooler_state' )
+        return self.get_scalar_value('get_cooler_state', 'cooler_state', bool )
 
     def get_cooler_power(self):
-        return self.get_scalar_value('get_cooler_power', 'cooler_power' )
+        return self.get_scalar_value('get_cooler_power', 'cooler_power', float )
 
     def get_binning(self):
         return (self.binning, self.binning)
@@ -454,7 +317,7 @@ class Camera(RPCDevice, BaseCamera):
         return True
 
     def get_max_binning(self):
-        return get_scalar_value('get_max_binning', 'max_binning' )
+        return self.get_scalar_value('get_max_binning', 'max_binning', int )
 
     def get_size(self):
         if not self.frame_width or not self.frame_height:

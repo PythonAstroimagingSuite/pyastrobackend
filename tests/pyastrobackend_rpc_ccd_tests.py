@@ -19,7 +19,7 @@ if __name__ == '__main__':
     LOG = logging.getLogger()
     formatter = logging.Formatter(FORMAT)
     CH = logging.StreamHandler()
-    CH.setLevel(logging.DEBUG)
+    CH.setLevel(logging.INFO)
     CH.setFormatter(formatter)
     LOG.addHandler(CH)
 

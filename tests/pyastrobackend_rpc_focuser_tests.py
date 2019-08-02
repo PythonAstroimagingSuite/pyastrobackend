@@ -6,17 +6,19 @@ from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
 from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
 
 if __name__ == '__main__':
+    FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
+
     logging.basicConfig(filename='pyastrobackend_rpc_focuser_tests.log',
                         filemode='w',
                         level=logging.DEBUG,
-                        format='%(asctime)s %(levelname)-8s %(message)s',
+                        format=FORMAT,
                         datefmt='%Y-%m-%d %H:%M:%S')
 
     # add to screen as well
     LOG = logging.getLogger()
     formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
     CH = logging.StreamHandler()
-    CH.setLevel(logging.DEBUG)
+    CH.setLevel(logging.INFO)
     CH.setFormatter(formatter)
     LOG.addHandler(CH)
 
@@ -61,7 +63,7 @@ if __name__ == '__main__':
 
     target = origpos + 1000
     if target > max_abspos:
-        logging.error('Move test would move past max pos of {max_abspos}')
+        logging.error(f'Move test would move past max pos of {max_abspos}')
         sys.exit(1)
 
     logging.info(f'Moving to {target}')

@@ -6,10 +6,11 @@ import queue
 import select
 import socket
 import logging
-import weakref
 
 from threading import Thread, Lock
 
+# 0 = none, higher shows more
+LOG_SERVER_TRAFFIC = 1
 
 class RPCDeviceThread(Thread):
     def __init__(self, port, user_data, *args, **kwargs):
@@ -47,118 +48,146 @@ class RPCDeviceThread(Thread):
             #logging.debug(f'emit: {cb} {event} {args}')
             cb(event, *args)
 
-    # def run(self):
-        # logging.info('RPCDeviceThread Started!')
+    def run(self):
+        logging.info(f'{self.__class__.__name__} started!')
 
-        # while True:
-            # # clear out event queue
-            # while True:
-                # try:
-                    # self.event_queue.get_nowait()
-                # except queue.Empty:
-                    # break
+        while True:
+            # clear out event queue
+            while True:
+                try:
+                    self.event_queue.get_nowait()
+                except queue.Empty:
+                    break
 
-            # logging.info('Connecting to server')
-            # while True:
-                # try:
-                    # self.rpc_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    # logging.info('Attempting connect')
-                    # self.rpc_socket.connect(('127.0.0.1', self.port))
-                    # logging.info('Success!')
-                    # break
-                # except ConnectionRefusedError:
-                    # logging.error('Failed to connect to RPC Server')
-                    # self.rpc_socket.close()
+            logging.info('Connecting to server')
+            while True:
+                try:
+                    self.rpc_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    logging.info('Attempting connect')
+                    self.rpc_socket.connect(('127.0.0.1', self.port))
+                    logging.info('Success!')
+                    break
+                except ConnectionRefusedError:
+                    logging.error('Failed to connect to RPC Server')
+                    self.rpc_socket.close()
 
-                # time.sleep(5)
+                time.sleep(5)
 
-            # logging.debug('Sending connect event to queue')
-            # cdict = { 'Event' : 'Connected' }
-            # self.event_queue.put(cdict)
+            logging.debug('Sending connect event to queue')
+            cdict = { 'Event' : 'Connected' }
+            self.event_queue.put(cdict)
 
-            # logging.debug('Waiting on data')
-            # quit = False
-            # while not quit:
-                # #logging.debug('A')
+            logging.debug('Waiting on data')
+            quit = False
+            while not quit:
+                #logging.debug('A')
 
-                # # check if time for status update request
-                # # if False and self.status_request_interval > 0:
-                    # # if time.time() - self.last_status_request_timestamp > self.status_request_interval:
-                        # # # request status
-                        # # logging.debug('Sending getstatus request')
-                        # # self.queue_rpc_command('getstatus', {})
-                        # # self.last_status_request_timestamp = time.time()
+                # check if time for status update request
+                # if False and self.status_request_interval > 0:
+                    # if time.time() - self.last_status_request_timestamp > self.status_request_interval:
+                        # # request status
+                        # logging.debug('Sending getstatus request')
+                        # self.queue_rpc_command('getstatus', {})
+                        # self.last_status_request_timestamp = time.time()
 
-                # read_list = [self.rpc_socket]
-                # readable, writable, errored = select.select(read_list, [], [], 0.5)
-                # #logging.debug('B')
+                read_list = [self.rpc_socket]
+                readable, writable, errored = select.select(read_list, [], [], 0.5)
+                #logging.debug('B')
 
-                # if len(readable) > 0:
-# #                    logging.debug(f'reading data readable={readable}')
+                # read in new data
+                if len(readable) > 0:
+#                    logging.debug(f'reading data readable={readable}')
 
-                    # with self._lock:
-                        # try:
-                            # j = self.read_json()
-# #                            logging.debug(f'length of message = {len(j)}')
-# #                            logging.debug(f'j = {j}')
-                        # except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                            # logging.error('RPCClient: server reset connection!')
-                            # self.server_disconnected()
-                            # quit = True
-                            # j = ''
+                    try:
+                        self.populate_buffer()
+                        if LOG_SERVER_TRAFFIC > 2:
+                            logging.debug('called populate_buffer()')
+                            logging.debug(f'self.buffer = |{self.buffer}|')
+                    except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                        logging.error('RPCClient: server reset connection!')
+                        self.server_disconnected()
+                        quit = True
+                        continue
 
-                        # if len(j) == 0:
-                            # logging.warning('Received select for read 0 bytes!')
-                        # else:
-                            # jdict = json.loads(j)
-                            # event = jdict.get('Event', None)
-                            # req_id = jdict.get('id', None)
-                            # #logging.debug(f'{event} {req_id}')
-                            # if req_id is not None:
-                                # logging.debug(f'Received response {repr(jdict)[:60]}')
-# #                                logging.debug('appending response to list')
-                                # self.responses.append(jdict)
-# #                                logging.debug(f'req_id = {req_id}')
-                                # self.emit('Response', req_id)
-                            # elif event is not None:
-                                # logging.debug(f'Received event {event}')
-                                # if event == 'Connection':
-                                    # logging.debug('Recv Connection event')
-                                    # self.emit(event)
-                            # else:
-                                # logging.warning(f'RPCClient: received JSON {jdict} with no event or id!')
+                # process all valid JSON blocks
+                while True:
+                    j = self.read_next_json_block()
+                    if LOG_SERVER_TRAFFIC > 2:
+                        logging.debug('read_next_json_block() returned {j}')
+                    if j is None:
+                        break
 
-                # # send any commands
-                # try:
-                    # rpccmd = self.command_queue.get(block=False)
-                # except queue.Empty:
-                    # rpccmd = None
+                    # if we get garbage json string dont die
+                    try:
+                        jdict = json.loads(j)
+                    except json.decoder.JSONDecodeError:
+                        logging.error(f'Error decoding {j}!', exc_info=True)
+                        break
 
-                # if rpccmd is not None:
-# #                    logging.debug(f'Recvd command from queue {rpccmd}')
-                    # cmd, edict = rpccmd
-                    # cdict = { 'method' : cmd }
-                    # jdict = {**cdict, **edict}
-                    # jmsg = str.encode(json.dumps(jdict) + '\n')
-                    # logging.debug(f'Sending json rpc = {jmsg}')
-                    # try:
-                        # self.rpc_socket.sendall(jmsg)
-                    # except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
-                        # logging.error(f'RPCClient: connection reset sending poll response!')
-                        # self.server_disconnected()
-                        # quit = True
-                    # except Exception as e:
-                        # logging.error(f'RPCClient: exception sending poll response!')
-                        # self.server_disconnected()
-                        # quit = True
+                    event = jdict.get('Event', None)
+                    req_id = jdict.get('id', None)
+                    if LOG_SERVER_TRAFFIC > 2:
+                        logging.debug(f'{event} {req_id}')
+                    if req_id is not None:
+                        if LOG_SERVER_TRAFFIC > 0:
+                            logging.debug(f'Received response {repr(jdict)}')
+                            #logging.debug(f'Received response {repr(jdict)[:60]}')
+                            #logging.debug('appending response to list')
+
+                        # FIXME MSF SHOULD I REMOVE FOR NORMAL OPS?
+                        # don't save duplicate ids
+                        already = False
+                        for resp in self.responses:
+                            if resp.get('id', None) == req_id:
+                                already = True
+                        if not already:
+                            self.responses.append(jdict)
+                        if LOG_SERVER_TRAFFIC > 2:
+                            logging.debug(f'req_id = {req_id}')
+                        self.emit('Response', req_id)
+                    elif event is not None:
+                        if LOG_SERVER_TRAFFIC > 0:
+                            logging.debug(f'Received event {event}')
+                        if event == 'Connection':
+#                                    logging.debug('Recv Connection event')
+                            self.emit(event)
+                    else:
+                        logging.warning(f'RPCClient: received JSON {jdict} with no event or id!')
+
+                # send any commands
+                try:
+                    rpccmd = self.command_queue.get(block=False)
+                except queue.Empty:
+                    rpccmd = None
+
+                if rpccmd is not None:
+                    if LOG_SERVER_TRAFFIC > 0:
+                        logging.debug(f'Recvd command from queue {rpccmd}')
+                    cmd, edict = rpccmd
+                    cdict = { 'method' : cmd }
+                    jdict = {**cdict, **edict}
+                    jmsg = str.encode(json.dumps(jdict) + '\n')
+                    if LOG_SERVER_TRAFFIC > 0:
+                        logging.debug(f'Sending json rpc = {jmsg}')
+                    try:
+                        self.rpc_socket.sendall(jmsg)
+                    except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+                        logging.error(f'RPCClient: connection reset sending poll response!')
+                        self.server_disconnected()
+                        quit = True
+                    except Exception:
+                        logging.error(f'RPCClient: exception sending poll response!', exc_info=True)
+                        self.server_disconnected()
+                        quit = True
 
 
-            # # fell out so close socket and try to reconnect
-            # logging.debug('RPCClient: Fell out of main loop closing socket')
-            # try:
-                # self.rpc_socket.close()
-            # except:
-                # logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}', exc_info=True)
+            # fell out so close socket and try to reconnect
+            logging.debug('RPCClient: Fell out of main loop closing socket')
+            try:
+                self.rpc_socket.close()
+            except:
+                logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}', exc_info=True)
+
 
     def server_disconnected(self):
         logging.error('RPCClient: server disconnection!')
@@ -177,57 +206,58 @@ class RPCDeviceThread(Thread):
         #self.rpc_socket.sendall(str.encode(json.dumps(poll_cmd)+'\n'))
         self.queue_rpc_command('polling', {})
 
-    def read_json(self):
-        """ read \n terminated JSON blocks """
+    def populate_buffer(self):
+        """
+        Read in any new data into buffer.
+        """
 
-        #self.rpc_socket.settimeout(0.5)
-        ret = ''
+        self.rpc_socket.settimeout(0.05)
+        got_data = False
         while True:
             #try:
             if True:
-                data = self.rpc_socket.recv(4096)
-                logging.debug(f'read_json(): len(data) = {len(data)} data = |{data}|')
+                try:
+                    data = self.rpc_socket.recv(4096)
+                except socket.timeout:
+                    data = b''
+
+                logging.debug(f'populate_buffer(): len(data) = {len(data)} data = |{data}|')
 
                 if len(data) < 1:
-                    logging.warning('socket ran dry')
-
                     # if we've received NOTHING this pass means socket closed
-                    if ret == '':
+                    if not got_data:
                         raise BrokenPipeError('recv returned 0 bytes - connection lost!')
-
                     break
 
+                got_data = True
                 data = data.decode()
                 self.buffer += data
-                #print('self.buffer = |', self.buffer, '|')
+                logging.debug(f'self.buffer = |{self.buffer}|')
+
+
+    def read_next_json_block(self):
+        """ read \n terminated JSON blocks """
+
 
             # find first '{' and '\n' and see if in between contains a valid json block
 #            logging.debug(f'after read buffer = |{self.buffer}|')
-            try:
-                json_start = self.buffer.index('{')
-            except ValueError:
-                continue
+        try:
+            json_start = self.buffer.index('{')
+        except ValueError:
+            return None
 
-            try:
-                json_end = self.buffer[json_start:].index('\n')
-            except ValueError:
-                continue
+        try:
+            json_end = self.buffer[json_start:].index('\n')
+        except ValueError:
+            return None
 
-            #print('json start/end = ', json_start, json_start + json_end)
+        #print('json start/end = ', json_start, json_start + json_end)
 
-            ret = self.buffer[json_start : json_start + json_end]
-            logging.debug(f'json message      -> {ret} <-')
-            self.buffer = self.buffer[ json_start + json_end : ]
-            logging.debug(f'final read buffer -> {self.buffer} <-')
-            break
+        ret = self.buffer[json_start : json_start + json_end]
+        logging.debug(f'json message      -> {ret} <-')
+        self.buffer = self.buffer[ json_start + json_end : ]
+        logging.debug(f'final read buffer -> {self.buffer} <-')
 
-        return ret
-
-    def get_latest_status(self):
-        with self._lock:
-            ret = self.latest_status, self.latest_status_timestamp
-
-        #print('-----------------------\n', ret)
         return ret
 
     def queue_rpc_command(self, cmd, argsdict):
@@ -258,6 +288,7 @@ class RPCDeviceThread(Thread):
                 return resp
 
         return None
+
 
 class RPCDevice:
     def __init__(self, backend=None):
@@ -317,3 +348,25 @@ class RPCDevice:
         rc = self.rpc_manager.queue_rpc_command(req, paramsdict)
         #logging.debug(f'send_server_req: queue_rpc_command returned {rc}')
         return rc
+
+    def wait_for_response(self, reqid, timeout=15):
+        # FIXME this shouldn't be a problem unless RPC Server dies
+        # FIXME add timeout
+        # block until we get answer
+        logging.debug(f'wait_for_response: waiting for reqid={reqid} timeout={timeout}')
+        resp = None
+        waited = time.time()
+        while (time.time() - waited) < timeout:
+            #logging.debug('waiting...')
+            resp = self.rpc_manager.check_rpc_command_status(reqid)
+            if resp is not None:
+                logging.debug(f'wait_for_response: Found resp={resp}')
+                break
+            time.sleep(1)
+
+        if resp is None:
+            logging.error(f'RPC wait for serverreq_id={reqid}  TIMEOUT ->  resp is None!')
+        else:
+            logging.debug(f'Response for req_id={reqid} is {resp}')
+
+        return resp
