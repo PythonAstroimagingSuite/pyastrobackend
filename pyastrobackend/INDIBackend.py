@@ -373,6 +373,12 @@ class Camera(BaseCamera):
         # FIXME accessing blob event seems like a poor choice
         return self.backend.indiclient.getBlobEvent() != None
 
+    def check_exposure_success(self):
+        # return True if exposure successful
+        # only valid if check_exposure() returns True
+        # FIXME Need to handle errors and set a success flag
+        return True
+
     def get_min_max_exposure(self):
         if self.cam:
             ccd_exposure = indihelper.getNumber(self.cam, 'CCD_EXPOSURE')
@@ -513,6 +519,13 @@ class Camera(BaseCamera):
             return ccd_gain.value
         else:
             return None
+
+    def set_camera_gain(self, gain):
+        """ Looks for camera specific gain - only works for ASI afaik"""
+        return indihelper.setfindNumberValue(self.backend.indiclient, self.cam,
+                                             'CCD_CONTROLS',
+                                             'Gain',
+                                             gain)
 
     def get_camera_offset(self):
         """ Looks for camera specific offset - only works for ASI afaik"""

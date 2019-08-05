@@ -27,11 +27,13 @@ class Camera(RPCDevice, BaseCamera):
         # set when exposure it going on
         self.exposure_reqid = None
         self.exposure_complete = False
+        self.exposure_success = False
 
         self.roi = None
         self.binning = 1
         self.frame_width = None
         self.frame_height = None
+        self.camera_gain = None
 
         self.rpc_manager = RPCCameraThread(8800, None)
         self.rpc_manager.event_callbacks.append(self.event_callback)
@@ -48,17 +50,27 @@ class Camera(RPCDevice, BaseCamera):
                 resp = self.rpc_manager.check_rpc_command_status(req_id)
 #                logging.debug(f'resp = {resp}')
                 result = resp.get('result', None)
-#                logging.debug(f'result {result}')
-                if result is None:
-                    logging.error('exposure response has no result!')
+                error = resp.get('error', None)
+                logging.debug(f'result {result} error {error}')
+
+                if result is not None:
+                    status = result.get('complete', None)
+    #                logging.debug(f'status {status}')
+                    if status is None:
+                        logging.error('exposure completion status is None!')
+                        logging.error('EXITTING')
+                        sys.exit(1)
+    #                logging.debug(f'setting exposure_complete to {status}')
+                    self.exposure_complete = status
+                    self.exposure_success = True
+                elif error is not None:
+                    logging.error(f'Error during exposure req_id = {req_id}!')
+                    self.exposure_complete =True
+                    self.exposure_success = False
+                else:
+                    logging.error('exposure response has no result or error!')
+                    logging.error('EXITTING!!!!')
                     sys.exit(1)
-                status = result.get('complete', None)
-#                logging.debug(f'status {status}')
-                if status is None:
-                    logging.error('exposure completion status is None!')
-                    sys.exit(1)
-#                logging.debug(f'setting exposure_complete to {status}')
-                self.exposure_complete = status
 
     def get_camera_name(self):
         return 'RPC'
@@ -84,6 +96,11 @@ class Camera(RPCDevice, BaseCamera):
         paramdict['params']['exposure'] = expos
         paramdict['params']['binning'] = self.binning
         paramdict['params']['roi'] = self.roi
+
+        logging.warning('!!!!!!RPC CAMERA start_exposure HAS GAIN COMMENTED OUT!!!!!!')
+#        if self.camera_gain is not None:
+#            paramdict['params']['camera_gain'] = self.camera_gain
+
         rc = self.send_server_request('take_image', paramdict)
 
         if not rc:
@@ -107,6 +124,11 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME this could break so many ways as it doesnt
         # link up to the actual id expected for method result
         return self.exposure_complete
+
+    def check_exposure_success(self):
+        # return True if exposure successful
+        # only valid if check_exposure() returns True
+        return self.exposure_success
 
     def supports_progress(self):
         logging.warning('RPC Camera supports_progress() not implemented')
@@ -200,10 +222,14 @@ class Camera(RPCDevice, BaseCamera):
             self.set_binning(result['binning'], result['binning'])
         if 'roi' in result:
             self.roi = result['roi']
+        if 'camera_gain' in result:
+            gain = result['camera_gain']
+            if gain is not None:
+                self.camera_gain = gain
 
         return True
 
-    def get_scalar_value(self, value_method, value_key, value_type):
+    def get_scalar_value(self, value_method, value_key, value_types):
 #        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
         rc = self.send_server_request(value_method, None)
 
@@ -231,9 +257,15 @@ class Camera(RPCDevice, BaseCamera):
 
         result_value = result.get(value_key, None)
 
-        if not isinstance(result_value, value_type):
+        match = False
+        for value_type in value_types:
+            match = isinstance(result_value, value_type)
+            if match:
+                break
+        if not match:
             logging.error(f'get_scalar_type: {value_method} {value_key}: ' + \
-                          f'expected {value_type} got {result_value} type {type(result_value)}')
+                          f'expected one of {value_types} got {result_value} ' + \
+                          f'type {type(result_value)}')
             return None
         else:
             return result_value
@@ -268,21 +300,40 @@ class Camera(RPCDevice, BaseCamera):
         logging.warning('RPC Camera get_image_data() not implemented!')
 
     def get_pixelsize(self):
-        valx = self.get_scalar_value('get_camera_x_pixelsize', 'camera_x_pixelsize', float )
-        valy = self.get_scalar_value('get_camera_y_pixelsize', 'camera_y_pixelsize', float )
+        valx = self.get_scalar_value('get_camera_x_pixelsize', 'camera_x_pixelsize', (float,) )
+        valy = self.get_scalar_value('get_camera_y_pixelsize', 'camera_y_pixelsize', (float,) )
         return valx, valy
 
     def get_egain(self):
-        return self.get_scalar_value('get_camera_egain','camera_egain', float )
+        return self.get_scalar_value('get_camera_egain','camera_egain', (float,) )
 
-    def get_gain(self):
-        return self.get_scalar_value('get_camera_gain', 'camera_gain', float )
+    def get_camera_gain(self):
+        gain = self.get_scalar_value('get_camera_gain', 'camera_gain', (int, float) )
+        if gain is not None:
+            self.camera_gain = gain
+            return gain
+        return None
+
+    def set_camera_gain(self, gain):
+        logging.warning('!!!!!!!! RPC set_camera_gain DISABLED for now until !!!!!!!!!')
+        logging.warning('!!!!!!!! discrepancy between dialog gain and API gain !!!!!!!!!')
+        logging.warning('!!!!!!!! better understood.                           !!!!!!!!!')
+        self.camera_gain = None
+        return
+
+
+        logging.debug(f'Setting camera_gain to {gain}')
+        rc = self.set_scalar_value('set_camera_gain', 'camera_gain', gain)
+        if rc:
+            self.camera_gain = gain
+
+        return rc
 
     def get_current_temperature(self):
-        return self.get_scalar_value('get_current_temperature', 'current_temperature', float )
+        return self.get_scalar_value('get_current_temperature', 'current_temperature', (float,) )
 
     def get_target_temperature(self):
-        return self.get_scalar_value('get_target_temperature', 'target_temperature', float )
+        return self.get_scalar_value('get_target_temperature', 'target_temperature', (float,) )
 
     def set_target_temperature(self, temp_c):
 #        logging.debug(f'RPC:set_target_temperature to {temp_c}')
@@ -295,10 +346,10 @@ class Camera(RPCDevice, BaseCamera):
         return self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
 
     def get_cooler_state(self):
-        return self.get_scalar_value('get_cooler_state', 'cooler_state', bool )
+        return self.get_scalar_value('get_cooler_state', 'cooler_state', (bool,) )
 
     def get_cooler_power(self):
-        return self.get_scalar_value('get_cooler_power', 'cooler_power', float )
+        return self.get_scalar_value('get_cooler_power', 'cooler_power', (float,) )
 
     def get_binning(self):
         return (self.binning, self.binning)
@@ -317,7 +368,7 @@ class Camera(RPCDevice, BaseCamera):
         return True
 
     def get_max_binning(self):
-        return self.get_scalar_value('get_max_binning', 'max_binning', int )
+        return self.get_scalar_value('get_max_binning', 'max_binning', (int,) )
 
     def get_size(self):
         if not self.frame_width or not self.frame_height:

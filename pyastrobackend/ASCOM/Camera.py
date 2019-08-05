@@ -28,7 +28,7 @@ class Camera(BaseCamera):
         logging.debug(f'{self.cam}')
         try:
             self.cam.Connected = True
-        except Exception as e:
+        except Exception:
             logging.error('ASCOMBackend:camera:connect() Exception ->', exc_info=True)
             return False
 
@@ -38,6 +38,10 @@ class Camera(BaseCamera):
         if self.cam.Connected:
             self.camera_has_progress = self.supports_progress()
             logging.debug(f'camera:connect camera_has_progress={self.camera_has_progress}')
+
+            #logging.debug(f'ASCOM GAINS = {self.cam.Gains}')
+            logging.debug(f'ASCOM GAINMAX = {self.cam.GainMax}')
+            logging.debug(f'ASCOM GAINMIN = {self.cam.GainMin}')
 
         return self.cam.Connected
 
@@ -99,6 +103,12 @@ class Camera(BaseCamera):
 
         return self.cam.ImageReady
 
+    def check_exposure_success(self):
+        # return True if exposure successful
+        # only valid if check_exposure() returns True
+        # FIXME Need to handle errors and set a success flag
+        return True
+
     def supports_progress(self):
 #        logging.info(f'ascomcamera: supports_progress {self.camera_has_progress}')
         if self.camera_has_progress is None:
@@ -117,7 +127,7 @@ class Camera(BaseCamera):
 
         try:
             return self.cam.PercentCompleted
-        except Exception as e:
+        except Exception:
             logging.warning('camera.get_exposure_progress() failed!')
             logging.error('Exception ->', exc_info=True)
             return -1
@@ -186,6 +196,24 @@ class Camera(BaseCamera):
                 logging.error(f'Unable to read camera gain!', exc_info=True)
 
         return ccd_gain
+
+    def set_camera_gain(self, ccd_gain):
+        """ Looks for camera specific gain - only works for ASI afaik"""
+
+        logging.warning('!!!!!!!! ASCOM set_camera_gain DISABLED for now until !!!!!!!!!')
+        logging.warning('!!!!!!!! discrepancy between dialog gain and API gain !!!!!!!!!')
+        logging.warning('!!!!!!!! better understood.                           !!!!!!!!!')
+        return
+
+        if self.cam:
+            try:
+                self.cam.Gain = int(ccd_gain)
+                logging.debug(f'set camera gain = {ccd_gain}')
+                return True
+            except:
+                logging.error(f'Unable to set camera gain!', exc_info=True)
+
+        return False
 
     def get_camera_offset(self):
         return None

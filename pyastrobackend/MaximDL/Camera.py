@@ -96,6 +96,10 @@ class Camera(BaseCamera):
                 return None
         return self.last_check_exposure_value
 
+    def check_exposure_success(self):
+        # FIXME Can we get a value for this from Maxim?
+        return True
+
     def supports_progress(self):
         logging.warning('MaximDL Camera supports_progress() not implemented')
         return False
@@ -160,6 +164,15 @@ class Camera(BaseCamera):
     def get_egain(self):
         logging.warning('MaximDL Camera get_egain() not implemented!')
         return None
+
+    def get_camera_gain(self):
+        logging.warning('MaximDL Camera get_camera_gain() not implemented!')
+        return None
+
+    def set_camera_gain(self, gain):
+        logging.warning('MaximDL Camera set_camera_gain() not implemented!')
+        return False
+
 
     def get_current_temperature(self):
         #logging.warning('MaximDL Camera get_current_temperature() not implemented!')

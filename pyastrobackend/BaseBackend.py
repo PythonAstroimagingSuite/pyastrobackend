@@ -226,6 +226,16 @@ class BaseCamera(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def check_exposure_success(self):
+        """
+        Check if exposure was successful - only valid if check_exposure() returns True.
+
+        :return: True if exposure complete.
+        :rtype: bool
+        """
+        pass
+
+    @abstractmethod
     def get_exposure_progress(self):
         """
         Get percentage completion of exposure.
@@ -273,6 +283,26 @@ class BaseCamera(metaclass=ABCMeta):
 
         :return: Camera gain
         :rtype: float
+        """
+        pass
+
+    @abstractmethod
+    def get_camera_gain(self):
+        """
+        Return gain for camera (not all cameras support).
+
+        :return: Camera gain
+        :rtype: float
+        """
+        pass
+
+    @abstractmethod
+    def set_camera_gain(self, gain):
+        """
+        Set gain for camera (not all cameras support).
+
+        :return: True on success.
+        :rtype: bool
         """
         pass
 
