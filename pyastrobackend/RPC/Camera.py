@@ -338,7 +338,7 @@ class Camera(RPCDevice, BaseCamera):
     def set_target_temperature(self, temp_c):
 #        logging.debug(f'RPC:set_target_temperature to {temp_c}')
 
-        self.set_scalar_value('set_target_temperature', 'target_temperature', temp_c)
+        return self.set_scalar_value('set_target_temperature', 'target_temperature', temp_c)
 
     def set_cooler_state(self, onoff):
 #        logging.debug(f'RPC:set_cooler_state to {onoff}')

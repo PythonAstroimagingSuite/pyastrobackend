@@ -1,6 +1,7 @@
 """ Pure ASCOM solution """
 from pyastrobackend.BaseBackend import BaseMount
 
+import time
 import logging
 from enum import Enum
 import pythoncom
@@ -117,7 +118,14 @@ class Mount(BaseMount):
         self.mount.Unpark()
 
     def set_tracking(self, onoff):
-        rc = self.mount.Tracking = onoff
+        #rc = self.mount.Tracking = onoff
+        #return rc
+        logging.debug(f'set_tracking: setting to {onoff}')
+        self.mount.Tracking = onoff
+        #time.sleep(0.1)
+        #check
+        rc = self.mount.Tracking == onoff
+        logging.debug(f'set_tracking: self.mount.Tracking = {self.mount.Tracking} rc = {rc}')
         return rc
 
     def get_tracking(self):
