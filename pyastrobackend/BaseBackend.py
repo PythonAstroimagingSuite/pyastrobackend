@@ -172,6 +172,31 @@ class BaseCamera(metaclass=ABCMeta):
         """
         pass
 
+    @abstractmethod
+    def get_settings(self):
+        """
+        Returns most settings for camera as dict.
+        Useful for RPC drivers to reduce round trips.
+
+        Following keys (not all will get values on all drivers):
+            - binning: (tuple) X, Y binning
+            - framesize: (tuple) Width, height of sensor
+            - roi: (tuple) Upper left corner and width, height of roi
+            - pixelsize: (tuple) X, Y pixel size
+            - egain: (float) Gain of camera in e-/ADU
+            - camera_gain: (float) Internal gain of camera
+            - camera_offset: (float) Internal offset of camera
+            - camera_usbbandwidth: (int) Internal USB traffic settings of camera
+            - camera_current_temperature: (float) Current temperature of camera
+            - camera_target_temperature: (float) Target temperature of camera
+            - cooler_state: (bool) Cooler on/off status
+            - cooler_power: (float) Power (0-100%) level of cooler
+
+        :return: Dictionary of settings
+        :rtype: dict
+        """
+        pass
+
 # this is ASCOM specific!
 #    @abstractmethod
 #    def get_driver_interface_version(self):

@@ -66,6 +66,9 @@ class Camera(BaseCamera):
     def get_driver_version(self):
         return 'V 0.1'
 
+    def get_settings(self):
+        raise Exception('get_settings not implemented for Maxim DL!')
+
     def get_state(self):
         logging.warning('MaximDL Camera get_state() not implemented')
         return None

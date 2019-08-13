@@ -165,7 +165,7 @@ class Camera(RPCDevice, BaseCamera):
             time.sleep(0.1)
 
         if resp is None:
-            logging.error('RPC get_camera_settings: resp is None!')
+            logging.error('RPC save_image_data: resp is None!')
             sys.exit(1)
 
         # FIXME parse out status?
@@ -180,11 +180,11 @@ class Camera(RPCDevice, BaseCamera):
         #FIXME need to look at result code
         return True
 
-    def get_camera_settings(self):
+    def get_settings(self):
         rc = self.send_server_request('get_camera_info', None)
 
         if not rc:
-            logging.error('RPC get_camera_settings: error sending json request!')
+            logging.error('RPC get_settings: error sending json request!')
             return False
 
         reqid = rc
@@ -201,7 +201,7 @@ class Camera(RPCDevice, BaseCamera):
             time.sleep(0.1)
 
         if resp is None:
-            logging.error('RPC get_camera_settings: resp is None!')
+            logging.error('RPC get_settings: resp is None!')
             sys.exit(1)
 
         # FIXME parse out status?
@@ -210,8 +210,8 @@ class Camera(RPCDevice, BaseCamera):
 #        logging.debug(f'RPC saveimageCamera status/resp = {status} {resp}')
 
         if not status:
-            logging.warning('RPC:get_camera_settings() - error getting settings!')
-            return False
+            logging.warning('RPC:get_settings() - error getting settings!')
+            return None
 
         result = resp['result']
         if 'framesize' in result:
@@ -219,7 +219,7 @@ class Camera(RPCDevice, BaseCamera):
             self.frame_width = w
             self.frame_height = h
         if 'binning' in result:
-            self.set_binning(result['binning'], result['binning'])
+            self.set_binning(*result['binning'])
         if 'roi' in result:
             self.roi = result['roi']
         if 'camera_gain' in result:
@@ -227,7 +227,7 @@ class Camera(RPCDevice, BaseCamera):
             if gain is not None:
                 self.camera_gain = gain
 
-        return True
+        return result
 
     def get_scalar_value(self, value_method, value_key, value_types):
 #        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
@@ -360,7 +360,7 @@ class Camera(RPCDevice, BaseCamera):
         self.binning = binx
 
         if not self.frame_width or not self.frame_height:
-            if not self.get_camera_settings():
+            if self.get_settings() is None:
                 logging.error('RPC:set_binning - unable to get camera settings!')
                 return False
 
@@ -372,7 +372,7 @@ class Camera(RPCDevice, BaseCamera):
 
     def get_size(self):
         if not self.frame_width or not self.frame_height:
-            if not self.get_camera_settings():
+            if self.get_settings() is None:
                 logging.error('RPC:get_size - unable to get camera settings!')
                 return None
 
