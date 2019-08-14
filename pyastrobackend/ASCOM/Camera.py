@@ -1,3 +1,9 @@
+# for now need to run with Python 3.6.  Using Python 3.7 there are some
+# issues with accessing the image data from the camera!
+
+import sys
+assert sys.version_info.major == 3 and sys.version_info.minor == 6
+
 import time
 import logging
 import numpy as np
