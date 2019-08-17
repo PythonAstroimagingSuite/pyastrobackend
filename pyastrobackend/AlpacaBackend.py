@@ -1,5 +1,6 @@
 """ Pure Alpaca solution """
 
+import json
 import logging
 import requests
 
@@ -93,15 +94,22 @@ class DeviceBackend(BaseDeviceBackend):
         req = self._base_url(device_type, device_number) + prop
         logging.debug(f'Sending GET req {req} params {params}')
         resp = requests.get(url=req, params=params)
-        logging.debug(f'Response was {resp} {repr(resp.json())[:255]}')
+        try:
+            resp_json = resp.json()
+        except json.decoder.JSONDecodeError:
+            logging.error('resp json parse error!')
+            return None
+
+        logging.debug(f'Response was {resp}')
+        logging.debug(f'Response JSON = {repr(resp_json)[:200]}')
 
         if not DeviceBackend._verify_response(resp):
             return None
 
         if not returndict:
-            return resp.json()['Value']
+            return resp_json['Value']
         else:
-            return resp.json()
+            return resp_json
 
     def set_prop(self, device_type, device_number, prop, params={}):
         params['ClientID'] = 1

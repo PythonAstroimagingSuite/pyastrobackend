@@ -2,6 +2,10 @@ import logging
 
 class AlpacaDevice:
 
+    def _initialize_device_attr(self):
+        self.device_number = None
+        self.device_type = None
+
     # Alpaca connect string is "ALPACA:<device type>:<device_number>"
     def connect(self, name):
         device_number = None
@@ -36,6 +40,10 @@ class AlpacaDevice:
                 self.camera_has_progress = None
 
     def is_connected(self):
+        # return False if device attributes not initialized
+        if None in [self.device_type, self.device_number]:
+            return False
+
         val = self.get_prop('connected')
         return val
 
@@ -47,6 +55,7 @@ class AlpacaDevice:
         return None
 
     def get_prop(self, prop, params={}, returndict=False):
+        logging.info(f'{dir(self.backend)}')
         return self.backend.get_prop(self.device_type, self.device_number,
                                      prop, params, returndict)
 

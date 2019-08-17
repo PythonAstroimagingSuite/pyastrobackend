@@ -8,8 +8,11 @@ from pyastrobackend.Alpaca.AlpacaDevice import AlpacaDevice
 class Camera(AlpacaDevice, BaseCamera):
 
     def __init__(self, backend):
+        # FIXME call initializer for AlpacaDevice mixin) - is this sensible way
+        self._initialize_device_attr()
         self.camera_has_progress = None
         self.backend = backend
+        logging.info(f'alapaca camera setting backend to {backend}')
 
     def get_camera_name(self):
         return self.get_prop('name')

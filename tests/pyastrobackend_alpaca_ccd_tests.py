@@ -132,7 +132,7 @@ if __name__ == '__main__':
     fileloc = os.path.join(os.getcwd(), 'pyastrobackend_alpaca_ccd_tests.fits')
     logging.info(f'saving image to {fileloc}')
     image_data = camera.get_image_data()
-    pyfits.writeto(fileloc, image_data.astype(float), overwrite=True)
+    pyfits.writeto(fileloc, image_data, overwrite=True)
 
     logging.info('Done')
 
