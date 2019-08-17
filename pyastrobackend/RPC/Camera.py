@@ -1,5 +1,6 @@
 """ RPC Camera solution """
 import sys
+import time
 import logging
 
 from ..BaseBackend import BaseCamera
