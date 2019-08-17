@@ -1,12 +1,6 @@
 """ RPC Camera solution """
 import sys
-import json
-import time
-import queue
-import select
-import socket
 import logging
-import weakref
 
 from ..BaseBackend import BaseCamera
 
@@ -250,7 +244,7 @@ class Camera(RPCDevice, BaseCamera):
 #        logging.debug(f'RPC {value_method} status/resp = {status} {resp}')
 
         if not status:
-            logging.warning(f'RPC:{value_method} - error getting settings!')
+            logging.error(f'RPC:{value_method} - error getting settings!')
             return None
 
         result = resp['result']

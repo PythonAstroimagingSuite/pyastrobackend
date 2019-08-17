@@ -1,9 +1,3 @@
-# for now need to run with Python 3.6.  Using Python 3.7 there are some
-# issues with accessing the image data from the camera!
-
-import sys
-assert sys.version_info.major == 3 and sys.version_info.minor == 6
-
 import time
 import logging
 import numpy as np
@@ -46,8 +40,11 @@ class Camera(BaseCamera):
             logging.debug(f'camera:connect camera_has_progress={self.camera_has_progress}')
 
             #logging.debug(f'ASCOM GAINS = {self.cam.Gains}')
-            logging.debug(f'ASCOM GAINMAX = {self.cam.GainMax}')
-            logging.debug(f'ASCOM GAINMIN = {self.cam.GainMin}')
+            try:
+                logging.debug(f'ASCOM GAINMAX = {self.cam.GainMax}')
+                logging.debug(f'ASCOM GAINMIN = {self.cam.GainMin}')
+            except:
+                logging.warning('Unable to read ASCOM GainMin/GainMax', exc_info=True)
 
         return self.cam.Connected
 
