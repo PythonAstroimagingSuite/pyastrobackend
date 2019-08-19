@@ -39,8 +39,16 @@ if __name__ == '__main__':
     val = cam.is_connected()
     logging.info(f'cam.is_connected() returns {val}')
 
+    if len(sys.argv) < 2:
+        w, h = cam.get_size()
+        cam.set_frame(0, 0, w, h)
+    else:
+        roi = int(sys.argv[1])
+        logging.info(f'Image is {roi} x {roi} pixels')
+        cam.set_frame(0, 0, roi, roi)
+
     logging.info('Taking image')
-    rc = cam.start_exposure(5)
+    rc = cam.start_exposure(1)
     if not rc:
         logging.error('Failed to start exposure - quitting')
         sys.exit(-1)
@@ -51,6 +59,8 @@ if __name__ == '__main__':
         if done:
             break
         time.sleep(1)
+
+    logging.info(f'ROI is {cam.get_frame()}')
 
     fileloc = os.path.join(os.getcwd(), 'pyastrobackend_alpaca_ccd_tests.fits')
     #logging.info(f'saving image to {fileloc}')
@@ -80,6 +90,8 @@ if __name__ == '__main__':
         c = pycurl.Curl()
         c.setopt(c.URL, download_url)
         c.setopt(c.WRITEDATA, buffer)
+        c.setopt(c.HTTPHEADER, ['Content-Type: application/json', 'Accept-Encoding: gzip, deflate'])
+        #c.setopt(c.HTTPHEADER, ['Content-Type: application/json'])
         c.perform()
         c.close()
 
