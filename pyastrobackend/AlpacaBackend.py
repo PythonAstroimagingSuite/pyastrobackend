@@ -7,16 +7,9 @@ import requests
 from pyastrobackend.BaseBackend import BaseDeviceBackend
 
 from pyastrobackend.Alpaca.Camera import Camera
-#from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
-#from pyastrobackend.ASCOM.FilterWheel import FilterWheel
-#from pyastrobackend.ASCOM.Mount import Mount
-
-# messy but we'll roll MaximDL camera support under ASCOM
-#from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
-#from pyastrobackend.RPC.Camera import Camera as RPC_Camera
-#from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
-
-#warnings.filterwarnings('always', category=DeprecationWarning)
+from pyastrobackend.Alpaca.Focuser import Focuser
+from pyastrobackend.Alpaca.FilterWheel import FilterWheel
+from pyastrobackend.Alpaca.Mount import Mount
 
 class DeviceBackend(BaseDeviceBackend):
 
