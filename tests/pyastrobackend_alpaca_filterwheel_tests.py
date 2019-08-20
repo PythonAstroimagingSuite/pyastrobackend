@@ -35,7 +35,7 @@ if __name__ == '__main__':
     if not rc:
         sys.exit(-1)
 
-    # connect to focuser
+    # connect to filterwheel
     filterwheel = FilterWheel(backend)
 
     logging.info('Connecting to FilterWheel')
