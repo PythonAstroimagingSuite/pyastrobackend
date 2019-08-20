@@ -55,7 +55,6 @@ class AlpacaDevice:
         return None
 
     def get_prop(self, prop, params={}, returndict=False):
-        logging.info(f'{dir(self.backend)}')
         return self.backend.get_prop(self.device_type, self.device_number,
                                      prop, params, returndict)
 

@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # connect to focuser
     focuser = Focuser(backend)
 
-    logging.info('Connecting to Focsuer')
+    logging.info('Connecting to Focuser')
     rc = focuser.connect('ALPACA:focuser:0')
     logging.info(f'connect result = {rc}')
 
@@ -46,7 +46,11 @@ if __name__ == '__main__':
         logging.error('Failed to connect - quitting')
         sys.exit(-1)
 
-    logging.info(f'is_connected() returns {focuser.is_connected()}')
+    iscon = focuser.is_connected()
+    logging.info(f'is_connected() returns {iscon}')
+    if not iscon:
+        logging.error('Not connected!')
+        sys.exit(1)
 
     logging.info('Getting max position')
     maxstep = focuser.get_max_absolute_position()
