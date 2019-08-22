@@ -4,6 +4,10 @@ import json
 import logging
 import requests
 
+# for base64/imagearray big transfers
+import pycurl
+from io import BytesIO
+
 from pyastrobackend.BaseBackend import BaseDeviceBackend
 
 from pyastrobackend.Alpaca.Camera import Camera
@@ -46,6 +50,13 @@ class DeviceBackend(BaseDeviceBackend):
 
     def newMount(self):
         return Mount(self)
+
+    def getDevicesByClass(self, device_class):
+        # for now just return "0" to "3" for the device number on remote server
+        vals = []
+        for d in ["0", "1", "2", "3"]:
+            vals.append(f'Alpaca:{d}')
+        return vals
 
     def _base_url(self, device_type, device_number):
         return f'http://{self.server_ip}:{self.server_port}/' + \
@@ -111,7 +122,7 @@ class DeviceBackend(BaseDeviceBackend):
         req = self._base_url(device_type, device_number) + prop
         logging.debug(f'Sending POST req {req} params {params}')
         resp = requests.put(url=req, data=params)
-        logging.debug(f'Response was {resp} {resp.json()}')
+        #logging.debug(f'Response was {resp} {resp.json()}')
 
         # test if request successful
         if resp.status_code != 200:
@@ -132,3 +143,40 @@ class DeviceBackend(BaseDeviceBackend):
             return False
 
         return True
+
+    def get_base64(self, device_type, device_number, prop):
+        buffer = BytesIO()
+        c = pycurl.Curl()
+        req = self._base_url(device_type, device_number) + prop
+        ctype = 'Content-Type: image/tiff'
+        #logging.debug(f'get_base64: req = {req}')
+        #logging.debug('Using {ctype} for http header')
+        c.setopt(c.URL, req)
+        c.setopt(c.WRITEDATA, buffer)
+        c.setopt(c.HTTPHEADER, [ctype])
+        c.perform()
+        c.close()
+
+        body = buffer.getvalue()
+        return body
+
+    def get_request(self, device_type, device_number, prop, extraparams={},
+                    extraheaders={}):
+        params = {}
+        params['ClientID'] = 1
+        params['ClientTransactionID'] = self.request_id
+        params = {**params, **extraparams}
+        self.request_id += 1
+        req = self._base_url(device_type, device_number) + prop
+        #logging.debug(f'Sending GET req {req} params {params}')
+        resp = requests.get(url=req, params=params, headers=extraheaders)
+        try:
+            resp_json = resp.json()
+        except json.decoder.JSONDecodeError:
+            logging.error('resp json parse error!')
+            return None
+
+        #logging.debug(f'Response was {resp}')
+        #logging.debug(f'Response JSON = {repr(resp_json)[:200]}')
+
+        return resp_json

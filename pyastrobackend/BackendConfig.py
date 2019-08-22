@@ -11,7 +11,7 @@ def get_backend_for_os():
     the default value.
 
     :returns:
-        'ASCOM' or 'INDI'.
+        'ASCOM' or 'INDI' or 'ALPACA'.
     :rtype: str
     """
     import os

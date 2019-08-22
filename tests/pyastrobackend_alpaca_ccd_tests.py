@@ -117,7 +117,7 @@ if __name__ == '__main__':
     camera.set_frame(0, 0, w, h)
 
     logging.info('Taking image')
-    rc = camera.start_exposure(5)
+    rc = camera.start_exposure(1)
     if not rc:
         logging.error('Failed to start exposure - quitting')
         sys.exit(-1)

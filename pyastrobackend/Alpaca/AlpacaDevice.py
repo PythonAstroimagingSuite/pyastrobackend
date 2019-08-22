@@ -33,11 +33,8 @@ class AlpacaDevice:
         return True
 
     def disconnect(self):
-        if self.cam:
-            if self.cam.Connected:
-                self.cam.Connected = False
-                self.cam = None
-                self.camera_has_progress = None
+        # FIXME should this do anything?
+        return True
 
     def is_connected(self):
         # return False if device attributes not initialized

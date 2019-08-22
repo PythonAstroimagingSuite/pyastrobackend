@@ -1,4 +1,5 @@
 import time
+import base64
 import logging
 import numpy as np
 
@@ -98,33 +99,75 @@ class Camera(AlpacaDevice, BaseCamera):
         # Transpose to get into row-major
         #image_data = np.array(self.cam.ImageArray, dtype=out_dtype).T
 
-        resp = self.get_prop('imagearray', returndict=True)
+        #resp = self.get_prop('imagearray', returndict=True)
+        resp = self.backend.get_request(self.device_type,
+                                        self.device_number,
+                                        'imagearray',
+                                        extraparams={},
+                                        extraheaders={'base64handoff' : 'true'})
+
+        logging.debug(f'imagearray resp = {resp}')
+
 #        f=open('imagejson.json', 'w')
 #        f.write(repr(resp))
 #        f.close()
 
         # check rank and type
-        logging.debug(f'ImageArray Rank = {resp.get("Rank")} Type = {resp.get("Type")}')
-        if resp.get('Rank') != 2 or resp.get('Type') != 2:
+        imgrank = resp.get('Rank')
+        imgtype = resp.get('Type')
+
+        logging.debug(f'ImageArray Rank = {imgrank} Type = {imgtype}')
+
+        dim0 = resp.get('Dimension0Length')
+        dim1 = resp.get('Dimension1Length')
+        dim2 = resp.get('Dimension2Length')
+
+        logging.debug(f'Dimension0Length: {dim0} ' + \
+                      f'Dimension1Length: {dim1} ' + \
+                      f'Dimension2Length: {dim2} ')
+
+        if imgrank != 2 or imgtype != 2:
             logging.error('ImageArray returned a Rank or Type != 2!')
             return None
 
-        # get data and convert to desired type
-        image_data = np.array(resp.get('Value')).astype(out_dtype)
-
-        # reshape to 2D
-        roi = self.get_frame()
-        if roi is None:
-            logging.error('roi is None cannot reshape image!')
+        if dim2 != 0:
+            logging.error('ImageArray returns Dimension2Length != 0!')
             return None
 
-        logging.debug(f'reshaping to numy = {roi[3]} numx = {roi[2]}')
+        # now get image data
+        # use pycurl as it is significantly faster than requests for big data
+        mts=time.time()
+        ts=time.time()
+        body = self.backend.get_base64(self.device_type, self.device_number,
+                                       'imagearraybase64')
+
+        te=time.time()
+        logging.debug(f'Download took {te-ts} seconds')
+
+        ts=time.time()
+        decoded = base64.b64decode(body)
+        read_img = np.frombuffer(decoded, dtype=np.int32)
+        te=time.time()
+
+        # convert to int16
+        out_dtype = np.dtype(np.uint16)
+
+        image_data = read_img.astype(out_dtype)
+
+        logging.debug(f'image_data shape is {image_data.shape}')
+
+        logging.debug(f'reshaping to numx = {dim0} numy = {dim1}')
 
         # remember array has Y as first axis!!
-        np.reshape(image_data, (roi[3], roi[2]))
+        image_data = np.reshape(image_data, (dim0, -1))
+
+        logging.debug(f'image_data shape is {image_data.shape}')
 
         # then transpose so X is first
         image_data = image_data.T
+
+        mte = time.time()
+        logging.debug(f'Total time getting image data = {mte-mts} seconds')
 
         return image_data
 

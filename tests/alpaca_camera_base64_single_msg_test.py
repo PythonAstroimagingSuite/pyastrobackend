@@ -66,11 +66,13 @@ if __name__ == '__main__':
 
     # first grab image info
     import sys
-    import json
+    import ujson as json
     import pycurl
     import base64
     import numpy as np
     from io import BytesIO
+
+    mts = time.time()
 
     buffer = BytesIO()
     c = pycurl.Curl()
@@ -80,40 +82,35 @@ if __name__ == '__main__':
 #    c.setopt(c.HTTPHEADER, ['Content-Type: application/json', 'Base64Serialisation: true'])
     c.setopt(c.HTTPHEADER, [
                             'Content-Type: application/json',
-                            'base64handoff: true',
-                            'Accept-Encoding: gzip'
+                            'base64json: true'
+#                            'base64handoff: true',
+#                            'Accept-Encoding: gzip'
                            ])
     c.perform()
     c.close()
 
     body = buffer.getvalue()
-    print(body)
 
-    # now read data
-    mts=time.time()
-    ts=time.time()
-    buffer = BytesIO()
-    c = pycurl.Curl()
-    part2_url = "http://127.0.0.1:11111/api/v1/camera/0/imagearraybase64?ClientID=1&ClientTransactionID=11"
-    c.setopt(c.URL, part2_url)
-    c.setopt(c.WRITEDATA, buffer)
-    c.setopt(c.HTTPHEADER, [
-                            #'Content-Type: image/tiff',
-                            'Content-Type: text/plain',
-                            #'Accept-Encoding: gzip'
-                           ])
-    c.perform()
-    c.close()
+#    f = open('test.dat', 'wb')
+#    f.write(body)
+#    f.close()
 
-    body = buffer.getvalue()
-    te=time.time()
-    logging.info(f'Download took {te-ts} seconds')
+    ts = time.time()
+    j = json.loads(body)
+    print(len(j['Value']))
 
-    print(len(body))
-    #print(body)
+    for k, v in j.items():
+        if k == 'Value':
+            continue
+        print(k, v)
+
+    b64 = j['Value']
+    te = time.time()
+    print(f'json parsing took {te-ts} secs')
+
 
     ts=time.time()
-    decoded = base64.b64decode(body)
+    decoded = base64.b64decode(b64)
     read_img = np.frombuffer(decoded, dtype=np.int32)
     te=time.time()
     print(f'b64decode took {te-ts} seconds')
@@ -158,49 +155,3 @@ if __name__ == '__main__':
 
 
     sys.exit(0)
-
-
-    # BELOW FOR REFERENCE ONLY
-
-
-    ts=time.time()
-    resp = json.loads(body)
-    te=time.time()
-    logging.info(f'json.loads() took {te-ts} seconds')
-
-    # check rank and type
-    ts=time.time()
-    logging.debug(f'ImageArray Rank = {resp.get("Rank")} Type = {resp.get("Type")}')
-    if resp.get('Rank') != 2 or resp.get('Type') != 2:
-        logging.error('ImageArray returned a Rank or Type != 2!')
-        sys.exit(1)
-
-    # get data and convert to desired type
-    out_dtype = np.dtype(np.uint16)
-
-    image_data = np.array(resp.get('Value')).astype(out_dtype)
-
-    # reshape to 2D
-    roi = cam.get_frame()
-    if roi is None:
-        logging.error('roi is None cannot reshape image!')
-        sys.exit(1)
-
-    logging.debug(f'reshaping to numy = {roi[3]} numx = {roi[2]}')
-
-    # remember array has Y as first axis!!
-    np.reshape(image_data, (roi[3], roi[2]))
-
-    # then transpose so X is first
-    image_data = image_data.T
-    te=time.time()
-    logging.info(f'convert to nparray took {te-ts} seconds')
-
-    ts=time.time()
-    logging.info(f'saving image to {fileloc}')
-    pyfits.writeto(fileloc, image_data, overwrite=True)
-    te=time.time()
-    logging.info(f'saving FITS took {te-ts} seconds')
-
-    mte=time.time()
-    logging.info(f'Entire download took {mte-mts} seconds')
