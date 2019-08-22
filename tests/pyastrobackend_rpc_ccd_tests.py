@@ -3,7 +3,7 @@ import sys
 import time
 import logging
 
-from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
+from pyastrobackend.RPCBackend import DeviceBackend as Backend
 from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 
 if __name__ == '__main__':

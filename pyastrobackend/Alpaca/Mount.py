@@ -52,7 +52,7 @@ class Mount(AlpacaDevice, BaseMount):
         return None
 
     def is_slewing(self):
-        return self.get_prop('isslewing')
+        return self.get_prop('slewing')
 
     def abort_slew(self):
         return self.set_prop('abortslew', {})

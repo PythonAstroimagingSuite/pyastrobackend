@@ -370,3 +370,99 @@ class RPCDevice:
             logging.debug(f'Response for req_id={reqid} is {resp}')
 
         return resp
+
+
+    def get_scalar_value(self, value_method, value_key, value_types):
+#        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
+        rc = self.send_server_request(value_method, None)
+
+        if not rc:
+            logging.error(f'RPC {value_method}: error sending json request!')
+            return False
+
+        resp = self.wait_for_response(rc)
+
+        if resp is None:
+            logging.error(f'RPC {value_method}: resp is None!')
+            return None
+            #sys.exit(1)
+
+        # FIXME parse out status?
+        status = 'result' in resp
+
+#        logging.debug(f'RPC {value_method} status/resp = {status} {resp}')
+
+        if not status:
+            logging.error(f'RPC:{value_method} - error getting settings!')
+            return None
+
+        result = resp['result']
+
+        result_value = result.get(value_key, None)
+
+        match = False
+        for value_type in value_types:
+            match = isinstance(result_value, value_type)
+            if match:
+                break
+        if not match:
+            logging.error(f'get_scalar_type: {value_method} {value_key}: ' + \
+                          f'expected one of {value_types} got {result_value} ' + \
+                          f'type {type(result_value)}')
+            return None
+        else:
+            return result_value
+
+    def set_scalar_value(self, value_method, value_key, value):
+#        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
+
+        paramdict = {}
+        if value_key is not None:
+            paramdict['params'] = {}
+            paramdict['params'][value_key] = value
+        rc = self.send_server_request(value_method, paramdict)
+
+        if not rc:
+            logging.error('RPC:set_scalar_value - error')
+            return False
+
+        resp = self.wait_for_response(rc)
+
+        # FIXME parse out status?
+        status = 'result' in resp
+
+#        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
+
+        if not status:
+            logging.warning('RPC:set_scalar_value - error getting settings!')
+            return False
+
+        #FIXME need to look at result code
+        return True
+
+    def send_command(self, command, params={}):
+#        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
+
+        paramdict = {}
+        paramdict['params'] = {}
+        for k, v in params.items():
+            paramdict['params'][k] = v
+        rc = self.send_server_request(command, paramdict)
+
+        if not rc:
+            logging.error('RPC:set_scalar_value - error')
+            return False
+
+        resp = self.wait_for_response(rc)
+
+        # FIXME parse out status?
+        status = 'result' in resp
+
+#        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
+
+        if not status:
+            logging.warning('RPC:set_scalar_value - error getting settings!')
+            return False
+
+        #FIXME need to look at result code
+        return True

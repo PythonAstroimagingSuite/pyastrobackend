@@ -96,16 +96,18 @@ class DeviceBackend(BaseDeviceBackend):
         params['ClientTransactionID'] = self.request_id
         self.request_id += 1
         req = self._base_url(device_type, device_number) + prop
-        logging.debug(f'Sending GET req {req} params {params}')
+#        logging.debug(f'Sending GET req {req} params {params}')
         resp = requests.get(url=req, params=params)
         try:
             resp_json = resp.json()
         except json.decoder.JSONDecodeError:
             logging.error('resp json parse error!')
+            logging.debug(f'Sent GET req {req} params {params}')
+            logging.debug(f'Response was {resp}')
             return None
 
-        logging.debug(f'Response was {resp}')
-        logging.debug(f'Response JSON = {repr(resp_json)[:200]}')
+#        logging.debug(f'Response was {resp}')
+#        logging.debug(f'Response JSON = {repr(resp_json)[:200]}')
 
         if not DeviceBackend._verify_response(resp):
             return None

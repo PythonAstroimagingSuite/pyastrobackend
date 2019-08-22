@@ -2,7 +2,7 @@ import sys
 import time
 import logging
 
-from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
+from pyastrobackend.RPCBackend import DeviceBackend as Backend
 from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
 
 if __name__ == '__main__':
@@ -61,7 +61,13 @@ if __name__ == '__main__':
     if origpos is None:
         sys.exit(1)
 
-    target = origpos + 1000
+    if origpos > max_abspos/2:
+        target = int(max_abspos*0.1)
+    else:
+        target = int(max_abspos*0.9)
+
+    logging.info(f'target = {target}')
+
     if target > max_abspos:
         logging.error(f'Move test would move past max pos of {max_abspos}')
         sys.exit(1)
@@ -69,6 +75,11 @@ if __name__ == '__main__':
     logging.info(f'Moving to {target}')
     rc = focuser.move_absolute_position(target)
     logging.info(f'rc for move is {rc}')
+
+    if not rc:
+        logging.error('Failed to move - quitting')
+        sys.exit(-1)
+
     i = 0
     while i < 4:
         logging.info('Getting focuser position')
@@ -82,8 +93,16 @@ if __name__ == '__main__':
     rc = focuser.stop()
     logging.info(f'rc for stop is {rc}')
 
+    if not rc:
+        logging.error('Failed to stop - quitting')
+        sys.exit(-1)
+
     logging.info(f'moving back to original pos of {origpos}')
     rc = focuser.move_absolute_position(origpos)
+
+    if not rc:
+        logging.error('Failed to move - quitting')
+        sys.exit(-1)
 
     while True:
         logging.info('Getting focuser position')
@@ -93,6 +112,10 @@ if __name__ == '__main__':
         focus_temp = focuser.get_current_temperature()
         logging.info(f'Current temp = {focus_temp} C')
         logging.info(f'is_moving = {focuser.is_moving()}')
+
+        if abspos == origpos:
+            logging.info(f'Reached {origpos}, test over!')
+            break
 
         time.sleep(2)
 
