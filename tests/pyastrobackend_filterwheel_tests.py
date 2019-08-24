@@ -29,6 +29,7 @@ if __name__ == '__main__':
                         choices = get_backend_choices(),
                         help="Backend to use")
     parser.add_argument('driver', type=str, help="Driver name to use")
+    parser.add_argument('--debug', action='store_true', help="Enable debug output")
 
     args = parser.parse_args()
     logging.info(f'command args = {args}')
@@ -40,6 +41,9 @@ if __name__ == '__main__':
     if args.driver is None:
         logging.error('Must supply name of driver to use!')
         sys.exit(1)
+
+    if args.debug:
+        CH.setLevel(logging.DEBUG)
 
     logging.info(f'connecting to backend {args.backend}')
     backend = get_backend(args.backend)
