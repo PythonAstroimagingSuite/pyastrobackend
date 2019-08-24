@@ -1,0 +1,4 @@
+Device Focuser 0 (ASCOM.Simulator.Focuser) connected OK and is available
+Device Camera 0 (ASCOM.Simulator.Camera) connected OK and is available
+Device Telescope 0 (EQMOD_SIM.Telescope) connected OK and is available
+Device FilterWheel 0 (ASCOM.Simulator.FilterWheel) connected OK and is available

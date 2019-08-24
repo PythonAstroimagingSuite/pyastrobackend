@@ -17,7 +17,7 @@ from pyastrobackend.Alpaca.Mount import Mount
 
 class DeviceBackend(BaseDeviceBackend):
 
-    def __init__(self, ip, port):
+    def __init__(self, ip='127.0.0.1', port=11111):
 
         self.server_ip = ip
         self.server_port = port
