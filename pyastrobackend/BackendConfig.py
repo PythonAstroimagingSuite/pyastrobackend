@@ -29,6 +29,9 @@ def get_backend_for_os():
     else:
         raise Exception(f'Sorry: no implementation for your platform ({os.name}) available')
 
+def get_backend_choices():
+    return ['ASCOM', 'ALPACA', 'RPC', 'INDI']
+
 def get_backend(backend_name):
     global LOADED_BACKENDS
 

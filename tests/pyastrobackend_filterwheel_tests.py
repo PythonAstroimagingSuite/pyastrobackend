@@ -3,7 +3,7 @@ import time
 import argparse
 import logging
 
-from pyastrobackend.BackendConfig import get_backend
+from pyastrobackend.BackendConfig import get_backend, get_backend_choices
 
 if __name__ == '__main__':
     FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('backend',
-                        choices = ['ASCOM', 'RPC', 'ALPACA', 'INDI'],
+                        choices = get_backend_choices(),
                         help="Backend to use")
     parser.add_argument('driver', type=str, help="Driver name to use")
 
