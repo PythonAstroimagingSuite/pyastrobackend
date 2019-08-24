@@ -293,6 +293,23 @@ class Camera(BaseCamera):
         # otherwise UNKNOWN
         return -1
 
+    def get_settings(self):
+        setdict = {}
+        setdict['binning'] = self.get_binning()
+        setdict['framesize'] = self.get_size()
+        setdict['pixelsize'] = self.get_pixelsize()
+        setdict['egain'] = self.get_egain()
+        setdict['camera_gain'] = self.get_camera_gain()
+        setdict['camera_offset'] = self.get_camera_offset()
+        setdict['camera_usbbandwidth'] = self.get_camera_usbbandwidth()
+        setdict['camera_current_temperature'] = self.get_current_temperature()
+        setdict['camera_target_temperature'] = self.get_target_temperature()
+        setdict['cooler_state'] = self.get_cooler_state()
+        setdict['cooler_power'] = self.get_cooler_power()
+        setdict['roi'] = self.get_frame()
+
+        return setdict
+
     def start_exposure(self, expos):
  #       global blobEvent
         logging.debug(f'Exposing image for {expos} seconds')
