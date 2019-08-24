@@ -282,6 +282,28 @@ class BaseCamera(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def supports_saveimage(self):
+        """
+        Test if drive has 'saveimage' method.
+
+        :return: True if available, False otherwise.
+        :rtype: bool
+        """
+        pass
+
+    @abstractmethod
+    def save_image_data(self):
+        """
+        Save image data from last image taken to file.
+        NOTE: Not availale for all backends - check with supports_saveimage().
+
+        :param filename: Filename for output file
+        :ptype str:
+        :return: Image data or None if not available.
+        """
+        pass
+
+    @abstractmethod
     def get_image_data(self):
         """
         Return image data from last image taken.

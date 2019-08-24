@@ -462,6 +462,9 @@ class Camera(BaseCamera):
 # FIXME ASCOM get_image_data returns a numpy array of the native camera data type!
         return hdulist
 
+    def supports_saveimage(self):
+        return True
+
     def save_image_data(self, path, overwrite=False):
         blobEvent = self.backend.indiclient.getBlobEvent()
         if blobEvent is None:

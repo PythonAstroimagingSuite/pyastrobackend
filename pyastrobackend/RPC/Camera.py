@@ -135,6 +135,9 @@ class Camera(RPCDevice, BaseCamera):
         logging.warning('RPC Camera get_exposure_progress() not implemented')
         return -1
 
+    def supports_saveimage(self):
+        return True
+
     def save_image_data(self, path, overwrite=False):
 #        logging.debug(f'RPC:Saving image to {path}')
 

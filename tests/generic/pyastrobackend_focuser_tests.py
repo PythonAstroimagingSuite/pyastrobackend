@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # connect to focuser
     focuser = backend.newFocuser()
 
-    logging.info(f'Connecting to Focuser driver {args.driver}')
+    logging.info(f'Connecting to focuser driver {args.driver}')
     rc = focuser.connect(args.driver)
     logging.info(f'connect result = {rc}')
 

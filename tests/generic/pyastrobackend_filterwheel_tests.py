@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # connect to focuser
     wheel = backend.newFilterWheel()
 
-    logging.info(f'Connecting to FilterWheel driver {args.driver}')
+    logging.info(f'Connecting to filter wheel driver {args.driver}')
     rc = wheel.connect(args.driver)
     logging.info(f'connect result = {rc}')
 

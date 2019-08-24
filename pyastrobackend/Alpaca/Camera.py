@@ -171,6 +171,9 @@ class Camera(AlpacaDevice, BaseCamera):
 
         return image_data
 
+    def supports_saveimage(self):
+        return False
+
     def save_image_data(self, path, overwrite=False):
         logging.warning('camera.save_image_data() NOT IMPLEMENTED FOR Alpaca CAMERA!')
         return False

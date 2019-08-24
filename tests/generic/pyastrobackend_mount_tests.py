@@ -6,8 +6,6 @@ import argparse
 from pyastrobackend.BackendConfig import get_backend, get_backend_choices
 
 if __name__ == '__main__':
-
-
     FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
 
     logging.basicConfig(filename='pyastrobackend_mount_tests.log',
@@ -58,7 +56,7 @@ if __name__ == '__main__':
     # connect to focuser
     mount = backend.newMount()
 
-    logging.info(f'Connecting to Focuser driver {args.driver}')
+    logging.info(f'Connecting to mount driver {args.driver}')
     rc = mount.connect(args.driver)
     logging.info(f'connect result = {rc}')
 
