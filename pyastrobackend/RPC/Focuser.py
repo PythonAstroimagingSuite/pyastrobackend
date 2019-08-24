@@ -29,26 +29,22 @@ class Focuser(RPCDevice, BaseFocuser):
 
 
     def get_absolute_position(self):
-        val = self.get_scalar_value('focuser_get_absolute_position',
+        return self.get_scalar_value('focuser_get_absolute_position',
                                     'absolute_position',
                                     (float,int))
-        return val
 
     def get_max_absolute_position(self):
-        val = self.get_scalar_value('focuser_get_max_absolute_position',
+        return self.get_scalar_value('focuser_get_max_absolute_position',
                                     'max_absolute_position',
                                     (float,int))
-        return val
 
     def get_current_temperature(self):
-        val = self.get_scalar_value('focuser_get_current_temperature',
+       return self.get_scalar_value('focuser_get_current_temperature',
                                     'current_temperature',
                                     (float,int))
-        return val
 
     def is_moving(self):
-        val = self.get_scalar_value('focuser_is_moving', 'is_moving', (bool,))
-        return val
+        return self.get_scalar_value('focuser_is_moving', 'is_moving', (bool,))
 
     def stop(self):
         return self.send_command('focuser_stop', {})

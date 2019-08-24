@@ -6,6 +6,7 @@ from pyastrobackend.BaseBackend import BaseDeviceBackend
 from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
 from pyastrobackend.RPC.Mount import Mount as RPC_Mount
+from pyastrobackend.RPC.FilterWheel import FilterWheel as RPC_FilterWheel
 
 class DeviceBackend(BaseDeviceBackend):
 

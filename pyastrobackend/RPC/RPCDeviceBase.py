@@ -466,3 +466,7 @@ class RPCDevice:
 
         #FIXME need to look at result code
         return True
+
+
+    def get_list_value(self, value_method, value_key):
+        return self.get_scalar_value(value_method, value_key, (list,))
