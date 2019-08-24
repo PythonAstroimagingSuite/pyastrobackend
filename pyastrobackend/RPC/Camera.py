@@ -260,6 +260,9 @@ class Camera(RPCDevice, BaseCamera):
                 return False
 
         self.roi = (0, 0, self.frame_width/self.binning, self.frame_height/self.binning)
+
+        #logging.debug(f'rpc camera set_binning: bin = {self.binning} roi = {self.roi}')
+
         return True
 
     def get_max_binning(self):
