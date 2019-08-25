@@ -349,7 +349,7 @@ class RPCDevice:
         #logging.debug(f'send_server_req: queue_rpc_command returned {rc}')
         return rc
 
-    def wait_for_response(self, reqid, timeout=15):
+    def wait_for_response(self, reqid, timeout=90):
         # FIXME this shouldn't be a problem unless RPC Server dies
         # FIXME add timeout
         # block until we get answer
@@ -427,6 +427,9 @@ class RPCDevice:
             return False
 
         resp = self.wait_for_response(rc)
+        if resp is None:
+            logging.error('RPC:set_scalar_value - server response was None!')
+            return False
 
         # FIXME parse out status?
         status = 'result' in resp
@@ -450,10 +453,14 @@ class RPCDevice:
         rc = self.send_server_request(command, paramdict)
 
         if not rc:
-            logging.error('RPC:set_scalar_value - error')
+            logging.error('RPC:send_command - error')
             return False
 
         resp = self.wait_for_response(rc)
+
+        if resp is None:
+            logging.error('RPC:send_command - server response was None!')
+            return False
 
         # FIXME parse out status?
         status = 'result' in resp
@@ -461,7 +468,7 @@ class RPCDevice:
 #        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
 
         if not status:
-            logging.warning('RPC:set_scalar_value - error getting settings!')
+            logging.error('RPC:send_command - error getting settings!')
             return False
 
         #FIXME need to look at result code

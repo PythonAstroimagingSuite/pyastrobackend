@@ -162,7 +162,7 @@ class Mount(RPCDevice, BaseMount):
         #check
         val = self.get_scalar_value('mount_get_tracking', 'tracking', (bool,))
         rc = val == onoff
-        logging.debug(f'set_tracking: self.mount.Tracking = {self.mount.Tracking} rc = {rc}')
+        logging.debug(f'set_tracking: Tracking = {val} rc = {rc}')
         return rc
 
     def get_tracking(self):
