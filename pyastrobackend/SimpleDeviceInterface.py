@@ -2,69 +2,80 @@ import os
 import time
 import logging
 
-def get_backend_for_os():
-    import os
-    # chose an implementation, depending on os
-    if os.name == 'nt': #sys.platform == 'win32':
-        return 'ASCOM'
-    elif os.name == 'posix':
-        return 'INDI'
-    else:
-        raise Exception("Sorry: no implementation for your platform ('%s') available" % os.name)
+import astropy.io.fits as pyfits
 
-if 'PYASTROBACKEND' in os.environ:
-    BACKEND = os.environ['PYASTROBACKEND']
-else:
-    BACKEND = get_backend_for_os()
+from pyastrobackend.BackendConfig import get_backend_for_os, get_backend, get_backend_choices
 
-#print(f'SimpleDeviceInterface: BACKEND = {BACKEND}')
-
-# debugging override with simulator
-#BACKEND = 'SIMULATOR'
-
-if BACKEND == 'ASCOM':
-    from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
-elif BACKEND == 'INDI':
-    from pyastrobackend.INDIBackend import DeviceBackend as Backend
-elif BACKEND == 'SIMULATOR':
-    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import DeviceBackend as Backend
-else:
-    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-
-if BACKEND == 'ASCOM':
-    from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
-    from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
-elif BACKEND == 'INDI':
-    from pyastrobackend.INDIBackend import Focuser
-elif BACKEND == 'SIMULATOR':
-    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Focuser
-else:
-    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-
-if BACKEND == 'ASCOM':
-    from pyastrobackend.ASCOM.FilterWheel import FilterWheel
-elif BACKEND == 'INDI':
-    from pyastrobackend.INDIBackend import FilterWheel
-elif BACKEND == 'SIMULATOR':
-    raise Exception('SIMULATOR driver not supported for FilterWheel')
-else:
-    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-
-if BACKEND == 'ASCOM':
-    from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
-    from pyastrobackend.RPC.Camera import Camera as RPC_Camera
-elif BACKEND == 'INDI':
-    from pyastrobackend.INDIBackend import Camera as INDI_Camera
-elif BACKEND == 'SIMULATOR':
-    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Camera as Sim_Camera
-else:
-    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
+#def get_backend_for_os():
+#    import os
+#    # chose an implementation, depending on os
+#    if os.name == 'nt': #sys.platform == 'win32':
+#        return 'ASCOM'
+#    elif os.name == 'posix':
+#        return 'INDI'
+#    else:
+#        raise Exception("Sorry: no implementation for your platform ('%s') available" % os.name)
+#
+#if 'PYASTROBACKEND' in os.environ:
+#    BACKEND = os.environ['PYASTROBACKEND']
+#else:
+#    BACKEND = get_backend_for_os()
+#
+##print(f'SimpleDeviceInterface: BACKEND = {BACKEND}')
+#
+## debugging override with simulator
+##BACKEND = 'SIMULATOR'
+#
+#if BACKEND == 'ASCOM':
+#    from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
+#elif BACKEND == 'INDI':
+#    from pyastrobackend.INDIBackend import DeviceBackend as Backend
+#elif BACKEND == 'SIMULATOR':
+#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import DeviceBackend as Backend
+#else:
+#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
+#
+#if BACKEND == 'ASCOM':
+#    from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
+#    from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
+#elif BACKEND == 'INDI':
+#    from pyastrobackend.INDIBackend import Focuser
+#elif BACKEND == 'SIMULATOR':
+#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Focuser
+#else:
+#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
+#
+#if BACKEND == 'ASCOM':
+#    from pyastrobackend.ASCOM.FilterWheel import FilterWheel
+#elif BACKEND == 'INDI':
+#    from pyastrobackend.INDIBackend import FilterWheel
+#elif BACKEND == 'SIMULATOR':
+#    raise Exception('SIMULATOR driver not supported for FilterWheel')
+#else:
+#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
+#
+#if BACKEND == 'ASCOM':
+#    from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
+#    from pyastrobackend.RPC.Camera import Camera as RPC_Camera
+#elif BACKEND == 'INDI':
+#    from pyastrobackend.INDIBackend import Camera as INDI_Camera
+#elif BACKEND == 'SIMULATOR':
+#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Camera as Sim_Camera
+#else:
+#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
 
 class SimpleDeviceInterface:
     def __init__(self):
-        self.backend = Backend()
+        pass
+        #def_backend = get_backend_for_os()
+        #self.backend = get_backend(def_backend)
 
-    def connect_backend(self):
+    def connect_backend(self, backend_name=None):
+        if backend_name is None:
+            backend_name = get_backend_for_os()
+
+        self.backend = get_backend(backend_name)
+
         rc = self.backend.connect()
         if not rc:
             logging.error('Failed to connect to backend!')
@@ -73,18 +84,22 @@ class SimpleDeviceInterface:
 
     def connect_focuser(self, driver):
         rc = None
-        if BACKEND == 'ASCOM':
-            if driver == 'RPC':
-                focuser = RPC_Focuser()
-            else:
-                focuser = Focuser()
-            rc = focuser.connect(driver)
-        elif BACKEND == 'INDI':
-            focuser = Focuser(self.backend)
-            rc = focuser.connect(driver)
-        elif BACKEND == 'SIMULATOR':
-            focuser = Focuser()
-            rc = True
+
+#        if BACKEND == 'ASCOM':
+#            if driver == 'RPC':
+#                focuser = RPC_Focuser()
+#            else:
+#                focuser = Focuser()
+#            rc = focuser.connect(driver)
+#        elif BACKEND == 'INDI':
+#            focuser = Focuser(self.backend)
+#            rc = focuser.connect(driver)
+#        elif BACKEND == 'SIMULATOR':
+#            focuser = Focuser()
+#            rc = True
+
+        focuser = self.backend.newFocuser()
+        rc = focuser.connect(driver)
 
         if rc:
             return focuser
@@ -93,15 +108,19 @@ class SimpleDeviceInterface:
 
     def connect_filterwheel(self, driver):
         rc = None
-        if BACKEND == 'ASCOM':
-            wheel = FilterWheel()
-            rc = wheel.connect(driver)
-        elif BACKEND == 'INDI':
-            wheel = FilterWheel(self.backend)
-            rc = wheel.connect(driver)
-        elif BACKEND == 'SIMULATOR':
-            wheel = FilterWheel()
-            rc = True
+
+#        if BACKEND == 'ASCOM':
+#            wheel = FilterWheel()
+#            rc = wheel.connect(driver)
+#        elif BACKEND == 'INDI':
+#            wheel = FilterWheel(self.backend)
+#            rc = wheel.connect(driver)
+#        elif BACKEND == 'SIMULATOR':
+#            wheel = FilterWheel()
+#            rc = True
+
+        wheel = self.backend.newFilterWheel()
+        rc = wheel.connect(driver)
 
         if rc:
             return wheel
@@ -131,24 +150,27 @@ class SimpleDeviceInterface:
             time.sleep(0.5)
         time.sleep(0.5) # just be sure its done
 
+        return ntimes > 2
+
     # FIXME INDI stuff is broken!!!!
     def connect_camera(self, camera_driver):
-        if BACKEND == 'ASCOM':
-            #driver = 'MaximDL'
-            if camera_driver == 'MaximDL':
-                cam = MaximDL_Camera()
-            elif camera_driver == 'RPC':
-                cam = RPC_Camera()
-        elif BACKEND == 'INDI':
-            #driver = 'INDICamera'
-            cam = INDI_Camera(self.backend)
-        elif BACKEND == 'SIMULATOR':
-            #driver = 'Simulator'
-            cam = Sim_Camera()
+#        if BACKEND == 'ASCOM':
+#            #driver = 'MaximDL'
+#            if camera_driver == 'MaximDL':
+#                cam = MaximDL_Camera()
+#            elif camera_driver == 'RPC':
+#                cam = RPC_Camera()
+#        elif BACKEND == 'INDI':
+#            #driver = 'INDICamera'
+#            cam = INDI_Camera(self.backend)
+#        elif BACKEND == 'SIMULATOR':
+#            #driver = 'Simulator'
+#            cam = Sim_Camera()
 
         logging.debug(f'connect_camera: driver =  {camera_driver}')
-
+        cam = self.backend.newCamera()
         rc = cam.connect(camera_driver)
+
     #    if driver == 'INDICamera':
     #        rc = cam.connect(camera_driver)
     #
@@ -205,11 +227,25 @@ class SimpleDeviceInterface:
             # FIXME we only call this because the
             # MaximDL backend needs it to save to disk
             # RPC backend already has saved it to disk by now
-            if BACKEND == 'INDI':
+            #if BACKEND == 'INDI':
+            if not cam.supports_saveimage():
                 # FIXME need better way to handle saving image to file!
                 image_data = cam.get_image_data()
-                # this is an hdulist
-                image_data.writeto(ff, overwrite=True)
+
+                #
+                # FIXME INDIBackend returns a FITS image
+                #       ASCOMBackend returns a numpy array
+                #       This is a temporary HACK to address this
+                #       but needs to be better handled!
+                #
+                try:
+                    pri_header = image_data[0].header
+                    image_data = image_data[0].data
+                except:
+                    pass
+
+                pyfits.writeto(ff, image_data, overwrite=True)
+
                 result = True
             else:
                 result = cam.save_image_data(ff)
