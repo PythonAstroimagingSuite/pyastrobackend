@@ -37,7 +37,7 @@ class Mount(BaseMount):
         else:
             try:
                 self.mount.Connected = True
-            except Exception as e:
+            except Exception:
                 logging.error('ASCOMBackend:mount:connect() Exception ->', exc_info=True)
                 return False
 

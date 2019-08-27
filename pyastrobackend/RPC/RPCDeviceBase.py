@@ -350,9 +350,6 @@ class RPCDevice:
         return rc
 
     def wait_for_response(self, reqid, timeout=90):
-        # FIXME this shouldn't be a problem unless RPC Server dies
-        # FIXME add timeout
-        # block until we get answer
         logging.debug(f'wait_for_response: waiting for reqid={reqid} timeout={timeout}')
         resp = None
         waited = time.time()
@@ -370,7 +367,6 @@ class RPCDevice:
             logging.debug(f'Response for req_id={reqid} is {resp}')
 
         return resp
-
 
     def get_scalar_value(self, value_method, value_key, value_types):
 #        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')

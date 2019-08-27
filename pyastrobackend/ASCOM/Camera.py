@@ -271,7 +271,7 @@ class Camera(BaseCamera):
     def get_cooler_power(self):
         try:
             return self.cam.CoolerPower
-        except Exception as e:
+        except Exception:
             logging.warning('camera.get_cooler_power() failed!')
             logging.error('Exception ->', exc_info=True)
             return 0
