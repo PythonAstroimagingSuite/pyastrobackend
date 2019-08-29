@@ -74,6 +74,8 @@ class SimpleDeviceInterface:
         if backend_name is None:
             backend_name = get_backend_for_os()
 
+        logging.info(f'SDI:connect_backend: backend={backend_name}')
+
         self.backend = get_backend(backend_name)
 
         rc = self.backend.connect()

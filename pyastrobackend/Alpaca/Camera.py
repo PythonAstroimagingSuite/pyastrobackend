@@ -261,16 +261,16 @@ class Camera(AlpacaDevice, BaseCamera):
         return(sx, sy, numx, numy)
 
     def set_frame(self, minx, miny, width, height):
-        rc = self.set_prop('startx', {'StartX' : minx})
+        rc = self.set_prop('startx', {'StartX' : int(minx)})
         if not rc:
             return rc
-        rc = self.set_prop('starty', {'StartY' : miny})
+        rc = self.set_prop('starty', {'StartY' : int(miny)})
         if not rc:
             return rc
-        rc = self.set_prop('numx', {'NumX' : width})
+        rc = self.set_prop('numx', {'NumX' : int(width)})
         if not rc:
             return rc
-        rc = self.set_prop('numy', {'NumY' : height})
+        rc = self.set_prop('numy', {'NumY' : int(height)})
         return rc
 
     def get_min_max_exposure(self):
