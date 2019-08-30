@@ -28,6 +28,9 @@ class DeviceBackend(BaseDeviceBackend):
 
         self.connected = False
 
+    def name(self):
+        return 'ALPACA'
+
     def connect(self):
         self.connected = True
         return True
@@ -53,9 +56,21 @@ class DeviceBackend(BaseDeviceBackend):
 
     def getDevicesByClass(self, device_class):
         # for now just return "0" to "3" for the device number on remote server
+        # class should be 'camera', 'focuser', 'filterwheel', or 'telescope'
+        # CASE MATTERS
+        if device_class not in ['camera', 'ccd', 'focuser', 'filterwheel', 'telescope']:
+            logging.error(f'Alpaca getDevicesbyClass: device_class {device_class} ' + \
+                          f'not "camera", "ccd", "focuser", "filterwheel", or "telescope"')
+            return []
+
+        # accept either 'ccd' or 'camera' for camera class
+        # but alpaca wants 'camera'
+        if device_class == 'ccd':
+            device_class = 'camera'
+
         vals = []
         for d in ["0", "1", "2", "3"]:
-            vals.append(f'Alpaca:{d}')
+            vals.append(f'ALPACA:{device_class}:{d}')
         return vals
 
     def _base_url(self, device_type, device_number):

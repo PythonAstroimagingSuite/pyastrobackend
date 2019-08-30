@@ -30,6 +30,9 @@ class DeviceBackend(BaseDeviceBackend):
         self.connected = False
 #        self.mainThread = mainThread
 
+    def name(self):
+        return 'ASCOM'
+
     def connect(self):
         self.connected = True
         return True

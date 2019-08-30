@@ -96,6 +96,9 @@ class DeviceBackend(BaseDeviceBackend):
         self.connected = False
         self.indiclient = None
 
+    def name(self):
+        return 'INDI'
+
     def connect(self):
         if self.connected:
             logging.warning('connect() already connected!')

@@ -13,6 +13,9 @@ class DeviceBackend(BaseDeviceBackend):
     def __init__(self, mainThread=True):
         self.connected = False
 
+    def name(self):
+        return 'RPC'
+
     def connect(self):
         self.connected = True
         return True
