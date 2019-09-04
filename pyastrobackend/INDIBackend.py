@@ -172,8 +172,16 @@ class DeviceBackend(BaseDeviceBackend):
                'ccd'
                'focuser'
                'filter'
-               'telscope'
-               'guider'       """
+               'telescope'
+               'guider'
+
+            Also accepts 'camera' and 'mount'.
+               """
+
+        if device_class == 'camera':
+            device_class = 'ccd'
+        elif device_class == 'mount':
+            device_class = 'telescope'
 
         devs = self.indiclient.getDevices()
         matches = []

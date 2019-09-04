@@ -58,15 +58,17 @@ class DeviceBackend(BaseDeviceBackend):
         # for now just return "0" to "3" for the device number on remote server
         # class should be 'camera', 'focuser', 'filterwheel', or 'telescope'
         # CASE MATTERS
-        if device_class not in ['camera', 'ccd', 'focuser', 'filterwheel', 'telescope']:
+        if device_class not in ['camera', 'ccd', 'focuser', 'filterwheel', 'mount', 'telescope']:
             logging.error(f'Alpaca getDevicesbyClass: device_class {device_class} ' + \
-                          f'not "camera", "ccd", "focuser", "filterwheel", or "telescope"')
+                          f'not "camera", "ccd", "focuser", "filterwheel", "mount" or "telescope"')
             return []
 
         # accept either 'ccd' or 'camera' for camera class
         # but alpaca wants 'camera'
         if device_class == 'ccd':
             device_class = 'camera'
+        elif device_class == 'mount':
+            device_class = 'telescope'
 
         vals = []
         for d in ["0", "1", "2", "3"]:
