@@ -138,10 +138,14 @@ class SimpleDeviceInterface:
 
             curpos = focuser.get_absolute_position()
             if abs(curpos - lastpos) < 1:
-                ntimes += 1
-
-            if ntimes > 2:
+                ntimes = 3
                 break
+
+#            if abs(curpos - lastpos) < 1:
+#                ntimes += 1
+#
+#            if ntimes > 2:
+#                break
 
             lastpos = curpos
 
@@ -150,7 +154,8 @@ class SimpleDeviceInterface:
 #                break
 
             time.sleep(0.5)
-        time.sleep(0.5) # just be sure its done
+
+        #time.sleep(0.5) # just be sure its done
 
         return ntimes > 2
 
