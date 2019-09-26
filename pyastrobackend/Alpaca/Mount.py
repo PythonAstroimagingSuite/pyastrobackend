@@ -63,7 +63,8 @@ class Mount(AlpacaDevice, BaseMount):
     def slew(self, ra, dec):
         """Slew to ra/dec with ra in decimal hours and dec in degrees"""
         params = { 'RightAscension' : ra, 'Declination' : dec}
-        return self.set_prop('slewtocoordinates', params)
+        #return self.set_prop('slewtocoordinates', params)
+        return self.set_prop('slewtocoordinatesasync', params)
 
     def sync(self, ra, dec):
         """Sync to ra/dec with ra in decimal hours and dec in degrees"""
