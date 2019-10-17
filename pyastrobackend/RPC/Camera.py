@@ -111,8 +111,10 @@ class Camera(RPCDevice, BaseCamera):
         return True
 
     def stop_exposure(self):
-        logging.warning('RPC Camera stop_exposure() not implemented')
-        return None
+        #logging.warning('RPC Camera stop_exposure() not implemented')
+        #return None
+        params = {}
+        return self.send_command('abort_image', params)
 
     def check_exposure(self):
         # connect to response from RPC server in process()

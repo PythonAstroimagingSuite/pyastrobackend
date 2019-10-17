@@ -324,6 +324,7 @@ class RPCDevice:
         while True:
             logging.info('Waiting on connection')
             if self.connected:
+                logging.info('Connection made!')
                 break
             time.sleep(1)
 
