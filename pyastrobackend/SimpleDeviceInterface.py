@@ -82,9 +82,14 @@ class SimpleDeviceInterface:
         if not rc:
             logging.error('Failed to connect to backend!')
 
+        # set all backends
+        self.camera_backend = self.backend
+        self.focuser_backend = self.backend
+        self.filterwheel_backend = self.backend
+
         return rc
 
-    def connect_focuser(self, driver):
+    def connect_focuser(self, driver, backend_name=None):
         rc = None
 
 #        if BACKEND == 'ASCOM':
@@ -100,7 +105,28 @@ class SimpleDeviceInterface:
 #            focuser = Focuser()
 #            rc = True
 
-        focuser = self.backend.newFocuser()
+        # if backend_name is None we assume they connected with connect_backend
+        # and all devices share the same backend
+        if backend_name is not None:
+            logging.info(f'SDI:connect_focuser: focuser_backend={backend_name}')
+
+            self.focuser_backend = get_backend(backend_name)
+
+            rc = self.focuser_backend.connect()
+            if not rc:
+                logging.error('Failed to connect to backend!')
+                return None
+        else:
+            if self.focuser_backend is not None:
+                backend_name = self.focuser_backend.name()
+            else:
+                backend_name = None
+
+        if backend_name is None:
+            logging.error('No backend specified! Cannot connect focuser!')
+            return None
+
+        focuser = self.focuser_backend.newFocuser()
         rc = focuser.connect(driver)
 
         if rc:
@@ -108,7 +134,7 @@ class SimpleDeviceInterface:
         else:
             return None
 
-    def connect_filterwheel(self, driver):
+    def connect_filterwheel(self, driver, backend_name=None):
         rc = None
 
 #        if BACKEND == 'ASCOM':
@@ -121,7 +147,28 @@ class SimpleDeviceInterface:
 #            wheel = FilterWheel()
 #            rc = True
 
-        wheel = self.backend.newFilterWheel()
+        # if backend_name is None we assume they connected with connect_backend
+        # and all devices share the same backend
+        if backend_name is not None:
+            logging.info(f'SDI:connect_filterwheel: filterwheel_backend={backend_name}')
+
+            self.filterwheel_backend = get_backend(backend_name)
+
+            rc = self.filterwheel_backend.connect()
+            if not rc:
+                logging.error('Failed to connect to backend!')
+                return None
+        else:
+            if self.filterwheel_backend is not None:
+                backend_name = self.filterwheel_backend.name()
+            else:
+                backend_name = None
+
+        if backend_name is None:
+            logging.error('No backend specified! Cannot connect filter wheel!')
+            return None
+
+        wheel = self.filterwheel_backend.newFilterWheel()
         rc = wheel.connect(driver)
 
         if rc:
@@ -160,7 +207,7 @@ class SimpleDeviceInterface:
         return ntimes > 2
 
     # FIXME INDI stuff is broken!!!!
-    def connect_camera(self, camera_driver):
+    def connect_camera(self, camera_driver,  backend_name=None):
 #        if BACKEND == 'ASCOM':
 #            #driver = 'MaximDL'
 #            if camera_driver == 'MaximDL':
@@ -174,8 +221,43 @@ class SimpleDeviceInterface:
 #            #driver = 'Simulator'
 #            cam = Sim_Camera()
 
+        # if backend_name is None we assume they connected with connect_backend
+        # and all devices share the same backend
+        if backend_name is not None:
+
+            logging.info(f'SDI:connect_camera: camera_backend={backend_name}')
+
+            self.camera_backend = get_backend(backend_name)
+
+            rc = self.camera_backend.connect()
+            if not rc:
+                logging.error('Failed to connect to backend!')
+                return None
+        else:
+            if self.camera_backend is not None:
+                backend_name = self.camera_backend.name()
+            else:
+                backend_name = None
+
+
+        logging.info(f'connect_camera: backend_name = {backend_name}')
+
+        if backend_name is None:
+            logging.error('No backend specified! Cannot connect camera!')
+            return None
+
         logging.debug(f'connect_camera: driver =  {camera_driver}')
-        cam = self.backend.newCamera()
+
+        # YUCK MAXIM MIXED IN
+        if backend_name == 'ASCOM':
+            if camera_driver == 'MaximDL':
+                logging.info('Creating MaximDL camera object')
+                cam = self.camera_backend.newMaximDLCamera()
+            else:
+                cam = self.camera_backend.newCamera()
+        else:
+            cam = self.camera_backend.newCamera()
+
         rc = cam.connect(camera_driver)
 
     #    if driver == 'INDICamera':
@@ -193,6 +275,8 @@ class SimpleDeviceInterface:
         if not rc:
             logging.error('connect_camera(): Unable to connect to camera!')
             return None
+
+        self.camera_driver = camera_driver
         return cam
 
     # take exposure
@@ -222,8 +306,10 @@ class SimpleDeviceInterface:
                 elapsed = focus_expos
 
         logging.debug('Exposure complete')
+
         # give it some time seems like Maxim isnt ready if we hit it too fast
-        #time.sleep(1)
+        if self.camera_driver == 'MaximDL':
+            time.sleep(2)
 
         ff = os.path.join(os.getcwd(), output_filename)
 

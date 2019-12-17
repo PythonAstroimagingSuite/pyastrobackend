@@ -113,6 +113,9 @@ class Camera(BaseCamera):
         logging.warning('MaximDL Camera get_exposure_progress() not implemented')
         return -1
 
+    def supports_saveimage(self):
+        return True
+
     def save_image_data(self, path, overwrite=False):
         #
         # FIXME overwrite probably ignored Maxim doesn't have option
