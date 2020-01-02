@@ -278,8 +278,9 @@ class RPCDeviceThread(Thread):
         See if response available for request id req_id and returns it.
         Removes from list of requests.
         """
-        logging.debug(f'check_rpc_command_status: req_id = {req_id}')
-        logging.debug(f'check_rpc_command_status: self.responses={self.responses}')
+        if len(self.responses) > 0:
+            logging.debug(f'check_rpc_command_status: req_id = {req_id}')
+            logging.debug(f'check_rpc_command_status: self.responses={self.responses}')
         for resp in self.responses:
             logging.debug(f'check_rpc_command_status: checking resp={resp}')
             if resp.get('id', None) == req_id:
@@ -360,12 +361,12 @@ class RPCDevice:
             if resp is not None:
                 logging.debug(f'wait_for_response: Found resp={resp}')
                 break
-            time.sleep(1)
+            time.sleep(0.05)  # was 1s
 
         if resp is None:
             logging.error(f'RPC wait for serverreq_id={reqid}  TIMEOUT ->  resp is None!')
         else:
-            logging.debug(f'Response for req_id={reqid} is {resp}')
+            logging.debug(f'Response for req_id={reqid} took {time.time()-waited:4.3f} s and is {resp}')
 
         return resp
 

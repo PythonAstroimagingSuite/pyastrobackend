@@ -8,7 +8,7 @@ from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 
 if __name__ == '__main__':
 #    FORMAT = '%(asctime)s %(levelname)-8s %(message)s'
-    FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
+    FORMAT = '%(asctime)s.%(msecs)03d [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
     logging.basicConfig(filename='pyastrobackend_rpc_ccd_tests.log',
                         filemode='w',
                         level=logging.DEBUG,

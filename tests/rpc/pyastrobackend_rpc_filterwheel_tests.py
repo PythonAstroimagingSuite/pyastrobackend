@@ -5,7 +5,7 @@ import logging
 from pyastrobackend.RPCBackend import DeviceBackend as Backend
 
 if __name__ == '__main__':
-    FORMAT = '%(asctime)s [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
+    FORMAT = '%(asctime)s.%(msecs)03d [%(filename)20s:%(lineno)3s - %(funcName)20s() ] %(levelname)-8s %(message)s'
 
     logging.basicConfig(filename='pyastrobackend_rpc_filterwheel_tests.log',
                         filemode='w',
@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     # add to screen as well
     LOG = logging.getLogger()
-    formatter = logging.Formatter('%(asctime)s %(levelname)-8s %(message)s')
+    formatter = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)-8s %(message)s')
     CH = logging.StreamHandler()
     CH.setLevel(logging.INFO)
     CH.setFormatter(formatter)
