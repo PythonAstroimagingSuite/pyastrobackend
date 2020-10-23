@@ -60,8 +60,8 @@ if __name__ == '__main__':
     mount = backend.newMount()
 
     logging.info('Connecting to Mount')
-    #rc = mount.connect('Telescope Simulator')
-    rc = mount.connect('AstroPhysics Experimental')
+    rc = mount.connect('Telescope Simulator')
+    #rc = mount.connect('AstroPhysics Experimental')
     logging.info(f'connect result = {rc}')
 
     if not rc:
