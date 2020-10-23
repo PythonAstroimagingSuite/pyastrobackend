@@ -180,8 +180,9 @@ class SimpleDeviceInterface:
         ts = time.time()
         lastpos = focuser.get_absolute_position()
         ntimes = 0
-        while (time.time()-ts) < timeout:
-            logging.debug(f'waiting on focuser move - curpos = {focuser.get_absolute_position()}')
+        while (time.time() - ts) < timeout:
+            logging.debug(f'waiting on focuser move - curpos = '
+                          f'{focuser.get_absolute_position()}')
 
             curpos = focuser.get_absolute_position()
             if abs(curpos - lastpos) < 1:
@@ -207,7 +208,7 @@ class SimpleDeviceInterface:
         return ntimes > 2
 
     # FIXME INDI stuff is broken!!!!
-    def connect_camera(self, camera_driver,  backend_name=None):
+    def connect_camera(self, camera_driver, backend_name=None):
 #        if BACKEND == 'ASCOM':
 #            #driver = 'MaximDL'
 #            if camera_driver == 'MaximDL':
@@ -238,7 +239,6 @@ class SimpleDeviceInterface:
                 backend_name = self.camera_backend.name()
             else:
                 backend_name = None
-
 
         logging.info(f'connect_camera: backend_name = {backend_name}')
 
@@ -298,7 +298,7 @@ class SimpleDeviceInterface:
         time.sleep(0.25)
 
         elapsed = 0
-        while (focus_expos-elapsed > 2) or not cam.check_exposure():
+        while (focus_expos - elapsed > 2) or not cam.check_exposure():
             logging.debug(f"Taking image with camera {elapsed} of {focus_expos} seconds")
             time.sleep(0.25)
             elapsed += 0.25

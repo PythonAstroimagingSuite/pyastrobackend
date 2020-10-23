@@ -74,7 +74,7 @@ class RPCDeviceThread(Thread):
                 time.sleep(5)
 
             logging.debug('Sending connect event to queue')
-            cdict = { 'Event' : 'Connected' }
+            cdict = {'Event': 'Connected'}
             self.event_queue.put(cdict)
 
             logging.debug('Waiting on data')
@@ -164,7 +164,7 @@ class RPCDeviceThread(Thread):
                     if LOG_SERVER_TRAFFIC > 0:
                         logging.debug(f'Recvd command from queue {rpccmd}')
                     cmd, edict = rpccmd
-                    cdict = { 'method' : cmd }
+                    cdict = {'method': cmd }
                     jdict = {**cdict, **edict}
                     jmsg = str.encode(json.dumps(jdict) + '\n')
                     if LOG_SERVER_TRAFFIC > 0:
@@ -180,7 +180,6 @@ class RPCDeviceThread(Thread):
                         self.server_disconnected()
                         quit = True
 
-
             # fell out so close socket and try to reconnect
             logging.debug('RPCClient: Fell out of main loop closing socket')
             try:
@@ -188,19 +187,18 @@ class RPCDeviceThread(Thread):
             except:
                 logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}', exc_info=True)
 
-
     def server_disconnected(self):
         logging.error('RPCClient: server disconnection!')
         self.rpc_socket.close()
         self.buffer = ''
         self.latest_status = ''
         self.latest_status_timestamp = 0
-        cdict = { 'Event' : 'Disconnected' }
+        cdict = {'Event': 'Disconnected' }
         self.event_queue.put(cdict)
 
     # given a received json for an event send a polling response to reset timer
     def send_polling_response(self):
-        logging.debug(f'sending_polling_response for event ')
+        logging.debug('sending_polling_response for event ')
         #poll_cmd = {}
         #poll_cmd['request'] = 'polling'
         #self.rpc_socket.sendall(str.encode(json.dumps(poll_cmd)+'\n'))
@@ -234,10 +232,8 @@ class RPCDeviceThread(Thread):
                 self.buffer += data
                 logging.debug(f'self.buffer = |{self.buffer}|')
 
-
     def read_next_json_block(self):
         """ read \n terminated JSON blocks """
-
 
             # find first '{' and '\n' and see if in between contains a valid json block
 #            logging.debug(f'after read buffer = |{self.buffer}|')
@@ -268,7 +264,7 @@ class RPCDeviceThread(Thread):
 
         #FIXME This works for our simple case but seems unclear if 'OK'
         self.rpc_request_id += 1
-        jdict = { 'id' : self.rpc_request_id, **argsdict}
+        jdict = {'id': self.rpc_request_id, **argsdict}
         self.command_queue.put((cmd, jdict))
 
         return self.rpc_request_id

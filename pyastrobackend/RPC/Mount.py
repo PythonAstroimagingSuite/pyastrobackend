@@ -28,7 +28,7 @@ class Mount(RPCDevice, BaseMount):
             self.connected = True
 
     def send_radec_command(self, cmd, ra, dec):
-        params = {'ra' : ra, 'dec' : dec}
+        params = {'ra': ra, 'dec': dec}
         return self.send_command(cmd, params)
 
     def can_park(self):

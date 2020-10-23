@@ -27,11 +27,10 @@ class FilterWheel(RPCDevice, BaseFilterWheel):
 #            req_id = args[0]
 #            logging.debug(f'event_callback: req_id = {req_id}')
 
-
     def get_position(self):
         return self.get_scalar_value('filterwheel_get_position',
-                                    'filter_position',
-                                    (float,int))
+                                     'filter_position',
+                                     (float, int))
 
     def get_position_name(self):
         #FIXME this should check return from get names, etc
@@ -46,7 +45,7 @@ class FilterWheel(RPCDevice, BaseFilterWheel):
         """
         if pos < self.get_num_positions():
             return self.set_scalar_value('filterwheel_move_position',
-                              'filter_position', pos)
+                                         'filter_position', pos)
         else:
             return False
 
@@ -79,4 +78,3 @@ class FilterWheel(RPCDevice, BaseFilterWheel):
 
     def get_num_positions(self):
         return len(self.get_names())
-

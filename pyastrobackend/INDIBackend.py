@@ -374,12 +374,12 @@ class Camera(BaseCamera):
         sw = None
         i = 0
         while i < retries:
-             logging.debug('Trying to get ABORT')
-             sw = indihelper.findSwitch(sw_prop, 'ABORT')
-             logging.debug(f'sw = {sw}')
-             if sw is not None:
-                 break
-             time.sleep(0.1)
+            logging.debug('Trying to get ABORT')
+            sw = indihelper.findSwitch(sw_prop, 'ABORT')
+            logging.debug(f'sw = {sw}')
+            if sw is not None:
+                break
+            time.sleep(0.1)
 
         if sw is None:
             return False
@@ -399,7 +399,7 @@ class Camera(BaseCamera):
 
     def check_exposure(self):
         # FIXME accessing blob event seems like a poor choice
-        return self.backend.indiclient.getBlobEvent() != None
+        return self.backend.indiclient.getBlobEvent() is not None
 
     def check_exposure_success(self):
         # return True if exposure successful
@@ -464,7 +464,7 @@ class Camera(BaseCamera):
             logging.error('Camera.get_image_data() - no blob ready!')
             return None
 
-        fits=blob.getblobdata()
+        fits = blob.getblobdata()
 
         blobfile = BytesIO(fits)
 
@@ -487,7 +487,7 @@ class Camera(BaseCamera):
             logging.error('Camera.get_image_data() - no blob ready!')
             return None
 
-        fits=blob.getblobdata()
+        fits = blob.getblobdata()
 
         blobfile = BytesIO(fits)
 
@@ -510,9 +510,10 @@ class Camera(BaseCamera):
         pix_size_y = indihelper.findNumber(ccd_info, 'CCD_PIXEL_SIZE_Y')
         bpp = indihelper.findNumber(ccd_info, 'CCD_BITSPERPIXEL')
 
-        if maxx is None or maxy is None is pix_size is None \
-           or pix_size_x is None or pix_size_y is None or bpp is None:
-               return None
+        # if maxx is None or maxy is None is pix_size is None \
+        #   or pix_size_x is None or pix_size_y is None or bpp is None:
+        if None in [maxx, maxy, pix_size, pix_size_x, pix_size_y, bpp]:
+            return None
 
         obj = self.CCD_INFO()
         obj.CCD_MAX_X = maxx.value
@@ -605,13 +606,13 @@ class Camera(BaseCamera):
 
     def set_cooler_state(self, onoff):
         rc = indihelper.setfindSwitchState(self.backend.indiclient, self.cam,
-                                          'CCD_COOLER', 'COOLER_ON',
+                                           'CCD_COOLER', 'COOLER_ON',
                                            onoff)
         if not rc:
             return rc
 
         rc = indihelper.setfindSwitchState(self.backend.indiclient, self.cam,
-                                          'CCD_COOLER', 'COOLER_OFF',
+                                           'CCD_COOLER', 'COOLER_OFF',
                                            not onoff)
 
         return rc
@@ -679,12 +680,15 @@ class Camera(BaseCamera):
         ccd_frame = indihelper.getNumber(self.cam, 'CCD_FRAME')
         if ccd_frame is None:
             return None
+
         ccd_x = indihelper.findNumber(ccd_frame, 'X')
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
-        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+#        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+        if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return (None, None, None, None)
+
         return (ccd_x.value, ccd_y.value, ccd_w.value, ccd_h.value)
 
     def set_frame(self, minx, miny, width, height):
@@ -696,7 +700,8 @@ class Camera(BaseCamera):
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
         logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} {ccd_y.value} {ccd_w.value} {ccd_h.value}')
-        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+#        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+        if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return False
         ccd_x.value = minx
         ccd_y.value = miny
@@ -759,10 +764,13 @@ class Focuser(BaseFocuser):
             return False
 
     def get_absolute_position(self):
-        return indihelper.getfindNumberValue(self.focuser, 'ABS_FOCUS_POSITION', 'FOCUS_ABSOLUTE_POSITION')
+        return indihelper.getfindNumberValue(self.focuser,
+                                             'ABS_FOCUS_POSITION',
+                                             'FOCUS_ABSOLUTE_POSITION')
 
     def move_absolute_position(self, abspos):
-        return indihelper.setfindNumberValue(self.backend.indiclient, self.focuser,
+        return indihelper.setfindNumberValue(self.backend.indiclient,
+                                             self.focuser,
                                              'ABS_FOCUS_POSITION',
                                              'FOCUS_ABSOLUTE_POSITION',
                                              float(abspos))
@@ -770,21 +778,27 @@ class Focuser(BaseFocuser):
     def get_max_absolute_position(self):
         # Moonlite driver defines max travel
         if self.focuser_has_max_travel is not False:
-            maxpos = indihelper.getfindNumberValue(self.focuser, 'FOCUS_MAXTRAVEL', 'MAXTRAVEL')
+            maxpos = indihelper.getfindNumberValue(self.focuser,
+                                                   'FOCUS_MAXTRAVEL',
+                                                   'MAXTRAVEL')
             if maxpos is not None:
                 return maxpos
             else:
                 self.focuser_has_max_travel = False
 
         # try using max value for abs pos slider
-        p = indihelper.getfindNumber(self.focuser, 'ABS_FOCUS_POSITION', 'FOCUS_ABSOLUTE_POSITION')
+        p = indihelper.getfindNumber(self.focuser,
+                                     'ABS_FOCUS_POSITION',
+                                     'FOCUS_ABSOLUTE_POSITION')
         if p is not None:
             return p.max
         return None
 
     def get_current_temperature(self):
         if self.focuser_has_temperature is not False:
-            curtemp = indihelper.getfindNumberValue(self.focuser, 'FOCUS_TEMPERATURE', 'TEMPERATURE')
+            curtemp = indihelper.getfindNumberValue(self.focuser,
+                                                    'FOCUS_TEMPERATURE',
+                                                    'TEMPERATURE')
             if curtemp is not None:
                 return curtemp
             else:
@@ -850,7 +864,7 @@ class FilterWheel(BaseFilterWheel):
         pos = indihelper.getfindNumberValue(self.filterwheel,
                                             'FILTER_SLOT', 'FILTER_SLOT_VALUE')
         if pos is not None:
-            return int(pos)-1
+            return int(pos) - 1
         return None
 
     def get_position_name(self):
@@ -872,10 +886,10 @@ class FilterWheel(BaseFilterWheel):
         """
         if pos < self.get_num_positions():
             return indihelper.setfindNumberValue(self.backend.indiclient,
-                                                     self.filterwheel,
-                                                     'FILTER_SLOT',
-                                                     'FILTER_SLOT_VALUE',
-                                                     pos+1)
+                                                 self.filterwheel,
+                                                 'FILTER_SLOT',
+                                                 'FILTER_SLOT_VALUE',
+                                                 pos + 1)
         else:
             return False
 
@@ -903,7 +917,6 @@ class FilterWheel(BaseFilterWheel):
         if state is None:
             return None
         return state == PyIndi.IPS_BUSY
-
 
         state = indihelper.getfindLightState(self.filterwheel,
                                              'FILTER_SLOT')
@@ -984,8 +997,8 @@ class Mount(BaseMount):
         # NOTE seems like some (most?) INDI GEM drivers don't return alt/az
         #
         if self.has_altaz_coord is not False:
-            az = indihelper.getfindNumberValue(self.mount, 'HORIZONTAL_COORD','AZ')
-            alt = indihelper.getfindNumberValue(self.mount, 'HORIZONTAL_COORD','ALT')
+            az = indihelper.getfindNumberValue(self.mount, 'HORIZONTAL_COORD', 'AZ')
+            alt = indihelper.getfindNumberValue(self.mount, 'HORIZONTAL_COORD', 'ALT')
             if az is None or alt is None:
                 self.has_altaz_coord = False
         else:
@@ -996,16 +1009,18 @@ class Mount(BaseMount):
     def get_position_radec(self):
         """Returns tuple of (ra, dec) with ra in decimal hours and dec in degrees"""
         ra = indihelper.getfindNumberValue(self.mount,
-                                           'EQUATORIAL_EOD_COORD','RA')
+                                           'EQUATORIAL_EOD_COORD', 'RA')
         dec = indihelper.getfindNumberValue(self.mount,
-                                            'EQUATORIAL_EOD_COORD','DEC')
+                                            'EQUATORIAL_EOD_COORD', 'DEC')
         return (ra, dec)
 
     def get_pier_side(self):
         """Returns 'EAST' or 'WEST' or None if could not be determined."""
-        if indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE', 'PIER_EAST'):
+        if indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE',
+                                         'PIER_EAST'):
             return 'EAST'
-        elif indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE', 'PIER_WEST'):
+        elif indihelper.getfindSwitchState(self.mount, 'TELESCOPE_PIER_SIDE',
+                                           'PIER_WEST'):
             return 'WEST'
         else:
             return None
@@ -1042,7 +1057,7 @@ class Mount(BaseMount):
         if eq_coord is None:
             return False
 
-        ra_coord = indihelper.findNumber(eq_coord,'RA')
+        ra_coord = indihelper.findNumber(eq_coord, 'RA')
         if ra_coord is None:
             return False
         dec_coord = indihelper.findNumber(eq_coord, 'DEC')
@@ -1064,7 +1079,7 @@ class Mount(BaseMount):
         if eq_coord is None:
             return False
         #logging.debug('findNumber "RA"')
-        ra_coord = indihelper.findNumber(eq_coord,'RA')
+        ra_coord = indihelper.findNumber(eq_coord, 'RA')
         if ra_coord is None:
             return False
         #logging.debug('findNumber "DEC"')
@@ -1085,13 +1100,13 @@ class Mount(BaseMount):
 
     def set_tracking(self, onoff):
         rc = indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
-                                          'TELESCOPE_TRACK_STATE', 'TRACK_ON',
+                                           'TELESCOPE_TRACK_STATE', 'TRACK_ON',
                                            onoff)
         if not rc:
             return rc
 
         rc = indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
-                                          'TELESCOPE_TRACK_STATE', 'TRACK_OFF',
+                                           'TELESCOPE_TRACK_STATE', 'TRACK_OFF',
                                            not onoff)
         return rc
 

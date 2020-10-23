@@ -200,15 +200,17 @@ class Camera(RPCDevice, BaseCamera):
         logging.warning('RPC Camera get_image_data() not implemented!')
 
     def get_pixelsize(self):
-        valx = self.get_scalar_value('get_camera_x_pixelsize', 'camera_x_pixelsize', (float,) )
-        valy = self.get_scalar_value('get_camera_y_pixelsize', 'camera_y_pixelsize', (float,) )
+        valx = self.get_scalar_value('get_camera_x_pixelsize',
+                                     'camera_x_pixelsize', (float, ))
+        valy = self.get_scalar_value('get_camera_y_pixelsize',
+                                     'camera_y_pixelsize', (float, ))
         return valx, valy
 
     def get_egain(self):
-        return self.get_scalar_value('get_camera_egain','camera_egain', (float,) )
+        return self.get_scalar_value('get_camera_egain', 'camera_egain', (float, ))
 
     def get_camera_gain(self):
-        gain = self.get_scalar_value('get_camera_gain', 'camera_gain', (int, float) )
+        gain = self.get_scalar_value('get_camera_gain', 'camera_gain', (int, float))
         if gain is not None:
             self.camera_gain = gain
             return gain
@@ -221,7 +223,6 @@ class Camera(RPCDevice, BaseCamera):
         self.camera_gain = None
         return
 
-
         logging.debug(f'Setting camera_gain to {gain}')
         rc = self.set_scalar_value('set_camera_gain', 'camera_gain', gain)
         if rc:
@@ -230,15 +231,18 @@ class Camera(RPCDevice, BaseCamera):
         return rc
 
     def get_current_temperature(self):
-        return self.get_scalar_value('get_current_temperature', 'current_temperature', (float,) )
+        return self.get_scalar_value('get_current_temperature',
+                                     'current_temperature', (float, ))
 
     def get_target_temperature(self):
-        return self.get_scalar_value('get_target_temperature', 'target_temperature', (float,) )
+        return self.get_scalar_value('get_target_temperature',
+                                     'target_temperature', (float, ))
 
     def set_target_temperature(self, temp_c):
 #        logging.debug(f'RPC:set_target_temperature to {temp_c}')
 
-        return self.set_scalar_value('set_target_temperature', 'target_temperature', temp_c)
+        return self.set_scalar_value('set_target_temperature',
+                                     'target_temperature', temp_c)
 
     def set_cooler_state(self, onoff):
 #        logging.debug(f'RPC:set_cooler_state to {onoff}')
@@ -246,10 +250,10 @@ class Camera(RPCDevice, BaseCamera):
         return self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
 
     def get_cooler_state(self):
-        return self.get_scalar_value('get_cooler_state', 'cooler_state', (bool,) )
+        return self.get_scalar_value('get_cooler_state', 'cooler_state', (bool, ))
 
     def get_cooler_power(self):
-        return self.get_scalar_value('get_cooler_power', 'cooler_power', (float,) )
+        return self.get_scalar_value('get_cooler_power', 'cooler_power', (float, ))
 
     def get_binning(self):
         return (self.binning, self.binning)
@@ -264,14 +268,14 @@ class Camera(RPCDevice, BaseCamera):
                 logging.error('RPC:set_binning - unable to get camera settings!')
                 return False
 
-        self.roi = (0, 0, self.frame_width/self.binning, self.frame_height/self.binning)
+        self.roi = (0, 0, self.frame_width / self.binning, self.frame_height / self.binning)
 
         #logging.debug(f'rpc camera set_binning: bin = {self.binning} roi = {self.roi}')
 
         return True
 
     def get_max_binning(self):
-        return self.get_scalar_value('get_max_binning', 'max_binning', (int,) )
+        return self.get_scalar_value('get_max_binning', 'max_binning', (int, ))
 
     def get_size(self):
         if not self.frame_width or not self.frame_height:
