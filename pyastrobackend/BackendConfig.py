@@ -1,7 +1,4 @@
-# FIXME not best way to control the backend!
-
-#backend = 'ASCOM'
-#BACKEND = 'INDI'
+import os
 
 LOADED_BACKENDS = {}
 
@@ -16,18 +13,18 @@ def get_backend_for_os():
         'ASCOM' or 'INDI' or 'ALPACA'.
     :rtype: str
     """
-    import os
 
     if 'PYASTROBACKEND' in os.environ:
         return os.environ['PYASTROBACKEND']
 
     # chose an implementation, depending on os
-    if os.name == 'nt': #sys.platform == 'win32':
+    if os.name == 'nt':
         return 'ASCOM'
     elif os.name == 'posix':
         return 'INDI'
     else:
-        raise Exception(f'Sorry: no implementation for your platform ({os.name}) available')
+        raise Exception('Sorry: no implementation for your platform '
+                        f'({os.name}) available')
 
 def get_backend_choices():
     return ['ASCOM', 'ALPACA', 'RPC', 'INDI']
