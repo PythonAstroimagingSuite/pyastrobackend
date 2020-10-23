@@ -6,63 +6,6 @@ import astropy.io.fits as pyfits
 
 from pyastrobackend.BackendConfig import get_backend_for_os, get_backend, get_backend_choices
 
-#def get_backend_for_os():
-#    import os
-#    # chose an implementation, depending on os
-#    if os.name == 'nt': #sys.platform == 'win32':
-#        return 'ASCOM'
-#    elif os.name == 'posix':
-#        return 'INDI'
-#    else:
-#        raise Exception("Sorry: no implementation for your platform ('%s') available" % os.name)
-#
-#if 'PYASTROBACKEND' in os.environ:
-#    BACKEND = os.environ['PYASTROBACKEND']
-#else:
-#    BACKEND = get_backend_for_os()
-#
-##print(f'SimpleDeviceInterface: BACKEND = {BACKEND}')
-#
-## debugging override with simulator
-##BACKEND = 'SIMULATOR'
-#
-#if BACKEND == 'ASCOM':
-#    from pyastrobackend.ASCOMBackend import DeviceBackend as Backend
-#elif BACKEND == 'INDI':
-#    from pyastrobackend.INDIBackend import DeviceBackend as Backend
-#elif BACKEND == 'SIMULATOR':
-#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import DeviceBackend as Backend
-#else:
-#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-#
-#if BACKEND == 'ASCOM':
-#    from pyastrobackend.ASCOM.Focuser import Focuser as ASCOM_Focuser
-#    from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
-#elif BACKEND == 'INDI':
-#    from pyastrobackend.INDIBackend import Focuser
-#elif BACKEND == 'SIMULATOR':
-#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Focuser
-#else:
-#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-#
-#if BACKEND == 'ASCOM':
-#    from pyastrobackend.ASCOM.FilterWheel import FilterWheel
-#elif BACKEND == 'INDI':
-#    from pyastrobackend.INDIBackend import FilterWheel
-#elif BACKEND == 'SIMULATOR':
-#    raise Exception('SIMULATOR driver not supported for FilterWheel')
-#else:
-#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
-#
-#if BACKEND == 'ASCOM':
-#    from pyastrobackend.MaximDL.Camera import Camera as MaximDL_Camera
-#    from pyastrobackend.RPC.Camera import Camera as RPC_Camera
-#elif BACKEND == 'INDI':
-#    from pyastrobackend.INDIBackend import Camera as INDI_Camera
-#elif BACKEND == 'SIMULATOR':
-#    from pyastrobackend.SimpleSimulator.SimpleSimulatorDrivers import Camera as Sim_Camera
-#else:
-#    raise Exception(f'Unknown backend {BACKEND} - choose ASCOM or INDI in BackendConfig.py')
 
 class SimpleDeviceInterface:
     def __init__(self):
@@ -91,19 +34,6 @@ class SimpleDeviceInterface:
 
     def connect_focuser(self, driver, backend_name=None):
         rc = None
-
-#        if BACKEND == 'ASCOM':
-#            if driver == 'RPC':
-#                focuser = RPC_Focuser()
-#            else:
-#                focuser = Focuser()
-#            rc = focuser.connect(driver)
-#        elif BACKEND == 'INDI':
-#            focuser = Focuser(self.backend)
-#            rc = focuser.connect(driver)
-#        elif BACKEND == 'SIMULATOR':
-#            focuser = Focuser()
-#            rc = True
 
         # if backend_name is None we assume they connected with connect_backend
         # and all devices share the same backend
@@ -136,16 +66,6 @@ class SimpleDeviceInterface:
 
     def connect_filterwheel(self, driver, backend_name=None):
         rc = None
-
-#        if BACKEND == 'ASCOM':
-#            wheel = FilterWheel()
-#            rc = wheel.connect(driver)
-#        elif BACKEND == 'INDI':
-#            wheel = FilterWheel(self.backend)
-#            rc = wheel.connect(driver)
-#        elif BACKEND == 'SIMULATOR':
-#            wheel = FilterWheel()
-#            rc = True
 
         # if backend_name is None we assume they connected with connect_backend
         # and all devices share the same backend
@@ -189,12 +109,6 @@ class SimpleDeviceInterface:
                 ntimes = 3
                 break
 
-#            if abs(curpos - lastpos) < 1:
-#                ntimes += 1
-#
-#            if ntimes > 2:
-#                break
-
             lastpos = curpos
 
 #   FIXME This doesn't seem to work in pyastro37 env under windows????
@@ -209,19 +123,6 @@ class SimpleDeviceInterface:
 
     # FIXME INDI stuff is broken!!!!
     def connect_camera(self, camera_driver, backend_name=None):
-#        if BACKEND == 'ASCOM':
-#            #driver = 'MaximDL'
-#            if camera_driver == 'MaximDL':
-#                cam = MaximDL_Camera()
-#            elif camera_driver == 'RPC':
-#                cam = RPC_Camera()
-#        elif BACKEND == 'INDI':
-#            #driver = 'INDICamera'
-#            cam = INDI_Camera(self.backend)
-#        elif BACKEND == 'SIMULATOR':
-#            #driver = 'Simulator'
-#            cam = Sim_Camera()
-
         # if backend_name is None we assume they connected with connect_backend
         # and all devices share the same backend
         if backend_name is not None:
@@ -249,14 +150,15 @@ class SimpleDeviceInterface:
         logging.debug(f'connect_camera: driver =  {camera_driver}')
 
         # YUCK MAXIM MIXED IN
-        if backend_name == 'ASCOM':
-            if camera_driver == 'MaximDL':
-                logging.info('Creating MaximDL camera object')
-                cam = self.camera_backend.newMaximDLCamera()
-            else:
-                cam = self.camera_backend.newCamera()
-        else:
-            cam = self.camera_backend.newCamera()
+        # if backend_name == 'ASCOM':
+        #     if camera_driver == 'MaximDL':
+        #         logging.info('Creating MaximDL camera object')
+        #         cam = self.camera_backend.newMaximDLCamera()
+        #     else:
+        #         cam = self.camera_backend.newCamera()
+        # else:
+
+        cam = self.camera_backend.newCamera()
 
         rc = cam.connect(camera_driver)
 
@@ -294,9 +196,6 @@ class SimpleDeviceInterface:
 
         cam.start_exposure(focus_expos)
 
-        # give things time to happen (?) I get Maxim not ready errors so slowing it down
-        time.sleep(0.25)
-
         elapsed = 0
         while (focus_expos - elapsed > 2) or not cam.check_exposure():
             logging.debug(f"Taking image with camera {elapsed} of {focus_expos} seconds")
@@ -306,10 +205,6 @@ class SimpleDeviceInterface:
                 elapsed = focus_expos
 
         logging.debug('Exposure complete')
-
-        # give it some time seems like Maxim isnt ready if we hit it too fast
-        if self.camera_driver == 'MaximDL':
-            time.sleep(2)
 
         ff = os.path.join(os.getcwd(), output_filename)
 
