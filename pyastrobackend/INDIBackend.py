@@ -105,6 +105,7 @@ class DeviceBackend(BaseDeviceBackend):
 
         if self.indiclient is not None:
             logging.warning('connect() indiclient is not None!')
+            return True
 
         self.indiclient = self.IndiClient()
         self.indiclient.setServer('localhost', 7624)
