@@ -6,7 +6,6 @@ from queue import Queue
 
 import ctypes
 
-#import numpy as np
 import astropy.io.fits as pyfits
 
 import PyIndi
@@ -15,16 +14,13 @@ from pyastrobackend.BaseBackend import BaseDeviceBackend, BaseCamera, BaseFocuse
 from pyastrobackend.BaseBackend import BaseFilterWheel, BaseMount
 import pyastrobackend.INDI.IndiHelper as indihelper
 
-warnings.filterwarnings('always', category=DeprecationWarning)
+#warnings.filterwarnings('always', category=DeprecationWarning)
 
 
 class DeviceBackend(BaseDeviceBackend):
     # INDI client connection
-#    indiclient=None
 
     class IndiClient(PyIndi.BaseClient):
-        # needed for ccd callback
-        #blobEvent = None
 
         def __init__(self):
             super().__init__()
@@ -55,10 +51,6 @@ class DeviceBackend(BaseDeviceBackend):
             self.eventQueue.put(p)
 
         def newBLOB(self, bp):
-# FIXME Global is BAD
-            #global blobEvent
-            #print('blob')
-            #self.eventQueue.put(bp)
             self.blobEvent = bp
 
         def newSwitch(self, svp):
@@ -67,22 +59,22 @@ class DeviceBackend(BaseDeviceBackend):
             self.eventQueue.put(svp)
 
         def newNumber(self, nvp):
-#            print('num:', nvp.name)
-#            print(indihelper.dump_INumberVectorProperty(nvp))
+            #print('num:', nvp.name)
+            #print(indihelper.dump_INumberVectorProperty(nvp))
             self.eventQueue.put(nvp)
 
         def newText(self, tvp):
-#            print('text:', tvp.name)
+            #print('text:', tvp.name)
             self.eventQueue.put(tvp)
 
         def newLight(self, lvp):
-#            print('light:', lvp.name)
-#            print(lvp)
+            #print('light:', lvp.name)
+            #print(lvp)
             self.eventQueue.put(lvp)
 
         def newMessage(self, d, m):
-#            print('msg:', d, m)
-            self.eventQueue.put((d,m))
+            #print('msg:', d, m)
+            self.eventQueue.put((d, m))
 
         def serverConnected(self):
             pass
@@ -146,7 +138,9 @@ class DeviceBackend(BaseDeviceBackend):
     def findDeviceInterfaces(indidevice):
         interface = indidevice.getDriverInterface()
         interface.acquire()
-        device_interfaces = int(ctypes.cast(interface.__int__(), ctypes.POINTER(ctypes.c_uint16)).contents.value)
+        device_interfaces = int(
+            ctypes.cast(interface.__int__(),
+                        ctypes.POINTER(ctypes.c_uint16)).contents.value)
         interface.disown()
         interfaces = {
             PyIndi.BaseDevice.GENERAL_INTERFACE: 'general',
@@ -179,6 +173,7 @@ class DeviceBackend(BaseDeviceBackend):
             Also accepts 'camera' and 'mount'.
                """
 
+        # accept some aliases for certain device classes
         if device_class == 'camera':
             device_class = 'ccd'
         elif device_class == 'mount':
@@ -251,7 +246,6 @@ class Camera(BaseCamera):
         return False
 
     def disconnect(self):
-        #logging.warning('Camera.disconnect() is not implemented for INDI!')
         self.cam = None
         self.name = None
         return True
@@ -264,28 +258,22 @@ class Camera(BaseCamera):
 
     def get_camera_name(self):
         return self.name
-#        logging.warning('Camera.get_camera_name() is not implemented for INDI!')
-#        return None
-
 
     def get_camera_description(self):
-        logging.warning('Camera.get_camera_description() is not implemented for INDI!')
+        logging.warning('Camera.get_camera_description() is not '
+                        'implemented for INDI!')
         return None
-        if self.cam:
-            return self.cam.Description
+        # if self.cam:
+        #     return self.cam.Description
 
     def get_driver_info(self):
         logging.warning('Camera.get_driver_info() is not implemented for INDI!')
         return None
-        if self.cam:
-            return self.cam.DriverInfo
+        # if self.cam:
+        #     return self.cam.DriverInfo
 
     def get_driver_version(self):
         return self.cam.getDriverVersion()
-
-#        logging.warning('Camera.get_driver_version() is not implemented for INDI!')
-#        return None
-
 
     def get_state(self):
         # FIXME using hard coded values based on ASCOM camera state
@@ -325,7 +313,6 @@ class Camera(BaseCamera):
         return setdict
 
     def start_exposure(self, expos):
- #       global blobEvent
         logging.debug(f'Exposing image for {expos} seconds')
 
         # FIXME currently always requesting a light frame
@@ -658,8 +645,6 @@ class Camera(BaseCamera):
         return True
 
     def get_max_binning(self):
-#        logging.warning('Camera.get_max_binning() is not implemented for INDI!')
-#        return None
         if self.cam:
             ccd_bin = indihelper.getNumber(self.cam, 'CCD_BINNING')
             #logging.info(f'ccd_bin={ccd_bin}')
@@ -702,7 +687,8 @@ class Camera(BaseCamera):
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
-        logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} {ccd_y.value} {ccd_w.value} {ccd_h.value}')
+        logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} '
+                      f'{ccd_y.value} {ccd_w.value} {ccd_h.value}')
 #        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return False
@@ -906,7 +892,7 @@ class FilterWheel(BaseFilterWheel):
         names = self.get_names()
         try:
             newpos = names.index(name)
-        except ValueError as e:
+        except ValueError:
             newpos = -1
 
         if newpos == -1:
@@ -925,8 +911,8 @@ class FilterWheel(BaseFilterWheel):
                                              'FILTER_SLOT')
         return state == PyIndi.IPS_BUSY
 
-        logging.warning('FilterWheel.is_moving() is not implemented for INDI!')
-        return None
+        # logging.warning('FilterWheel.is_moving() is not implemented for INDI!')
+        # return None
 
     def get_names(self):
         # lookup filter names from driver

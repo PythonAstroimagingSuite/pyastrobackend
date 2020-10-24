@@ -7,14 +7,14 @@ import logging
 import PyIndi
 
 
-DEFAULT_TIMEOUT=0.5
+DEFAULT_TIMEOUT = 0.5
 
 # routines for dealing with switch properties
 
 def getSwitch(device, name, timeout=DEFAULT_TIMEOUT):
     sw = device.getSwitch(name)
     cnt = 0
-    while sw is None and cnt < (timeout/0.1):
+    while sw is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
 #        print('S')
         sw = device.getSwitch(name)
@@ -62,12 +62,12 @@ def setfindSwitchState(indiclient, device, propname, swname, onoff):
 # routines for number properties
 
 def getNumber(device, name, timeout=DEFAULT_TIMEOUT):
-#    print('getNumber:', name)
+    #    print('getNumber:', name)
     num = device.getNumber(name)
     cnt = 0
-    while num is None and cnt < (timeout/0.1):
+    while num is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
-#        print('N')
+        #print('N')
         num = device.getNumber(name)
         cnt += 1
 
@@ -118,9 +118,9 @@ def setfindNumberValue(indiclient, device, propname, numname, value):
 def getText(device, name, timeout=DEFAULT_TIMEOUT):
     text = device.getText(name)
     cnt = 0
-    while text is None and cnt < (timeout/0.1):
+    while text is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
-#        print('T')
+        #print('T')
         text = device.getText(name)
         cnt += 1
 
@@ -162,9 +162,9 @@ def setfindTextText(indiclient, device, propname, txtname, value):
 def getLight(device, name, timeout=DEFAULT_TIMEOUT):
     light = device.getLight(name)
     cnt = 0
-    while light is None and cnt < (timeout/0.1):
+    while light is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
-#        print('L')
+        #print('L')
         light = device.getLight(name)
         cnt += 1
 
@@ -208,7 +208,7 @@ def connectDevice(indiclient, devicename, timeout=2):
     cnt = 0
     device = None
     #logging.debug(f'connectDevice: searching for {devicename}')
-    while device is None and cnt < (timeout/0.1):
+    while device is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
         device = indiclient.getDevice(devicename)
         #logging.debug(f'getDevice({devicename}) = {device}')
@@ -229,7 +229,7 @@ def connectDevice(indiclient, devicename, timeout=2):
     indiclient.sendNewSwitch(connect)
 
     cnt = 0
-    while not device.isConnected() and cnt < (timeout/0.1):
+    while not device.isConnected() and cnt < (timeout / 0.1):
         time.sleep(0.1)
         #print('W4C')
         cnt += 1
@@ -241,6 +241,7 @@ def strISState(s):
         return "Off"
     else:
         return "On"
+
 def strIPState(s):
     if (s == PyIndi.IPS_IDLE):
         return "Idle"
@@ -335,7 +336,7 @@ def dump_ISwitchVectorProperty(p):
     return s
 
 def dump_Number(p):
-    s = f'Number\n'
+    s = 'Number\n'
     s += f'   Name: {p.name}\n'
     s += f'  Label: {p.min}\n'
     s += f'    Min: {p.min}\n'
@@ -396,7 +397,7 @@ def findDeviceName(indidevice):
 def findDevices(indiclient, timeout=2):
     devs = indiclient.getDevices()
     cnt = 0
-    while (devs is None or len(devs) < 1) and cnt < (timeout/0.1):
+    while (devs is None or len(devs) < 1) and cnt < (timeout / 0.1):
         time.sleep(0.1)
         devs = indiclient.getDevices()
         cnt += 1
@@ -412,4 +413,3 @@ def findDevicesByClass(indiclient, device_class):
         if device_class in interfaces:
             matches.append(findDeviceName(d))
     return matches
-

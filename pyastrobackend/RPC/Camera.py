@@ -34,33 +34,33 @@ class Camera(RPCDevice, BaseCamera):
         self.rpc_manager.event_callbacks.append(self.event_callback)
 
     def event_callback(self, event, *args):
-#        logging.debug(f'Camera event_callback: {event} {args})')
+        #logging.debug(f'Camera event_callback: {event} {args})')
         if event == 'Connection':
             self.connected = True
         elif event == 'Response':
             req_id = args[0]
-#            logging.debug(f'event_callback: req_id = {req_id} exposure_reqid = {self.exposure_reqid}')
+            #logging.debug(f'event_callback: req_id = {req_id} exposure_reqid = {self.exposure_reqid}')
             if req_id == self.exposure_reqid:
-#                logging.debug(f'exposure reqid = {self.exposure_reqid} response recvd!')
+                #logging.debug(f'exposure reqid = {self.exposure_reqid} response recvd!')
                 resp = self.rpc_manager.check_rpc_command_status(req_id)
-#                logging.debug(f'resp = {resp}')
+                #logging.debug(f'resp = {resp}')
                 result = resp.get('result', None)
                 error = resp.get('error', None)
                 logging.debug(f'result {result} error {error}')
 
                 if result is not None:
                     status = result.get('complete', None)
-    #                logging.debug(f'status {status}')
+                    #logging.debug(f'status {status}')
                     if status is None:
                         logging.error('exposure completion status is None!')
                         logging.error('EXITTING')
                         sys.exit(1)
-    #                logging.debug(f'setting exposure_complete to {status}')
+                        #logging.debug(f'setting exposure_complete to {status}')
                     self.exposure_complete = status
                     self.exposure_success = True
                 elif error is not None:
                     logging.error(f'Error during exposure req_id = {req_id}!')
-                    self.exposure_complete =True
+                    self.exposure_complete = True
                     self.exposure_success = False
                 else:
                     logging.error('exposure response has no result or error!')
@@ -84,7 +84,7 @@ class Camera(RPCDevice, BaseCamera):
         return None
 
     def start_exposure(self, expos):
-#        logging.debug(f'RPC:Exposing image for {expos} seconds')
+        #logging.debug(f'RPC:Exposing image for {expos} seconds')
 
         paramdict = {}
         paramdict['params'] = {}
@@ -92,9 +92,11 @@ class Camera(RPCDevice, BaseCamera):
         paramdict['params']['binning'] = self.binning
         paramdict['params']['roi'] = self.roi
 
-        logging.warning('!!!!!!RPC CAMERA start_exposure HAS GAIN COMMENTED OUT!!!!!!')
-#        if self.camera_gain is not None:
-#            paramdict['params']['camera_gain'] = self.camera_gain
+        logging.warning('!!!!!!RPC CAMERA start_exposure HAS '
+                        'GAIN COMMENTED OUT!!!!!!')
+
+        #if self.camera_gain is not None:
+        #    paramdict['params']['camera_gain'] = self.camera_gain
 
         rc = self.send_server_request('take_image', paramdict)
 
@@ -141,10 +143,10 @@ class Camera(RPCDevice, BaseCamera):
         return True
 
     def save_image_data(self, path, overwrite=False):
-#        logging.debug(f'RPC:Saving image to {path}')
+        #logging.debug(f'RPC:Saving image to {path}')
 
-        params = {'filename' : path,
-                  'overwrite' : overwrite}
+        params = {'filename': path,
+                  'overwrite': overwrite}
         return self.send_command('save_image', params)
 
     def get_settings(self):
@@ -174,7 +176,7 @@ class Camera(RPCDevice, BaseCamera):
         # FIXME parse out status?
         status = 'result' in resp
 
-#        logging.debug(f'RPC saveimageCamera status/resp = {status} {resp}')
+        #logging.debug(f'RPC saveimageCamera status/resp = {status} {resp}')
 
         if not status:
             logging.warning('RPC:get_settings() - error getting settings!')
@@ -223,12 +225,13 @@ class Camera(RPCDevice, BaseCamera):
         self.camera_gain = None
         return
 
-        logging.debug(f'Setting camera_gain to {gain}')
-        rc = self.set_scalar_value('set_camera_gain', 'camera_gain', gain)
-        if rc:
-            self.camera_gain = gain
+        # OLD CODE implementing gain change
+        # logging.debug(f'Setting camera_gain to {gain}')
+        # rc = self.set_scalar_value('set_camera_gain', 'camera_gain', gain)
+        # if rc:
+        #     self.camera_gain = gain
 
-        return rc
+        # return rc
 
     def get_current_temperature(self):
         return self.get_scalar_value('get_current_temperature',
@@ -239,13 +242,13 @@ class Camera(RPCDevice, BaseCamera):
                                      'target_temperature', (float, ))
 
     def set_target_temperature(self, temp_c):
-#        logging.debug(f'RPC:set_target_temperature to {temp_c}')
+        #logging.debug(f'RPC:set_target_temperature to {temp_c}')
 
         return self.set_scalar_value('set_target_temperature',
                                      'target_temperature', temp_c)
 
     def set_cooler_state(self, onoff):
-#        logging.debug(f'RPC:set_cooler_state to {onoff}')
+        #logging.debug(f'RPC:set_cooler_state to {onoff}')
 
         return self.set_scalar_value('set_cooler_state', 'cooler_state', onoff)
 
@@ -268,7 +271,9 @@ class Camera(RPCDevice, BaseCamera):
                 logging.error('RPC:set_binning - unable to get camera settings!')
                 return False
 
-        self.roi = (0, 0, self.frame_width / self.binning, self.frame_height / self.binning)
+        self.roi = (0, 0,
+                    self.frame_width / self.binning,
+                    self.frame_height / self.binning)
 
         #logging.debug(f'rpc camera set_binning: bin = {self.binning} roi = {self.roi}')
 

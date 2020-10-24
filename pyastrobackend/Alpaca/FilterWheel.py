@@ -27,7 +27,7 @@ class FilterWheel(AlpacaDevice, BaseFilterWheel):
         Use is_moving() method to check if its done.
         """
         if pos < self.get_num_positions():
-            params = {'Position' : pos}
+            params = {'Position': pos}
             return self.set_prop('position', params)
         else:
             return False
@@ -62,4 +62,3 @@ class FilterWheel(AlpacaDevice, BaseFilterWheel):
 
     def get_num_positions(self):
         return len(self.get_names())
-

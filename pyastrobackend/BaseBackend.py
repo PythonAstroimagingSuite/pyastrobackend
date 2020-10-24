@@ -97,7 +97,8 @@ class BaseCamera(metaclass=ABCMeta):
         """
         Launch chooser for driver.
 
-        Use :meth:`has_chooser` to test if one is available for a given backend/camera.
+        Use :meth:`has_chooser` to test if one is available for a
+        given backend/camera.
 
         :return: True on success.
         :rtype: bool
@@ -253,7 +254,8 @@ class BaseCamera(metaclass=ABCMeta):
     @abstractmethod
     def check_exposure_success(self):
         """
-        Check if exposure was successful - only valid if check_exposure() returns True.
+        Check if exposure was successful - only valid if check_exposure()
+        returns True.
 
         :return: True if exposure complete.
         :rtype: bool

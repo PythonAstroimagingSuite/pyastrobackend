@@ -50,7 +50,7 @@ class Camera(AlpacaDevice, BaseCamera):
     def start_exposure(self, expos):
         logging.debug(f'Exposing image for {expos} seconds')
 
-        params = {'Duration' : expos, 'Light' : True}
+        params = {'Duration': expos, 'Light': True}
         return self.set_prop('startexposure', params)
 
     def stop_exposure(self):
@@ -89,7 +89,7 @@ class Camera(AlpacaDevice, BaseCamera):
             Data is in row-major format!
         """
         # FIXME Is this best way to determine data type from camera??
-        maxadu =  self.get_prop('maxadu')
+        maxadu = self.get_prop('maxadu')
         if maxadu == 65535:
             out_dtype = np.dtype(np.uint16)
         else:
@@ -104,7 +104,7 @@ class Camera(AlpacaDevice, BaseCamera):
                                         self.device_number,
                                         'imagearray',
                                         extraparams={},
-                                        extraheaders={'base64handoff' : 'true'})
+                                        extraheaders={'base64handoff': 'true'})
 
         logging.debug(f'imagearray resp = {resp}')
 
@@ -122,8 +122,8 @@ class Camera(AlpacaDevice, BaseCamera):
         dim1 = resp.get('Dimension1Length')
         dim2 = resp.get('Dimension2Length')
 
-        logging.debug(f'Dimension0Length: {dim0} ' + \
-                      f'Dimension1Length: {dim1} ' + \
+        logging.debug(f'Dimension0Length: {dim0} '
+                      f'Dimension1Length: {dim1} '
                       f'Dimension2Length: {dim2} ')
 
         if imgrank != 2 or imgtype != 2:
@@ -136,18 +136,19 @@ class Camera(AlpacaDevice, BaseCamera):
 
         # now get image data
         # use pycurl as it is significantly faster than requests for big data
-        mts=time.time()
-        ts=time.time()
+        mts = time.time()
+        ts = time.time()
         body = self.backend.get_base64(self.device_type, self.device_number,
                                        'imagearraybase64')
 
-        te=time.time()
+        te = time.time()
         logging.debug(f'Download took {te-ts} seconds')
 
-        ts=time.time()
+        ts = time.time()
         decoded = base64.b64decode(body)
         read_img = np.frombuffer(decoded, dtype=np.int32)
-        te=time.time()
+        te = time.time()
+        logging.debug(f'Base64 conversion took {te-ts} seconds')
 
         # convert to int16
         out_dtype = np.dtype(np.uint16)
@@ -214,11 +215,11 @@ class Camera(AlpacaDevice, BaseCamera):
         return self.get_prop('setccdtemperature')
 
     def set_target_temperature(self, temp_c):
-        params = {'SetCCDTemperature' : temp_c}
+        params = {'SetCCDTemperature': temp_c}
         return self.set_prop('setccdtemperature', params)
 
     def set_cooler_state(self, onoff):
-        params = {'CoolerOn' : onoff}
+        params = {'CoolerOn': onoff}
         return self.set_prop('cooleron', params)
 
     def get_cooler_state(self):
@@ -236,8 +237,8 @@ class Camera(AlpacaDevice, BaseCamera):
         return power
 
     def set_binning(self, binx, biny):
-        param_x = {'binx' : binx}
-        param_y = {'biny' : biny}
+        param_x = {'binx': binx}
+        param_y = {'biny': biny}
         rc = self.set_prop('binx', param_x)
         if not rc:
             return rc
@@ -261,16 +262,16 @@ class Camera(AlpacaDevice, BaseCamera):
         return(sx, sy, numx, numy)
 
     def set_frame(self, minx, miny, width, height):
-        rc = self.set_prop('startx', {'StartX' : int(minx)})
+        rc = self.set_prop('startx', {'StartX': int(minx)})
         if not rc:
             return rc
-        rc = self.set_prop('starty', {'StartY' : int(miny)})
+        rc = self.set_prop('starty', {'StartY': int(miny)})
         if not rc:
             return rc
-        rc = self.set_prop('numx', {'NumX' : int(width)})
+        rc = self.set_prop('numx', {'NumX': int(width)})
         if not rc:
             return rc
-        rc = self.set_prop('numy', {'NumY' : int(height)})
+        rc = self.set_prop('numy', {'NumY': int(height)})
         return rc
 
     def get_min_max_exposure(self):

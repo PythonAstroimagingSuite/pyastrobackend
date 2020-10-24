@@ -12,6 +12,7 @@ from threading import Thread, Lock
 # 0 = none, higher shows more
 LOG_SERVER_TRAFFIC = 1
 
+
 class RPCDeviceThread(Thread):
     def __init__(self, port, user_data, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -62,7 +63,8 @@ class RPCDeviceThread(Thread):
             logging.info('Connecting to server')
             while True:
                 try:
-                    self.rpc_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    self.rpc_socket = socket.socket(socket.AF_INET,
+                                                    socket.SOCK_STREAM)
                     logging.info('Attempting connect')
                     self.rpc_socket.connect(('127.0.0.1', self.port))
                     logging.info('Success!')
@@ -96,7 +98,7 @@ class RPCDeviceThread(Thread):
 
                 # read in new data
                 if len(readable) > 0:
-#                    logging.debug(f'reading data readable={readable}')
+                    #logging.debug(f'reading data readable={readable}')
 
                     try:
                         self.populate_buffer()
@@ -149,10 +151,11 @@ class RPCDeviceThread(Thread):
                         if LOG_SERVER_TRAFFIC > 0:
                             logging.debug(f'Received event {event}')
                         if event == 'Connection':
-#                                    logging.debug('Recv Connection event')
+                            #logging.debug('Recv Connection event')
                             self.emit(event)
                     else:
-                        logging.warning(f'RPCClient: received JSON {jdict} with no event or id!')
+                        logging.warning(f'RPCClient: received JSON {jdict} '
+                                        'with no event or id!')
 
                 # send any commands
                 try:
@@ -164,7 +167,7 @@ class RPCDeviceThread(Thread):
                     if LOG_SERVER_TRAFFIC > 0:
                         logging.debug(f'Recvd command from queue {rpccmd}')
                     cmd, edict = rpccmd
-                    cdict = {'method': cmd }
+                    cdict = {'method': cmd}
                     jdict = {**cdict, **edict}
                     jmsg = str.encode(json.dumps(jdict) + '\n')
                     if LOG_SERVER_TRAFFIC > 0:
@@ -176,7 +179,8 @@ class RPCDeviceThread(Thread):
                         self.server_disconnected()
                         quit = True
                     except Exception:
-                        logging.error(f'RPCClient: exception sending poll response!', exc_info=True)
+                        logging.error(f'RPCClient: exception sending poll response!',
+                                      exc_info=True)
                         self.server_disconnected()
                         quit = True
 
@@ -185,7 +189,8 @@ class RPCDeviceThread(Thread):
             try:
                 self.rpc_socket.close()
             except:
-                logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}', exc_info=True)
+                logging.error(f'RPCClient: Error closing rpc_socket={self.rpc_socket}',
+                              exc_info=True)
 
     def server_disconnected(self):
         logging.error('RPCClient: server disconnection!')
@@ -193,7 +198,7 @@ class RPCDeviceThread(Thread):
         self.buffer = ''
         self.latest_status = ''
         self.latest_status_timestamp = 0
-        cdict = {'Event': 'Disconnected' }
+        cdict = {'Event': 'Disconnected'}
         self.event_queue.put(cdict)
 
     # given a received json for an event send a polling response to reset timer
@@ -219,12 +224,14 @@ class RPCDeviceThread(Thread):
                 except socket.timeout:
                     data = b''
 
-                logging.debug(f'populate_buffer(): len(data) = {len(data)} data = |{data}|')
+                logging.debug(f'populate_buffer(): len(data) = {len(data)} '
+                              f'data = |{data}|')
 
                 if len(data) < 1:
                     # if we've received NOTHING this pass means socket closed
                     if not got_data:
-                        raise BrokenPipeError('recv returned 0 bytes - connection lost!')
+                        raise BrokenPipeError('recv returned 0 bytes - '
+                                              'connection lost!')
                     break
 
                 got_data = True
@@ -235,8 +242,8 @@ class RPCDeviceThread(Thread):
     def read_next_json_block(self):
         """ read \n terminated JSON blocks """
 
-            # find first '{' and '\n' and see if in between contains a valid json block
-#            logging.debug(f'after read buffer = |{self.buffer}|')
+        # find first '{' and '\n' and see if in between contains a valid json block
+        #logging.debug(f'after read buffer = |{self.buffer}|')
         try:
             json_start = self.buffer.index('{')
         except ValueError:
@@ -249,9 +256,9 @@ class RPCDeviceThread(Thread):
 
         #print('json start/end = ', json_start, json_start + json_end)
 
-        ret = self.buffer[json_start : json_start + json_end]
+        ret = self.buffer[json_start:json_start + json_end]
         logging.debug(f'json message      -> {ret} <-')
-        self.buffer = self.buffer[ json_start + json_end : ]
+        self.buffer = self.buffer[json_start + json_end:]
         logging.debug(f'final read buffer -> {self.buffer} <-')
 
         return ret
@@ -276,7 +283,8 @@ class RPCDeviceThread(Thread):
         """
         if len(self.responses) > 0:
             logging.debug(f'check_rpc_command_status: req_id = {req_id}')
-            logging.debug(f'check_rpc_command_status: self.responses={self.responses}')
+            logging.debug(f'check_rpc_command_status: '
+                          f'self.responses={self.responses}')
         for resp in self.responses:
             logging.debug(f'check_rpc_command_status: checking resp={resp}')
             if resp.get('id', None) == req_id:
@@ -313,7 +321,8 @@ class RPCDevice:
             logging.error('RPCDevice.connect(): rpc_manager is not None! and running')
             return False
 
-        logging.info(f'RPC Device connect: Connecting to RPCServer 127.0.0.1:{self.port}')
+        logging.info('RPC Device connect: Connecting to RPCServer '
+                     f'127.0.0.1:{self.port}')
 
         logging.info('Starting RPC Device manager thread')
         self.rpc_manager.start()
@@ -348,7 +357,8 @@ class RPCDevice:
         return rc
 
     def wait_for_response(self, reqid, timeout=90):
-        logging.debug(f'wait_for_response: waiting for reqid={reqid} timeout={timeout}')
+        logging.debug('wait_for_response: waiting for '
+                      f'reqid={reqid} timeout={timeout}')
         resp = None
         waited = time.time()
         while (time.time() - waited) < timeout:
@@ -360,14 +370,16 @@ class RPCDevice:
             time.sleep(0.05)  # was 1s
 
         if resp is None:
-            logging.error(f'RPC wait for serverreq_id={reqid}  TIMEOUT ->  resp is None!')
+            logging.error(f'RPC wait for serverreq_id={reqid}  '
+                          'TIMEOUT ->  resp is None!')
         else:
-            logging.debug(f'Response for req_id={reqid} took {time.time()-waited:4.3f} s and is {resp}')
+            logging.debug(f'Response for req_id={reqid} took '
+                          f'{time.time()-waited:4.3f} s and is {resp}')
 
         return resp
 
     def get_scalar_value(self, value_method, value_key, value_types):
-#        logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
+        #logging.debug(f'RPC Camera get_scale_value {value_method} {value_key}')
         rc = self.send_server_request(value_method, None)
 
         if not rc:
@@ -384,7 +396,7 @@ class RPCDevice:
         # FIXME parse out status?
         status = 'result' in resp
 
-#        logging.debug(f'RPC {value_method} status/resp = {status} {resp}')
+        #logging.debug(f'RPC {value_method} status/resp = {status} {resp}')
 
         if not status:
             logging.error(f'RPC:{value_method} - error getting settings!')
@@ -400,15 +412,15 @@ class RPCDevice:
             if match:
                 break
         if not match:
-            logging.error(f'get_scalar_type: {value_method} {value_key}: ' + \
-                          f'expected one of {value_types} got {result_value} ' + \
+            logging.error(f'get_scalar_type: {value_method} {value_key}: '
+                          f'expected one of {value_types} got {result_value} '
                           f'type {type(result_value)}')
             return None
         else:
             return result_value
 
     def set_scalar_value(self, value_method, value_key, value):
-#        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
+        #logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
 
         paramdict = {}
         if value_key is not None:
@@ -428,7 +440,7 @@ class RPCDevice:
         # FIXME parse out status?
         status = 'result' in resp
 
-#        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
+    #logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
 
         if not status:
             logging.warning('RPC:set_scalar_value - error getting settings!')
@@ -438,7 +450,7 @@ class RPCDevice:
         return True
 
     def send_command(self, command, params={}):
-#        logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
+        #logging.debug(f'RPC:set_scalar_value {value_method} {value_key} = {value}')
 
         paramdict = {}
         paramdict['params'] = {}
@@ -459,7 +471,7 @@ class RPCDevice:
         # FIXME parse out status?
         status = 'result' in resp
 
-#        logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
+        #logging.debug(f'RPC set_scalar_value status/resp = {status} {resp}')
 
         if not status:
             logging.error('RPC:send_command - error getting settings!')
@@ -467,7 +479,6 @@ class RPCDevice:
 
         #FIXME need to look at result code
         return True
-
 
     def get_list_value(self, value_method, value_key):
         return self.get_scalar_value(value_method, value_key, (list,))

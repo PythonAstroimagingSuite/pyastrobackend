@@ -8,8 +8,6 @@ from ..BaseBackend import BaseMount
 
 from pyastrobackend.RPC.RPCDeviceBase import RPCDeviceThread, RPCDevice
 
-# 0 = none, higher shows more
-LOG_SERVER_TRAFFIC = 1
 
 class RPCMountThread(RPCDeviceThread):
     def __init__(self, port, user_data, *args, **kwargs):

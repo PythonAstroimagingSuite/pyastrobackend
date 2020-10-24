@@ -17,7 +17,7 @@ class Focuser(BaseFocuser):
     def show_chooser(self, last_choice):
         pythoncom.CoInitialize()
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
-        chooser.DeviceType="Focuser"
+        chooser.DeviceType = "Focuser"
         focuser = chooser.Choose(last_choice)
         logging.debug(f'choice = {focuser}')
         return focuser
@@ -46,13 +46,16 @@ class Focuser(BaseFocuser):
             self.focus.Connected = True
             #logging.debug('Connecting focuser "Connected" worked')
         except:
+            # FIXME Need to tighten up this exception
             try:
                 #logging.debug('Connecting focuser trying "Link"')
                 self.focus.Link = True
                 #logging.debug('Connecting focuser "Link" worked')
             except Exception:
+                # FIXME Need to tighten up this exception
                 logging.error('Both "Connected" and "Link" failed!')
-                logging.error('ASCOMBackend:focuser:connect() Exception ->', exc_info=True)
+                logging.error('ASCOMBackend:focuser:connect() Exception ->',
+                              exc_info=True)
                 return False
 
         if self.is_connected():
@@ -79,12 +82,15 @@ class Focuser(BaseFocuser):
                 #logging.debug('Focuser is_connected trying "Connected"')
                 connected = self.focus.Connected
             except:
+                # FIXME Need to tighten up this exception
                 try:
                     #logging.debug('Focuser is_connected trying "Link"')
                     connected = self.focus.Link
                 except Exception:
+                    # FIXME Need to tighten up this exception
                     logging.error('Both "Connected" and "Link" failed!')
-                    logging.error('ASCOMBackend:focuser:is_connected() Exception ->', exc_info=True)
+                    logging.error('ASCOMBackend:focuser:is_connected() '
+                                  'Exception ->', exc_info=True)
                     return False
             return connected
         else:

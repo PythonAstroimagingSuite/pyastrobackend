@@ -37,5 +37,3 @@ class DeviceBackend(BaseDeviceBackend):
 
     def newMount(self):
         return RPC_Mount(self)
-
-

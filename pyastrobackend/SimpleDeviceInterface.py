@@ -4,7 +4,7 @@ import logging
 
 import astropy.io.fits as pyfits
 
-from pyastrobackend.BackendConfig import get_backend_for_os, get_backend, get_backend_choices
+from pyastrobackend.BackendConfig import get_backend_for_os, get_backend
 
 
 class SimpleDeviceInterface:
@@ -14,6 +14,16 @@ class SimpleDeviceInterface:
         #self.backend = get_backend(def_backend)
 
     def connect_backend(self, backend_name=None):
+        """
+        Connect to the driver backend. If none is specified then a
+        default value for the given platform will be guessed.
+
+        :param backend_name: Name of backend, defaults to None
+        :type backend_name: str, optional
+        :return: True on success.
+        :rtype: bool
+
+        """
         if backend_name is None:
             backend_name = get_backend_for_os()
 
@@ -33,6 +43,19 @@ class SimpleDeviceInterface:
         return rc
 
     def connect_focuser(self, driver, backend_name=None):
+        """
+        Connect to the focuser driver.  A backend can be specified so that
+        the focuser uses a different backend than other device classes, for
+        example.
+
+        :param driver: Name of focuser driver.
+        :type driver: str
+        :param backend_name: Name of backend to use for focuser, defaults to None
+        :type backend_name: str, optional
+        :return: Focuser object or None if connection fails.
+        :rtype: Focuser object
+
+        """
         rc = None
 
         # if backend_name is None we assume they connected with connect_backend
@@ -65,12 +88,26 @@ class SimpleDeviceInterface:
             return None
 
     def connect_filterwheel(self, driver, backend_name=None):
+        """
+        Connect to the filterwheel driver.  A backend can be specified so that
+        the filterwheel uses a different backend than other device classes, for
+        example.
+
+        :param driver: Name of filterwheel driver.
+        :type driver: str
+        :param backend_name: Name of backend to use for filterwheel, defaults to None
+        :type backend_name: str, optional
+        :return: FilterWheel object or None if connection fails.
+        :rtype: FilterWheel object
+
+        """
         rc = None
 
         # if backend_name is None we assume they connected with connect_backend
         # and all devices share the same backend
         if backend_name is not None:
-            logging.info(f'SDI:connect_filterwheel: filterwheel_backend={backend_name}')
+            logging.info('SDI:connect_filterwheel: '
+                         f'filterwheel_backend={backend_name}')
 
             self.filterwheel_backend = get_backend(backend_name)
 
@@ -97,6 +134,17 @@ class SimpleDeviceInterface:
             return None
 
     def wait_on_focuser_move(self, focuser, timeout=60):
+        """
+        Wait for any focuser move to complete up to a timeout value.
+
+        :param focuser: Focuser object
+        :type focuser: Focuser object
+        :param timeout: Timeout for wait for motion to stop, defaults to 60
+        :type timeout: int, optional
+        :return: True on success.
+        :rtype: bool
+
+        """
         ts = time.time()
         lastpos = focuser.get_absolute_position()
         ntimes = 0
@@ -123,6 +171,19 @@ class SimpleDeviceInterface:
 
     # FIXME INDI stuff is broken!!!!
     def connect_camera(self, camera_driver, backend_name=None):
+        """
+        Connect to the camera driver.  A backend can be specified so that
+        the camera uses a different backend than other device classes, for
+        example.
+
+        :param driver: Name of camera driver.
+        :type driver: str
+        :param backend_name: Name of backend to use for camera, defaults to None
+        :type backend_name: str, optional
+        :return: Camera object or None if connection fails.
+        :rtype: Camera object
+
+        """
         # if backend_name is None we assume they connected with connect_backend
         # and all devices share the same backend
         if backend_name is not None:
@@ -149,15 +210,6 @@ class SimpleDeviceInterface:
 
         logging.debug(f'connect_camera: driver =  {camera_driver}')
 
-        # YUCK MAXIM MIXED IN
-        # if backend_name == 'ASCOM':
-        #     if camera_driver == 'MaximDL':
-        #         logging.info('Creating MaximDL camera object')
-        #         cam = self.camera_backend.newMaximDLCamera()
-        #     else:
-        #         cam = self.camera_backend.newCamera()
-        # else:
-
         cam = self.camera_backend.newCamera()
 
         rc = cam.connect(camera_driver)
@@ -183,7 +235,25 @@ class SimpleDeviceInterface:
 
     # take exposure
     # roi is (xleft, ytop, width, height)
-    def take_exposure(self, cam, focus_expos, output_filename, roi=None):
+    def take_exposure(self, cam, exposure, output_filename, roi=None):
+        """
+        Start an exposure with specified camera and wait until it completes.
+
+        The ROI is specified by a tuple/list with the following values:
+            (upper x, leftmost y, width, height)
+
+        :param cam: Camera object
+        :type cam: Camera object
+        :param exposure: Length of exposure.
+        :type exposure: float
+        :param output_filename: Filename for output image.
+        :type output_filename: str
+        :param roi: Region of interest, defaults to None
+        :type roi: list, optional
+        :return: DESCRIPTION
+        :rtype: TYPE
+
+        """
 
         # reset frame to desired roi
         cam.set_binning(1, 1)
@@ -194,15 +264,15 @@ class SimpleDeviceInterface:
         else:
             cam.set_frame(roi[0], roi[1], roi[2], roi[3])
 
-        cam.start_exposure(focus_expos)
+        cam.start_exposure(exposure)
 
         elapsed = 0
-        while (focus_expos - elapsed > 2) or not cam.check_exposure():
-            logging.debug(f"Taking image with camera {elapsed} of {focus_expos} seconds")
+        while (exposure - elapsed > 2) or not cam.check_exposure():
+            logging.debug(f"Taking image with camera {elapsed} of {exposure} seconds")
             time.sleep(0.25)
             elapsed += 0.25
-            if elapsed > focus_expos:
-                elapsed = focus_expos
+            if elapsed > exposure:
+                elapsed = exposure
 
         logging.debug('Exposure complete')
 

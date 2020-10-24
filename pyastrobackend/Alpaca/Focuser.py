@@ -16,7 +16,7 @@ class Focuser(AlpacaDevice, BaseFocuser):
         return self.get_prop('position')
 
     def move_absolute_position(self, abspos):
-        params = {'Position' : abspos}
+        params = {'Position': abspos}
         return self.set_prop('move', params)
 
     def get_max_absolute_position(self):

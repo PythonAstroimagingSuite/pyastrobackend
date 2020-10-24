@@ -1,7 +1,6 @@
 """ Pure ASCOM solution """
 from pyastrobackend.BaseBackend import BaseMount
 
-import time
 import logging
 from enum import Enum
 import pythoncom
@@ -23,7 +22,7 @@ class Mount(BaseMount):
     def show_chooser(self, last_choice):
         pythoncom.CoInitialize()
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
-        chooser.DeviceType="Telescope"
+        chooser.DeviceType = "Telescope"
         mount = chooser.Choose(last_choice)
         logging.debug(f'choice = {mount}')
         return mount
@@ -38,7 +37,9 @@ class Mount(BaseMount):
             try:
                 self.mount.Connected = True
             except Exception:
-                logging.error('ASCOMBackend:mount:connect() Exception ->', exc_info=True)
+                # FIXME Need to tighten up this exception
+                logging.error('ASCOMBackend:mount:connect() Exception ->',
+                              exc_info=True)
                 return False
 
         if self.mount.Connected:
@@ -125,9 +126,9 @@ class Mount(BaseMount):
         #time.sleep(0.1)
         #check
         rc = self.mount.Tracking == onoff
-        logging.debug(f'set_tracking: self.mount.Tracking = {self.mount.Tracking} rc = {rc}')
+        logging.debug('set_tracking: self.mount.Tracking = '
+                      f'{self.mount.Tracking} rc = {rc}')
         return rc
 
     def get_tracking(self):
         return self.mount.Tracking
-

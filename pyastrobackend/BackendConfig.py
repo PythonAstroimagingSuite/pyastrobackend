@@ -10,7 +10,7 @@ def get_backend_for_os():
     the default value.
 
     :returns:
-        'ASCOM' or 'INDI' or 'ALPACA'.
+        Name of the default backend for this platform.
     :rtype: str
     """
 
@@ -27,9 +27,26 @@ def get_backend_for_os():
                         f'({os.name}) available')
 
 def get_backend_choices():
+    """
+    Returns all valid values for the backend name.
+
+    :return: Names of all possible backends.
+    :rtype: List[str]
+
+    """
     return ['ASCOM', 'ALPACA', 'RPC', 'INDI']
 
 def get_backend(backend_name):
+    """
+    Returns a backend object for the requested backend.
+
+    :param backend_name: Name of desired backend.
+    :type backend_name: str
+    :raises Exception: If unavailable backend requested raises exception.
+    :return: Backend instance
+    :rtype: Backend object
+
+    """
     global LOADED_BACKENDS
 
     if backend_name in LOADED_BACKENDS:
@@ -48,6 +65,8 @@ def get_backend(backend_name):
         from pyastrobackend.INDIBackend import DeviceBackend as INDI_Backend
         backend = INDI_Backend()
     else:
+        # FIXME Exception might be extreme for this scenario.
+        #       Also should look at standard exceptions for closer match.
         raise Exception(f'Error: no implementation for backend {backend_name} '
                         'available')
 

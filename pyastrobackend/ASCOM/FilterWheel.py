@@ -10,14 +10,14 @@ class FilterWheel(BaseFilterWheel):
     def __init__(self, backend=None):
         self.filterwheel = None
         # backend ignore for ASCOM
-        
+
     def has_chooser(self):
         return True
-        
+
     def show_chooser(self, last_choice):
         pythoncom.CoInitialize()
         chooser = win32com.client.Dispatch("ASCOM.Utilities.Chooser")
-        chooser.DeviceType="FilterWheel"
+        chooser.DeviceType = "FilterWheel"
         filterwheel = chooser.Choose(last_choice)
         logging.debug(f'choice = {filterwheel}')
         return filterwheel
@@ -31,8 +31,10 @@ class FilterWheel(BaseFilterWheel):
         else:
             try:
                 self.filterwheel.Connected = True
-            except Exception as e:
-                logging.error('ASCOMBackend:filterwheel:connect() Exception ->', exc_info=True)
+            except Exception:
+                # FIXME Need to tighten up this exception
+                logging.error('ASCOMBackend:filterwheel:connect() Exception '
+                              '->', exc_info=True)
                 return False
 
         if self.filterwheel.Connected:
@@ -84,7 +86,7 @@ class FilterWheel(BaseFilterWheel):
         names = self.get_names()
         try:
             newpos = names.index(name)
-        except ValueError as e:
+        except ValueError:
             newpos = -1
 
         if newpos == -1:

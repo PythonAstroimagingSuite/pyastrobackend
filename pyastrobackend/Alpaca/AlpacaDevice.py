@@ -13,7 +13,7 @@ class AlpacaDevice:
         try:
             alpaca_field, device_type, device_number = name.split(':')
             device_number = int(device_number)
-        except:
+        except ValueError:
             logging.error('Error parsing Alpaca device spec in connect()')
 
         if alpaca_field != 'ALPACA' or None in [device_type, device_number]:
@@ -24,7 +24,8 @@ class AlpacaDevice:
             self.device_type = None
             return False
 
-        logging.debug(f'Alpaca connect device_type={device_type}, device_number={device_number}')
+        logging.debug(f'Alpaca connect device_type={device_type}, '
+                      f'device_number={device_number}')
         logging.debug(f'connect camera {name}')
 
         self.device_number = device_number

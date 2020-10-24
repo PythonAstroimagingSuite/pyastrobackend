@@ -17,7 +17,7 @@ class Camera(BaseCamera):
 
     def show_chooser(self, last_choice):
         chooser = CreateObject("ASCOM.Utilities.Chooser")
-        chooser.DeviceType="Camera"
+        chooser.DeviceType = "Camera"
         camera = chooser.Choose(last_choice)
         logging.debug(f'choice = {camera}')
         return camera
@@ -37,9 +37,13 @@ class Camera(BaseCamera):
         # have it continually doing this so we cache result
         if self.cam.Connected:
             self.camera_has_progress = self.supports_progress()
-            logging.debug(f'camera:connect camera_has_progress={self.camera_has_progress}')
+            logging.debug('camera:connect camera_has_progress='
+                          f'{self.camera_has_progress}')
 
             #logging.debug(f'ASCOM GAINS = {self.cam.Gains}')
+            # FIXME Gain with ASCOM has been somewhat troublesome
+            #       Need to revisit with newer drivers as it is
+            #       probably better behaved now and this can be cleaned up
             try:
                 logging.debug(f'ASCOM GAINMAX = {self.cam.GainMax}')
                 logging.debug(f'ASCOM GAINMIN = {self.cam.GainMin}')
@@ -161,7 +165,7 @@ class Camera(BaseCamera):
             Data is in row-major format!
         """
         # FIXME Is this best way to determine data type from camera??
-        maxadu =  self.cam.MaxADU
+        maxadu = self.cam.MaxADU
         if maxadu == 65535:
             out_dtype = np.dtype(np.uint16)
         else:
@@ -216,7 +220,8 @@ class Camera(BaseCamera):
                 ccd_gain = self.cam.Gain
                 logging.debug(f'camera gain = {ccd_gain}')
             except:
-                logging.error(f'Unable to read camera gain!', exc_info=True)
+                # FIXME Need to tighten up this exception
+                logging.error('Unable to read camera gain!', exc_info=True)
 
         return ccd_gain
 
@@ -228,13 +233,15 @@ class Camera(BaseCamera):
         logging.warning('!!!!!!!! better understood.                           !!!!!!!!!')
         return
 
-        if self.cam:
-            try:
-                self.cam.Gain = int(ccd_gain)
-                logging.debug(f'set camera gain = {ccd_gain}')
-                return True
-            except:
-                logging.error(f'Unable to set camera gain!', exc_info=True)
+        # OLD CODE to implement gain changes
+        # if self.cam:
+        #     try:
+        #         self.cam.Gain = int(ccd_gain)
+        #         logging.debug(f'set camera gain = {ccd_gain}')
+        #         return True
+        #     except:
+        #         # FIXME Need to tighten up this exception
+        #         logging.error(f'Unable to set camera gain!', exc_info=True)
 
         return False
 
@@ -254,12 +261,14 @@ class Camera(BaseCamera):
         try:
             self.cam.SetCCDTemperature = temp_c
         except:
+            # FIXME Need to tighten up this exception
             logging.warning('camera.set_target_temperature() failed!')
 
     def set_cooler_state(self, onoff):
         try:
             self.cam.CoolerOn = onoff
         except:
+            # FIXME Need to tighten up this exception
             logging.warning('camera.set_cooler_state() failed!')
 
     def get_cooler_state(self):
@@ -272,6 +281,7 @@ class Camera(BaseCamera):
         try:
             return self.cam.CoolerPower
         except Exception:
+            # FIXME Need to tighten up this exception
             logging.warning('camera.get_cooler_power() failed!')
             logging.error('Exception ->', exc_info=True)
             return 0
@@ -306,6 +316,7 @@ class Camera(BaseCamera):
                 exp_min = self.cam.ExposureMin
                 exp_max = self.cam.ExposureMax
             except:
+                # FIXME Need to tighten up this exception
                 logging.error('Unable to get min/max exposure allowed', exc_info=True)
                 return None
             return (exp_min, exp_max)

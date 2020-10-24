@@ -62,13 +62,13 @@ class Mount(AlpacaDevice, BaseMount):
 
     def slew(self, ra, dec):
         """Slew to ra/dec with ra in decimal hours and dec in degrees"""
-        params = { 'RightAscension' : ra, 'Declination' : dec}
+        params = {'RightAscension': ra, 'Declination': dec}
         #return self.set_prop('slewtocoordinates', params)
         return self.set_prop('slewtocoordinatesasync', params)
 
     def sync(self, ra, dec):
         """Sync to ra/dec with ra in decimal hours and dec in degrees"""
-        params = { 'RightAscension' : ra, 'Declination' : dec}
+        params = {'RightAscension': ra, 'Declination': dec}
         return self.set_prop('synctocoordinates', params)
 
     def unpark(self):
@@ -78,7 +78,7 @@ class Mount(AlpacaDevice, BaseMount):
         #rc = self.mount.Tracking = onoff
         #return rc
         logging.debug(f'set_tracking: setting to {onoff}')
-        params = { 'Tracking' : onoff}
+        params = {'Tracking': onoff}
         self.set_prop('tracking', params)
         #time.sleep(0.1)
         #check
@@ -88,4 +88,3 @@ class Mount(AlpacaDevice, BaseMount):
 
     def get_tracking(self):
         return self.get_prop('tracking')
-

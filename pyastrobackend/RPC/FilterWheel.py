@@ -20,12 +20,12 @@ class FilterWheel(RPCDevice, BaseFilterWheel):
         self.rpc_manager.event_callbacks.append(self.event_callback)
 
     def event_callback(self, event, *args):
-#        logging.debug(f'Focsuer event_callback: {event} {args})')
+        #        logging.debug(f'Focsuer event_callback: {event} {args})')
         if event == 'Connection':
             self.connected = True
-#        elif event == 'Response':
-#            req_id = args[0]
-#            logging.debug(f'event_callback: req_id = {req_id}')
+        #elif event == 'Response':
+            #req_id = args[0]
+            #logging.debug(f'event_callback: req_id = {req_id}')
 
     def get_position(self):
         return self.get_scalar_value('filterwheel_get_position',
