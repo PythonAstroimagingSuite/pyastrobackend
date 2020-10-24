@@ -8,7 +8,6 @@ Subpackages
 
     pyastrobackend.ASCOM
     pyastrobackend.INDI
-    pyastrobackend.MaximDL
 
 
 Submodules
