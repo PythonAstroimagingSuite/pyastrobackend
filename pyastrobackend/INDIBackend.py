@@ -183,6 +183,8 @@ class DeviceBackend(BaseDeviceBackend):
             device_class = 'ccd'
         elif device_class == 'mount':
             device_class = 'telescope'
+        elif device_class == 'filterwheel':
+            device_class = 'filter'
 
         devs = self.indiclient.getDevices()
         matches = []
