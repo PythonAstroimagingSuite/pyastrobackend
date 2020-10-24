@@ -58,9 +58,11 @@ class DeviceBackend(BaseDeviceBackend):
         # for now just return "0" to "3" for the device number on remote server
         # class should be 'camera', 'focuser', 'filterwheel', or 'telescope'
         # CASE MATTERS
-        if device_class not in ['camera', 'ccd', 'focuser', 'filterwheel', 'mount', 'telescope']:
-            logging.error(f'Alpaca getDevicesbyClass: device_class {device_class} ' + \
-                          f'not "camera", "ccd", "focuser", "filterwheel", "mount" or "telescope"')
+        if device_class not in ['camera', 'ccd', 'focuser', 'filterwheel',
+                                'mount', 'telescope']:
+            logging.error('Alpaca getDevicesbyClass: device_class '
+                          f'{device_class} not "camera", "ccd", "focuser", '
+                          '"filterwheel", "mount" or "telescope"')
             return []
 
         # accept either 'ccd' or 'camera' for camera class
@@ -76,9 +78,9 @@ class DeviceBackend(BaseDeviceBackend):
         return vals
 
     def _base_url(self, device_type, device_number):
-        return f'http://{self.server_ip}:{self.server_port}/' + \
-               f'api/v{self.api_version}/' + \
-               f'{device_type}/{device_number}/'
+        return f'http://{self.server_ip}:{self.server_port}/' \
+               + f'api/v{self.api_version}/' \
+               + f'{device_type}/{device_number}/'
 
     # FIXME Do I really want to make this a static method?
     @staticmethod
@@ -98,8 +100,8 @@ class DeviceBackend(BaseDeviceBackend):
 
         if error_num != 0:
             error_msg = resp_dict.get('ErrorMessage', 'Unknown')
-            logging.error(f'get_prop request returned error number {error_num} ' + \
-                          f'error message "{error_msg}"')
+            logging.error(f'get_prop request returned error number '
+                          f'{error_num} error message "{error_msg}"')
             return False
 
         if 'Value' not in resp_dict:
@@ -113,7 +115,9 @@ class DeviceBackend(BaseDeviceBackend):
         params['ClientTransactionID'] = self.request_id
         self.request_id += 1
         req = self._base_url(device_type, device_number) + prop
+
 #        logging.debug(f'Sending GET req {req} params {params}')
+
         resp = requests.get(url=req, params=params)
         try:
             resp_json = resp.json()
@@ -157,7 +161,7 @@ class DeviceBackend(BaseDeviceBackend):
 
         if error_num != 0:
             error_msg = resp_dict.get('ErrorMessage', 'Unknown')
-            logging.error(f'set_prop request returned error number {error_num} ' + \
+            logging.error(f'set_prop request returned error number {error_num} '
                           f'error message "{error_msg}"')
             return False
 
