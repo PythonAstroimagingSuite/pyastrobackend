@@ -48,8 +48,8 @@ def get_backend(backend_name):
         from pyastrobackend.INDIBackend import DeviceBackend as INDI_Backend
         backend = INDI_Backend()
     else:
-        raise Exception(f'Error: no implementation for backend {backend_name} available')
+        raise Exception(f'Error: no implementation for backend {backend_name} '
+                        'available')
 
     LOADED_BACKENDS[backend_name] = backend
     return backend
-
