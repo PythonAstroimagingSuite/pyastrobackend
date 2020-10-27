@@ -695,13 +695,35 @@ class Camera(BaseCamera):
 #        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return (None, None, None, None)
+        
+        # called expects pixels are the "size" of the current binning
+        #        
+        #
+        # INDI returns frame in 1x1 pixels
+        #
+        binx, biny = self.get_binning()
+        if None in [binx, biny]:
+            logging.error('get_frame: unable to determine binning!')
+            return False
+        logging.debug(f'get_frame: binning = {binx} {biny}')
 
-        return (ccd_x.value, ccd_y.value, ccd_w.value, ccd_h.value)
+        return (ccd_x.value // binx, ccd_y.value // biny, 
+                ccd_w.value // binx, ccd_h.value // biny)
 
     def set_frame(self, minx, miny, width, height):
+        # passed in pixels are the "size" of the current binning
+        #        
+        #
+        # INDI expects us to set frame in 1x1 pixels
+        #
         ccd_frame = indihelper.getNumber(self.cam, 'CCD_FRAME')
         if ccd_frame is None:
             return False
+        binx, biny = self.get_binning()
+        if None in [binx, biny]:
+            logging.error('set_frame: unable to determine binning!')
+            return False
+        logging.debug(f'set_frame: binning = {binx} {biny}')
         ccd_x = indihelper.findNumber(ccd_frame, 'X')
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
@@ -711,10 +733,14 @@ class Camera(BaseCamera):
 #        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return False
-        ccd_x.value = minx
-        ccd_y.value = miny
-        ccd_w.value = width
-        ccd_h.value = height
+        ccd_x.value = minx * binx
+        ccd_y.value = miny * biny
+        ccd_w.value = width * binx
+        ccd_h.value = height * biny
+        print(width, height)
+        print(binx, biny)
+        print(width*binx, height*biny)
+        print(ccd_x.value, ccd_y.value, ccd_w.value, ccd_h.value)
         self.backend.indiclient.sendNewNumber(ccd_frame)
         return True
 
@@ -1059,7 +1085,7 @@ class Mount(BaseMount):
     def slew(self, ra, dec):
         """Slew to ra/dec with ra in decimal hours and dec in degrees"""
         indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
-                                      'ON_COORD_SET', 'TRACK', True)
+                                      'ON_COORD_SET', 'SLEW', True)
 
         eq_coord = indihelper.getNumber(self.mount, 'EQUATORIAL_EOD_COORD')
         if eq_coord is None:
