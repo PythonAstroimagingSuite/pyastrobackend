@@ -152,12 +152,17 @@ class SimpleDeviceInterface:
         else:
             return None
 
-    def wait_on_focuser_move(self, focuser, timeout=60):
+    def wait_on_focuser_move(self, focuser, position=None, timeout=60):
         """
         Wait for any focuser move to complete up to a timeout value.
+        If a position is given will wait until that position is reached.
+        Otherwise it watches the focuser position until it has stabilized
+        indicating the focuser is no longer moving.
 
         :param focuser: Focuser object
         :type focuser: Focuser object
+        :param position: Target position
+        :type position: int, optional
         :param timeout: Timeout for wait for motion to stop, defaults to 60
         :type timeout: int, optional
         :return: True on success.
@@ -167,21 +172,35 @@ class SimpleDeviceInterface:
         ts = time.time()
         lastpos = focuser.get_absolute_position()
         ntimes = 0
+        #
+        # With INDI Moonlite driver I have found when you set the desired
+        # position for the focuser that initially for a short period
+        # the position you read back is that position!  Then it starts
+        # showing the actual position of the focuser as it moves to that
+        # target position.  
+        #
+        # So require the target position to be achieved a few times
+        # before declaring the move complete
+        #
         while (time.time() - ts) < timeout:
             logging.debug(f'waiting on focuser move - curpos = '
-                          f'{focuser.get_absolute_position()}')
+                          f'{focuser.get_absolute_position()} '
+                          f'position = {position} '
+                          f'ntimes = {ntimes}')
 
             curpos = focuser.get_absolute_position()
-            if abs(curpos - lastpos) < 1:
-                ntimes = 3
-                break
+            if position is not None:
+                condition = abs(curpos - position) < 1
+            else:
+                condition = abs(curpos - lastpos) < 1
+            if condition:
+                ntimes += 1               
+                if ntimes > 3:
+                    break
+            else:
+                ntimes = 0
 
             lastpos = curpos
-
-#   FIXME This doesn't seem to work in pyastro37 env under windows????
-#            if not focuser.is_moving():
-#                break
-
             time.sleep(0.5)
 
         #time.sleep(0.5) # just be sure its done
@@ -254,7 +273,8 @@ class SimpleDeviceInterface:
 
     # take exposure
     # roi is (xleft, ytop, width, height)
-    def take_exposure(self, cam, exposure, output_filename, roi=None):
+    def take_exposure(self, cam, exposure, output_filename, roi=None,
+                      overwrite=False):
         """
         Start an exposure with specified camera and wait until it completes.
 
@@ -269,8 +289,10 @@ class SimpleDeviceInterface:
         :type output_filename: str
         :param roi: Region of interest, defaults to None
         :type roi: list, optional
-        :return: DESCRIPTION
-        :rtype: TYPE
+        :param overwrite: Overwrite existing file if True.
+        :type overwrite: bool, optional
+        :return: True on success.
+        :rtype: bool
 
         """
 
@@ -321,7 +343,7 @@ class SimpleDeviceInterface:
                 except:
                     pass
 
-                pyfits.writeto(ff, image_data, overwrite=True)
+                pyfits.writeto(ff, image_data, overwrite=overwrite)
 
                 result = True
             else:
