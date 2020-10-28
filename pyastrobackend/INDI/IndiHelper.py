@@ -43,7 +43,7 @@ def getSwitch(device, name, timeout=DEFAULT_TIMEOUT):
 
 def findSwitch(iswvect, name):
     for i in range(0, iswvect.nsp):
-        #print(i, iswvect[i].name, iswvect[i].s)
+        # logging.debug(f'findSwitch: {name} {iswvect[i].name} {iswvect[i].s}')
         if iswvect[i].name == name:
             return iswvect[i]
 
@@ -63,10 +63,14 @@ def getfindSwitchState(device, propname, swname):
     return sw.s == PyIndi.ISS_ON
 
 def setfindSwitchState(indiclient, device, propname, swname, onoff):
+    # logging.debug(f'setfindswitchstate: {propname} {swname} {onoff}')
     sw_prop = getSwitch(device, propname)
     if sw_prop is None:
         #print('sw_prop = None')
         return False
+
+    # logging.debug(f'sw_prop before: {dump_ISwitchVectorProperty(sw_prop)}')
+
     sw = findSwitch(sw_prop, swname)
     if sw is None:
         #print('sw is None')
@@ -75,6 +79,9 @@ def setfindSwitchState(indiclient, device, propname, swname, onoff):
         sw.s = PyIndi.ISS_ON
     else:
         sw.s = PyIndi.ISS_OFF
+
+    # logging.debug(f'sw_prop after: {dump_ISwitchVectorProperty(sw_prop)}')
+
     indiclient.sendNewSwitch(sw_prop)
     return True
 
@@ -89,6 +96,8 @@ def getNumber(device, name, timeout=DEFAULT_TIMEOUT):
         #print('N')
         num = device.getNumber(name)
         cnt += 1
+
+    # logging.debug(f'getnumber: {name} cnt = {cnt} {timeout/0.1}')
 
     return num
 
@@ -117,6 +126,9 @@ def getfindNumberValue(device, propname, numname):
 
 def getNumberState(device, propname):
     num = getNumber(device, propname)
+    # logging.debug(f'getnumberstate: {propname} = {num}')
+    # if isinstance(num, PyIndi.INumberVectorProperty):
+       # logging.debug(f'num = {dump_INumberVectorProperty(num)}')
     if num is None:
         return None
     return num.s
@@ -223,14 +235,14 @@ def setfindLightState(indiclient, device, propname, lightname, state):
 # device routines
 
 def connectDevice(indiclient, devicename, timeout=2):
-    #logging.debug(f'Connecting to device: {devicename}')
+    # logging.debug(f'Connecting to device: {devicename}')
     cnt = 0
     device = None
-    #logging.debug(f'connectDevice: searching for {devicename}')
+    # logging.debug(f'connectDevice: searching for {devicename}')
     while device is None and cnt < (timeout / 0.1):
         time.sleep(0.1)
         device = indiclient.getDevice(devicename)
-        #logging.debug(f'getDevice({devicename}) = {device}')
+        # logging.debug(f'getDevice({devicename}) = {device}')
         cnt += 1
     if device is None:
         logging.error(f'INDIHelper:connectDevice(): could not find {devicename}')

@@ -177,7 +177,7 @@ class SimpleDeviceInterface:
         # position for the focuser that initially for a short period
         # the position you read back is that position!  Then it starts
         # showing the actual position of the focuser as it moves to that
-        # target position.  
+        # target position.
         #
         # So require the target position to be achieved a few times
         # before declaring the move complete
@@ -194,7 +194,7 @@ class SimpleDeviceInterface:
             else:
                 condition = abs(curpos - lastpos) < 1
             if condition:
-                ntimes += 1               
+                ntimes += 1
                 if ntimes > 3:
                     break
             else:

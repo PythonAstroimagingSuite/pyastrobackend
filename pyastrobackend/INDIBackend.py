@@ -695,9 +695,9 @@ class Camera(BaseCamera):
 #        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return (None, None, None, None)
-        
+
         # called expects pixels are the "size" of the current binning
-        #        
+        #
         #
         # INDI returns frame in 1x1 pixels
         #
@@ -707,12 +707,12 @@ class Camera(BaseCamera):
             return False
         logging.debug(f'get_frame: binning = {binx} {biny}')
 
-        return (ccd_x.value // binx, ccd_y.value // biny, 
+        return (ccd_x.value // binx, ccd_y.value // biny,
                 ccd_w.value // binx, ccd_h.value // biny)
 
     def set_frame(self, minx, miny, width, height):
         # passed in pixels are the "size" of the current binning
-        #        
+        #
         #
         # INDI expects us to set frame in 1x1 pixels
         #
@@ -982,6 +982,11 @@ class Mount(BaseMount):
         self.has_altaz_coord = None
         self.timeout = 5
 
+        # when we start a slew create a property for EQUATOIRAL_EOD_COORD
+        # and have is_slewing() use it
+        # otherwise I have had issues detecting the end of a slew
+        self.slew_eqcoord = None
+
     def has_chooser(self):
         return False
 
@@ -1068,9 +1073,22 @@ class Mount(BaseMount):
         return None
 
     def is_slewing(self):
-        state = indihelper.getNumberState(self.mount, 'EQUATORIAL_EOD_COORD')
-        if state is None:
-            return None
+        using_eqcoord = False
+        if self.slew_eqcoord is not None:
+            logging.debug(f'using slew_eqcoord')
+            state = self.slew_eqcoord.s
+            using_eqcoord = True
+        else:
+            state = indihelper.getNumberState(self.mount, 'EQUATORIAL_EOD_COORD')
+            if state is None:
+                return None
+
+        logging.debug(f'is_slewing: state = {state}')
+
+        if state != PyIndi.IPS_BUSY and using_eqcoord:
+            # slew is done clear slew_eqcoord
+            self.slew_eqcoord = None
+
         return state == PyIndi.IPS_BUSY
 
     def abort_slew(self):
@@ -1085,12 +1103,17 @@ class Mount(BaseMount):
     def slew(self, ra, dec):
         """Slew to ra/dec with ra in decimal hours and dec in degrees"""
         indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
-                                      'ON_COORD_SET', 'SLEW', True)
+                                      'ON_COORD_SET', 'SLEW', False)
+        indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                      'ON_COORD_SET', 'TRACK',  True)
+        indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                      'ON_COORD_SET', 'SYNC', False)
 
         eq_coord = indihelper.getNumber(self.mount, 'EQUATORIAL_EOD_COORD')
         if eq_coord is None:
             return False
 
+        self.slew_eqcoord = eq_coord
         ra_coord = indihelper.findNumber(eq_coord, 'RA')
         if ra_coord is None:
             return False
@@ -1108,6 +1131,11 @@ class Mount(BaseMount):
         #logging.debug('finding) ON_COORD_SET switch')
         indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
                                       'ON_COORD_SET', 'SYNC', True)
+        indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                      'ON_COORD_SET', 'SLEW', False)
+        indihelper.setfindSwitchState(self.backend.indiclient, self.mount,
+                                      'ON_COORD_SET', 'TRACK', False)
+
         #logging.debug('getNumber EQUATORIAL_EOD_COORD')
         eq_coord = indihelper.getNumber(self.mount, 'EQUATORIAL_EOD_COORD')
         if eq_coord is None:
