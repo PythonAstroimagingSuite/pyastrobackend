@@ -228,11 +228,17 @@ class BaseCamera(metaclass=ABCMeta):
         Get camera state.
 
         :returns:
+
                 -1   Camera State unknown
+
                 0    Camera idle
+
                 2    Camera is busy (exposing)
+
                 5    Camera error
+
         :rtype int:
+
         """
         # TODO Need to fix formatting of multiple return values.
 

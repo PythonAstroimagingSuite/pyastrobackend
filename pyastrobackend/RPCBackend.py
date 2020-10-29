@@ -21,7 +21,6 @@
 
 from pyastrobackend.BaseBackend import BaseDeviceBackend
 
-# messy but we'll roll MaximDL camera support under ASCOM
 from pyastrobackend.RPC.Camera import Camera as RPC_Camera
 from pyastrobackend.RPC.Focuser import Focuser as RPC_Focuser
 from pyastrobackend.RPC.Mount import Mount as RPC_Mount

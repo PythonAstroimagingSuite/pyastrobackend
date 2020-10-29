@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
@@ -22,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -81,6 +80,7 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pyastrobackend</a></li>
 </ul>
 
             
@@ -151,6 +151,7 @@
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
@@ -158,6 +159,7 @@
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -168,16 +170,22 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.abort_slew">abort_slew() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.abort_slew">abort_slew() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.abort_slew">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.abort_slew">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.abort_slew">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.abort_slew">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.abort_slew">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice">AlpacaDevice (class in pyastrobackend.Alpaca.AlpacaDevice)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -202,14 +210,12 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera">Camera (class in pyastrobackend.ASCOM.Camera)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera">Camera (class in pyastrobackend.Alpaca.Camera)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera">(class in pyastrobackend.ASCOMBackend)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera">(class in pyastrobackend.ASCOM.Camera)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera">(class in pyastrobackend.INDIBackend)</a>
-</li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera">(class in pyastrobackend.MaximDL.Camera)</a>
 </li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera">(class in pyastrobackend.RPC.Camera)</a>
 </li>
@@ -218,48 +224,64 @@
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.CCD_INFO">Camera.CCD_INFO (class in pyastrobackend.INDIBackend)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.can_park">can_park() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.can_park">can_park() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.can_park">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.can_park">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.can_park">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.can_park">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.can_park">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.check_exposure">check_exposure() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.check_exposure">check_exposure() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.check_exposure">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.check_exposure">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.check_exposure">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.check_exposure">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.check_exposure">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.check_exposure">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.clearBlobEvent">clearBlobEvent() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
-</li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.connect">connect() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.check_exposure_success">check_exposure_success() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.check_exposure_success">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.check_exposure_success">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.check_exposure_success">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.check_exposure_success">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.check_rpc_command_status">check_rpc_command_status() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.clearBlobEvent">clearBlobEvent() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.close">close() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.connect">connect() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.connect">(pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.connect">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.connect">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.connect">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.connect">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.connect">(pyastrobackend.ASCOMBackend.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.connect">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.connect">(pyastrobackend.ASCOMBackend.FilterWheel method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.connect">(pyastrobackend.ASCOMBackend.Focuser method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.connect">(pyastrobackend.ASCOMBackend.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.connect">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
@@ -281,16 +303,16 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.connect">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.connect">(pyastrobackend.MaximDL.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.connect">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
 </li>
-        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.connect">(pyastrobackend.RPC.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.connect">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_backend">connect_backend() (pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface method)</a>
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_camera">connect_camera() (pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface method)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_filterwheel">connect_filterwheel() (pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface method)</a>
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.connect_focuser">connect_focuser() (pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface method)</a>
 </li>
@@ -302,30 +324,32 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend">DeviceBackend (class in pyastrobackend.ASCOMBackend)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend">DeviceBackend (class in pyastrobackend.AlpacaBackend)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend">(class in pyastrobackend.ASCOMBackend)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend">(class in pyastrobackend.INDIBackend)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend">(class in pyastrobackend.RPCBackend)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient">DeviceBackend.IndiClient (class in pyastrobackend.INDIBackend)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.disconnect">disconnect() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.disconnect">disconnect() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.disconnect">(pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.disconnect">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.disconnect">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.disconnect">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.disconnect">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.disconnect">(pyastrobackend.ASCOMBackend.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.disconnect">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.disconnect">(pyastrobackend.ASCOMBackend.FilterWheel method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.disconnect">(pyastrobackend.ASCOMBackend.Focuser method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.disconnect">(pyastrobackend.ASCOMBackend.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.disconnect">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
@@ -347,9 +371,9 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.disconnect">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.disconnect">(pyastrobackend.MaximDL.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.disconnect">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
 </li>
-        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.disconnect">(pyastrobackend.RPC.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.disconnect">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -371,13 +395,39 @@
   </ul></td>
 </tr></table>
 
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.PierSide.EAST">EAST (pyastrobackend.ASCOM.Mount.PierSide attribute)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.emit">emit() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.event_callback">event_callback() (pyastrobackend.RPC.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.event_callback">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.event_callback">(pyastrobackend.RPC.Focuser.Focuser method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.event_callback">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.event_callback">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel">FilterWheel (class in pyastrobackend.ASCOMBackend)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel">FilterWheel (class in pyastrobackend.Alpaca.FilterWheel)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel">(class in pyastrobackend.ASCOM.FilterWheel)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel">(class in pyastrobackend.INDIBackend)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel">(class in pyastrobackend.RPC.FilterWheel)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDeviceInterfaces">findDeviceInterfaces() (in module pyastrobackend.INDI.IndiHelper)</a>
@@ -390,10 +440,10 @@
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDevices">findDevices() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
-      <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDevicesByClass">findDevicesByClass() (in module pyastrobackend.INDI.IndiHelper)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findDevicesByClass">findDevicesByClass() (in module pyastrobackend.INDI.IndiHelper)</a>
+</li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findLight">findLight() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findNumber">findNumber() (in module pyastrobackend.INDI.IndiHelper)</a>
@@ -402,12 +452,14 @@
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.findText">findText() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser">Focuser (class in pyastrobackend.ASCOM.Focuser)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser">Focuser (class in pyastrobackend.Alpaca.Focuser)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser">(class in pyastrobackend.ASCOMBackend)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser">(class in pyastrobackend.ASCOM.Focuser)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser">(class in pyastrobackend.INDIBackend)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser">(class in pyastrobackend.RPC.Focuser)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -416,108 +468,122 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.get_absolute_position">get_absolute_position() (pyastrobackend.ASCOM.Focuser.Focuser method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.get_absolute_position">get_absolute_position() (pyastrobackend.Alpaca.Focuser.Focuser method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.get_absolute_position">(pyastrobackend.ASCOMBackend.Focuser method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.get_absolute_position">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFocuser.get_absolute_position">(pyastrobackend.BaseBackend.BaseFocuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.get_absolute_position">(pyastrobackend.INDIBackend.Focuser method)</a>
 </li>
-      </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.BackendConfig.get_backend_for_os">get_backend_for_os() (in module pyastrobackend.BackendConfig)</a>
-
-      <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.get_backend_for_os">(in module pyastrobackend.SimpleDeviceInterface)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.get_absolute_position">(pyastrobackend.RPC.Focuser.Focuser method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_binning">get_binning() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.BackendConfig.get_backend">get_backend() (in module pyastrobackend.BackendConfig)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.BackendConfig.get_backend_choices">get_backend_choices() (in module pyastrobackend.BackendConfig)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.BackendConfig.get_backend_for_os">get_backend_for_os() (in module pyastrobackend.BackendConfig)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.get_base64">get_base64() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_binning">get_binning() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_binning">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_binning">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_binning">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_binning">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_binning">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_binning">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_description">get_camera_description() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_camera_description">get_camera_description() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_camera_description">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_description">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_camera_description">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_description">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_camera_description">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_description">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_gain">get_camera_gain() (pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_name">get_camera_name() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_camera_gain">get_camera_gain() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_camera_name">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_gain">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_camera_gain">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_gain">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_gain">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_camera_name">get_camera_name() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_name">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_camera_name">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_name">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_camera_name">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_name">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_offset">get_camera_offset() (pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_camera_settings">get_camera_settings() (pyastrobackend.RPC.Camera.Camera method)</a>
-</li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_usbbandwidth">get_camera_usbbandwidth() (pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_cooler_power">get_cooler_power() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_camera_offset">get_camera_offset() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_cooler_power">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_offset">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_offset">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_camera_usbbandwidth">get_camera_usbbandwidth() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_camera_usbbandwidth">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_camera_usbbandwidth">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_cooler_power">get_cooler_power() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_cooler_power">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_cooler_power">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_cooler_power">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_cooler_power">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_cooler_power">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_cooler_state">get_cooler_state() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_cooler_state">get_cooler_state() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_cooler_state">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_cooler_state">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_cooler_state">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_cooler_state">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_cooler_state">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_cooler_state">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_current_temperature">get_current_temperature() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_current_temperature">get_current_temperature() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.get_current_temperature">(pyastrobackend.Alpaca.Focuser.Focuser method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_current_temperature">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.get_current_temperature">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_current_temperature">(pyastrobackend.ASCOMBackend.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.get_current_temperature">(pyastrobackend.ASCOMBackend.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_current_temperature">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
@@ -527,237 +593,319 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.get_current_temperature">(pyastrobackend.INDIBackend.Focuser method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_current_temperature">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_current_temperature">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.get_current_temperature">(pyastrobackend.RPC.Focuser.Focuser method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_driver_info">get_driver_info() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_driver_info">get_driver_info() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_driver_info">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_driver_info">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_driver_info">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_driver_info">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_driver_info">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_driver_info">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_driver_version">get_driver_version() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_driver_version">get_driver_version() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_driver_version">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_driver_version">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_driver_version">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_driver_version">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_driver_version">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_driver_version">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_egain">get_egain() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_egain">get_egain() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_egain">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_egain">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_egain">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_egain">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_egain">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_egain">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_exposure_progress">get_exposure_progress() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_exposure_progress">get_exposure_progress() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_exposure_progress">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_exposure_progress">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_exposure_progress">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_exposure_progress">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_exposure_progress">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_exposure_progress">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_frame">get_frame() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_frame">get_frame() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_frame">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_frame">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_frame">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_frame">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_frame">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_frame">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_image_data">get_image_data() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_image_data">get_image_data() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_image_data">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_image_data">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_image_data">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_image_data">(pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_image_data">(pyastrobackend.MaximDL.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_image_data">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_info">get_info() (pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.get_max_absolute_position">get_max_absolute_position() (pyastrobackend.ASCOM.Focuser.Focuser method)</a>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.get_list_value">get_list_value() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.get_max_absolute_position">get_max_absolute_position() (pyastrobackend.Alpaca.Focuser.Focuser method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.get_max_absolute_position">(pyastrobackend.ASCOMBackend.Focuser method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.get_max_absolute_position">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFocuser.get_max_absolute_position">(pyastrobackend.BaseBackend.BaseFocuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.get_max_absolute_position">(pyastrobackend.INDIBackend.Focuser method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.get_max_absolute_position">(pyastrobackend.RPC.Focuser.Focuser method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_max_binning">get_max_binning() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_max_binning">get_max_binning() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_max_binning">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_max_binning">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_max_binning">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_max_binning">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_max_binning">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_max_binning">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_min_max_exposure">get_min_max_exposure() (pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.get_names">get_names() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_min_max_exposure">get_min_max_exposure() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_min_max_exposure">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_min_max_exposure">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.get_names">get_names() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_names">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.get_names">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.get_names">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.get_names">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.get_num_positions">get_num_positions() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.get_num_positions">get_num_positions() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_num_positions">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.get_num_positions">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.get_num_positions">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.get_num_positions">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_pixelsize">get_pixelsize() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_pier_side">get_pier_side() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_pixelsize">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_pier_side">(pyastrobackend.ASCOM.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_pier_side">(pyastrobackend.BaseBackend.BaseMount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_pier_side">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_pier_side">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_pixelsize">get_pixelsize() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_pixelsize">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_pixelsize">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_pixelsize">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_pixelsize">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_pixelsize">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.get_position">get_position() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.get_position">get_position() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.get_position">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.get_position">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.get_position">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_position_altaz">get_position_altaz() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_position_altaz">get_position_altaz() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.get_position_altaz">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_position_altaz">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_position_altaz">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_position_altaz">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_position_altaz">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.get_position_name">get_position_name() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.get_position_name">get_position_name() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position_name">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.get_position_name">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.get_position_name">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.get_position_name">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_position_radec">get_position_radec() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_position_radec">get_position_radec() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.get_position_radec">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_position_radec">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_position_radec">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_position_radec">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_position_radec">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_size">get_size() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.get_prop">get_prop() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_size">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.get_prop">(pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.get_request">get_request() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.get_scalar_value">get_scalar_value() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_settings">get_settings() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_settings">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_settings">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_settings">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_settings">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_side_physical">get_side_physical() (pyastrobackend.Alpaca.Mount.Mount method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_side_physical">(pyastrobackend.ASCOM.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_side_physical">(pyastrobackend.BaseBackend.BaseMount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_side_physical">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_side_physical">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_side_pointing">get_side_pointing() (pyastrobackend.Alpaca.Mount.Mount method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_side_pointing">(pyastrobackend.ASCOM.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_side_pointing">(pyastrobackend.BaseBackend.BaseMount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_side_pointing">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_side_pointing">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_size">get_size() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_size">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_size">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_size">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_size">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_size">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_state">get_state() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_state">get_state() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_state">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_state">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_state">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_state">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_state">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_state">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_target_temperature">get_target_temperature() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.get_target_temperature">get_target_temperature() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.get_target_temperature">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.get_target_temperature">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.get_target_temperature">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.get_target_temperature">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.get_target_temperature">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.get_target_temperature">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.get_tracking">get_tracking() (pyastrobackend.Alpaca.Mount.Mount method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.get_tracking">(pyastrobackend.ASCOM.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.get_tracking">(pyastrobackend.BaseBackend.BaseMount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.get_tracking">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.get_tracking">(pyastrobackend.RPC.Mount.Mount method)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.getBlobEvent">getBlobEvent() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.getDevicesByClass">getDevicesByClass() (pyastrobackend.INDIBackend.DeviceBackend method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.getDevicesByClass">getDevicesByClass() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.getDevicesByClass">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
 </li>
+      </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.getEventQueue">getEventQueue() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.getfindLight">getfindLight() (in module pyastrobackend.INDI.IndiHelper)</a>
@@ -792,9 +940,13 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.has_chooser">has_chooser() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.has_chooser">has_chooser() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.has_chooser">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.has_chooser">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.has_chooser">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.has_chooser">(pyastrobackend.ASCOM.Mount.Mount method)</a>
@@ -815,9 +967,7 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.has_chooser">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.has_chooser">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.has_chooser">(pyastrobackend.RPC.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.has_chooser">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -826,20 +976,18 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.is_connected">is_connected() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.initialize">initialize() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.is_connected">is_connected() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.is_connected">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_connected">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.is_connected">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.is_connected">(pyastrobackend.ASCOM.Mount.Mount method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.is_connected">(pyastrobackend.ASCOMBackend.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.is_connected">(pyastrobackend.ASCOMBackend.FilterWheel method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.is_connected">(pyastrobackend.ASCOMBackend.Focuser method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.is_connected">(pyastrobackend.ASCOMBackend.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.is_connected">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
@@ -857,19 +1005,17 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.is_connected">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.is_connected">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.is_connected">(pyastrobackend.RPC.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.is_connected">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.is_moving">is_moving() (pyastrobackend.ASCOM.Focuser.Focuser method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.is_moving">is_moving() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.is_moving">(pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+        <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.is_moving">(pyastrobackend.Alpaca.Focuser.Focuser method)</a>
 </li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.is_moving">(pyastrobackend.ASCOMBackend.Focuser method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_moving">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.is_moving">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.is_moving">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
@@ -879,33 +1025,47 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.is_moving">(pyastrobackend.INDIBackend.Focuser method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.is_moving">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.is_moving">(pyastrobackend.RPC.Focuser.Focuser method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.is_parked">is_parked() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.is_parked">is_parked() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.is_parked">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.is_parked">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.is_parked">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.is_parked">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.is_parked">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.is_slewing">is_slewing() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.is_slewing">is_slewing() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.is_slewing">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.is_slewing">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.is_slewing">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.is_slewing">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.is_slewing">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.isConnected">isConnected() (pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.isConnected">isConnected() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.isConnected">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.isConnected">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.isConnected">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.isConnected">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -914,24 +1074,87 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount">Mount (class in pyastrobackend.ASCOM.Mount)</a>
+      <li>
+    module
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount">(class in pyastrobackend.ASCOMBackend)</a>
+        <li><a href="pyastrobackend.html#module-pyastrobackend">pyastrobackend</a>
 </li>
-        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount">(class in pyastrobackend.INDIBackend)</a>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca">pyastrobackend.Alpaca</a>
+</li>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.AlpacaDevice">pyastrobackend.Alpaca.AlpacaDevice</a>
+</li>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Camera">pyastrobackend.Alpaca.Camera</a>
+</li>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.FilterWheel">pyastrobackend.Alpaca.FilterWheel</a>
+</li>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Focuser">pyastrobackend.Alpaca.Focuser</a>
+</li>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Mount">pyastrobackend.Alpaca.Mount</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.AlpacaBackend">pyastrobackend.AlpacaBackend</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM">pyastrobackend.ASCOM</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Camera">pyastrobackend.ASCOM.Camera</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.FilterWheel">pyastrobackend.ASCOM.FilterWheel</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Focuser">pyastrobackend.ASCOM.Focuser</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Mount">pyastrobackend.ASCOM.Mount</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.ASCOMBackend">pyastrobackend.ASCOMBackend</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.BackendConfig">pyastrobackend.BackendConfig</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.BaseBackend">pyastrobackend.BaseBackend</a>
+</li>
+        <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI">pyastrobackend.INDI</a>
+</li>
+        <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI.IndiHelper">pyastrobackend.INDI.IndiHelper</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.INDIBackend">pyastrobackend.INDIBackend</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC">pyastrobackend.RPC</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Camera">pyastrobackend.RPC.Camera</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.FilterWheel">pyastrobackend.RPC.FilterWheel</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Focuser">pyastrobackend.RPC.Focuser</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Mount">pyastrobackend.RPC.Mount</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.RPCDeviceBase">pyastrobackend.RPC.RPCDeviceBase</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.RPCBackend">pyastrobackend.RPCBackend</a>
+</li>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.SimpleDeviceInterface">pyastrobackend.SimpleDeviceInterface</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.move_absolute_position">move_absolute_position() (pyastrobackend.ASCOM.Focuser.Focuser method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount">Mount (class in pyastrobackend.Alpaca.Mount)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.move_absolute_position">(pyastrobackend.ASCOMBackend.Focuser method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount">(class in pyastrobackend.ASCOM.Mount)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount">(class in pyastrobackend.INDIBackend)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount">(class in pyastrobackend.RPC.Mount)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.move_absolute_position">move_absolute_position() (pyastrobackend.Alpaca.Focuser.Focuser method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.move_absolute_position">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFocuser.move_absolute_position">(pyastrobackend.BaseBackend.BaseFocuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.move_absolute_position">(pyastrobackend.INDIBackend.Focuser method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.move_absolute_position">(pyastrobackend.RPC.Focuser.Focuser method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -940,46 +1163,72 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newBLOB">newBLOB() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
-</li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newCamera">newCamera() (pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.name">name() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.name">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.name">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.name">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newBLOB">newBLOB() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
+</li>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.newCamera">newCamera() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newCamera">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.newCamera">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.newCamera">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
 </li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.newCamera">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
+</li>
       </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newDevice">newDevice() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newFilterWheel">newFilterWheel() (pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.newFilterWheel">newFilterWheel() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newFilterWheel">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.newFilterWheel">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.newFilterWheel">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
 </li>
-      </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newFocuser">newFocuser() (pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
-
-      <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.newFocuser">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.newFocuser">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.newFilterWheel">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.newFocuser">newFocuser() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newFocuser">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.newFocuser">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.newFocuser">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.newFocuser">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
+</li>
+      </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newLight">newLight() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newMessage">newMessage() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newMount">newMount() (pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+      <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.newMount">newMount() (pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.DeviceBackend.newMount">(pyastrobackend.ASCOMBackend.DeviceBackend method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseDeviceBackend.newMount">(pyastrobackend.BaseBackend.BaseDeviceBackend method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.newMount">(pyastrobackend.INDIBackend.DeviceBackend method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.RPCBackend.DeviceBackend.newMount">(pyastrobackend.RPCBackend.DeviceBackend method)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.newNumber">newNumber() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
@@ -996,53 +1245,220 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.park">park() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.park">park() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.park">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.park">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.park">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.park">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.park">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.process">process() (pyastrobackend.RPC.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.PierSide">PierSide (class in pyastrobackend.ASCOM.Mount)</a>
 </li>
-      <li><a href="pyastrobackend.html#module-pyastrobackend">pyastrobackend (module)</a>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.populate_buffer">populate_buffer() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM">pyastrobackend.ASCOM (module)</a>
+      <li>
+    pyastrobackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend">module</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Camera">pyastrobackend.ASCOM.Camera (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca">module</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Focuser">pyastrobackend.ASCOM.Focuser (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca.AlpacaDevice
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.AlpacaDevice">module</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Mount">pyastrobackend.ASCOM.Mount (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca.Camera
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Camera">module</a>
 </li>
-      <li><a href="pyastrobackend.html#module-pyastrobackend.ASCOMBackend">pyastrobackend.ASCOMBackend (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca.FilterWheel
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.FilterWheel">module</a>
 </li>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca.Focuser
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Focuser">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.Alpaca.Mount
+
+      <ul>
+        <li><a href="pyastrobackend.Alpaca.html#module-pyastrobackend.Alpaca.Mount">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.AlpacaBackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.AlpacaBackend">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.ASCOM
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.ASCOM.Camera
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Camera">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.ASCOM.FilterWheel
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.FilterWheel">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.ASCOM.Focuser
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Focuser">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.html#module-pyastrobackend.BackendConfig">pyastrobackend.BackendConfig (module)</a>
+      <li>
+    pyastrobackend.ASCOM.Mount
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#module-pyastrobackend.ASCOM.Mount">module</a>
 </li>
-      <li><a href="pyastrobackend.html#module-pyastrobackend.BaseBackend">pyastrobackend.BaseBackend (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.ASCOMBackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.ASCOMBackend">module</a>
 </li>
-      <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI">pyastrobackend.INDI (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.BackendConfig
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.BackendConfig">module</a>
 </li>
-      <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI.IndiHelper">pyastrobackend.INDI.IndiHelper (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.BaseBackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.BaseBackend">module</a>
 </li>
-      <li><a href="pyastrobackend.html#module-pyastrobackend.INDIBackend">pyastrobackend.INDIBackend (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.INDI
+
+      <ul>
+        <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI">module</a>
 </li>
-      <li><a href="pyastrobackend.MaximDL.html#module-pyastrobackend.MaximDL">pyastrobackend.MaximDL (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.INDI.IndiHelper
+
+      <ul>
+        <li><a href="pyastrobackend.INDI.html#module-pyastrobackend.INDI.IndiHelper">module</a>
 </li>
-      <li><a href="pyastrobackend.MaximDL.html#module-pyastrobackend.MaximDL.Camera">pyastrobackend.MaximDL.Camera (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.INDIBackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.INDIBackend">module</a>
 </li>
-      <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC">pyastrobackend.RPC (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC">module</a>
 </li>
-      <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Camera">pyastrobackend.RPC.Camera (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC.Camera
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Camera">module</a>
 </li>
-      <li><a href="pyastrobackend.html#module-pyastrobackend.SimpleDeviceInterface">pyastrobackend.SimpleDeviceInterface (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC.FilterWheel
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.FilterWheel">module</a>
 </li>
-      <li><a href="pyastrobackend.SimpleSimulator.html#module-pyastrobackend.SimpleSimulator">pyastrobackend.SimpleSimulator (module)</a>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC.Focuser
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Focuser">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC.Mount
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.Mount">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.RPC.RPCDeviceBase
+
+      <ul>
+        <li><a href="pyastrobackend.RPC.html#module-pyastrobackend.RPC.RPCDeviceBase">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.RPCBackend
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.RPCBackend">module</a>
+</li>
+      </ul></li>
+      <li>
+    pyastrobackend.SimpleDeviceInterface
+
+      <ul>
+        <li><a href="pyastrobackend.html#module-pyastrobackend.SimpleDeviceInterface">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.queue_rpc_command">queue_rpc_command() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1050,7 +1466,25 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.read_next_json_block">read_next_json_block() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.removeProperty">removeProperty() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.RPCCameraThread">RPCCameraThread (class in pyastrobackend.RPC.Camera)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice">RPCDevice (class in pyastrobackend.RPC.RPCDeviceBase)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread">RPCDeviceThread (class in pyastrobackend.RPC.RPCDeviceBase)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.RPCFilterWheelThread">RPCFilterWheelThread (class in pyastrobackend.RPC.FilterWheel)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.RPCFocuserThread">RPCFocuserThread (class in pyastrobackend.RPC.Focuser)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.RPCMountThread">RPCMountThread (class in pyastrobackend.RPC.Mount)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.run">run() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1058,112 +1492,156 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.save_image_data">save_image_data() (pyastrobackend.MaximDL.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.save_image_data">save_image_data() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.save_image_data">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.save_image_data">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.save_image_data">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.save_image_data">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.send_server_request">send_server_request() (pyastrobackend.RPC.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.send_command">send_command() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.send_polling_response">send_polling_response() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.send_radec_command">send_radec_command() (pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.send_server_request">send_server_request() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread.server_disconnected">server_disconnected() (pyastrobackend.RPC.RPCDeviceBase.RPCDeviceThread method)</a>
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.serverConnected">serverConnected() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
       <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.DeviceBackend.IndiClient.serverDisconnected">serverDisconnected() (pyastrobackend.INDIBackend.DeviceBackend.IndiClient method)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_binning">set_binning() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.set_binning">set_binning() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.set_binning">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_binning">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.set_binning">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.set_binning">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.set_binning">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_binning">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_cooler_state">set_cooler_state() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.set_camera_gain">set_camera_gain() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.set_cooler_state">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_camera_gain">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.set_camera_gain">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.set_camera_gain">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_camera_gain">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.set_cooler_state">set_cooler_state() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_cooler_state">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.set_cooler_state">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.set_cooler_state">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.set_cooler_state">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_cooler_state">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_frame">set_frame() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.set_frame">set_frame() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.set_frame">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_frame">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.set_frame">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.set_frame">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.set_frame">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_frame">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.set_position">set_position() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.set_position">set_position() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.set_position">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.set_position">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.set_position">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.set_position_name">set_position_name() (pyastrobackend.ASCOMBackend.FilterWheel method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.FilterWheel.FilterWheel.set_position_name">set_position_name() (pyastrobackend.Alpaca.FilterWheel.FilterWheel method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position_name">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel.set_position_name">(pyastrobackend.BaseBackend.BaseFilterWheel method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.FilterWheel.set_position_name">(pyastrobackend.INDIBackend.FilterWheel method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.FilterWheel.FilterWheel.set_position_name">(pyastrobackend.RPC.FilterWheel.FilterWheel method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_target_temperature">set_target_temperature() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.set_prop">set_prop() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.set_target_temperature">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.html#pyastrobackend.AlpacaBackend.DeviceBackend.set_prop">(pyastrobackend.AlpacaBackend.DeviceBackend method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.set_scalar_value">set_scalar_value() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.set_target_temperature">set_target_temperature() (pyastrobackend.Alpaca.Camera.Camera method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.set_target_temperature">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.set_target_temperature">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.set_target_temperature">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.set_target_temperature">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.set_target_temperature">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.set_tracking">set_tracking() (pyastrobackend.Alpaca.Mount.Mount method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.set_tracking">(pyastrobackend.ASCOM.Mount.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.set_tracking">(pyastrobackend.BaseBackend.BaseMount method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.set_tracking">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.set_tracking">(pyastrobackend.RPC.Mount.Mount method)</a>
 </li>
       </ul></li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindLightState">setfindLightState() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindNumberValue">setfindNumberValue() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindSwitchState">setfindSwitchState() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.setfindTextText">setfindTextText() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.show_chooser">show_chooser() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice.show_chooser">show_chooser() (pyastrobackend.Alpaca.AlpacaDevice.AlpacaDevice method)</a>
 
       <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.show_chooser">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.FilterWheel.FilterWheel.show_chooser">(pyastrobackend.ASCOM.FilterWheel.FilterWheel method)</a>
+</li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.show_chooser">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.show_chooser">(pyastrobackend.ASCOM.Mount.Mount method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.show_chooser">(pyastrobackend.ASCOMBackend.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.FilterWheel.show_chooser">(pyastrobackend.ASCOMBackend.FilterWheel method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.show_chooser">(pyastrobackend.ASCOMBackend.Focuser method)</a>
-</li>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.show_chooser">(pyastrobackend.ASCOMBackend.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.show_chooser">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
@@ -1181,59 +1659,55 @@
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.show_chooser">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.show_chooser">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.show_chooser">(pyastrobackend.RPC.Camera.Camera method)</a>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.show_chooser">(pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface">SimpleDeviceInterface (class in pyastrobackend.SimpleDeviceInterface)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.slew">slew() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.slew">slew() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.slew">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.slew">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.slew">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.slew">(pyastrobackend.INDIBackend.Mount method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.slew">(pyastrobackend.RPC.Mount.Mount method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.start_exposure">start_exposure() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.start_exposure">start_exposure() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.start_exposure">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.start_exposure">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.start_exposure">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.start_exposure">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.start_exposure">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.start_exposure">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.stop">stop() (pyastrobackend.ASCOM.Focuser.Focuser method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Focuser.Focuser.stop">stop() (pyastrobackend.Alpaca.Focuser.Focuser method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Focuser.stop">(pyastrobackend.ASCOMBackend.Focuser method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Focuser.Focuser.stop">(pyastrobackend.ASCOM.Focuser.Focuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFocuser.stop">(pyastrobackend.BaseBackend.BaseFocuser method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Focuser.stop">(pyastrobackend.INDIBackend.Focuser method)</a>
 </li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Focuser.Focuser.stop">(pyastrobackend.RPC.Focuser.Focuser method)</a>
+</li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.stop_exposure">stop_exposure() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.stop_exposure">stop_exposure() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.stop_exposure">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.stop_exposure">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.stop_exposure">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.stop_exposure">(pyastrobackend.INDIBackend.Camera method)</a>
-</li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.stop_exposure">(pyastrobackend.MaximDL.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.stop_exposure">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
@@ -1244,28 +1718,40 @@
 </li>
       <li><a href="pyastrobackend.INDI.html#pyastrobackend.INDI.IndiHelper.strISState">strISState() (in module pyastrobackend.INDI.IndiHelper)</a>
 </li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.supports_progress">supports_progress() (pyastrobackend.ASCOM.Camera.Camera method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.supports_progress">supports_progress() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Camera.supports_progress">(pyastrobackend.ASCOMBackend.Camera method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.supports_progress">(pyastrobackend.ASCOM.Camera.Camera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.supports_progress">(pyastrobackend.BaseBackend.BaseCamera method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.supports_progress">(pyastrobackend.INDIBackend.Camera method)</a>
 </li>
-        <li><a href="pyastrobackend.MaximDL.html#pyastrobackend.MaximDL.Camera.Camera.supports_progress">(pyastrobackend.MaximDL.Camera.Camera method)</a>
-</li>
         <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.supports_progress">(pyastrobackend.RPC.Camera.Camera method)</a>
 </li>
       </ul></li>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.sync">sync() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Camera.Camera.supports_saveimage">supports_saveimage() (pyastrobackend.Alpaca.Camera.Camera method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.sync">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Camera.Camera.supports_saveimage">(pyastrobackend.ASCOM.Camera.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera.supports_saveimage">(pyastrobackend.BaseBackend.BaseCamera method)</a>
+</li>
+        <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Camera.supports_saveimage">(pyastrobackend.INDIBackend.Camera method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Camera.Camera.supports_saveimage">(pyastrobackend.RPC.Camera.Camera method)</a>
+</li>
+      </ul></li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.sync">sync() (pyastrobackend.Alpaca.Mount.Mount method)</a>
+
+      <ul>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.sync">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.sync">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.sync">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.sync">(pyastrobackend.RPC.Mount.Mount method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1282,14 +1768,18 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.unpark">unpark() (pyastrobackend.ASCOM.Mount.Mount method)</a>
+      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.PierSide.UNKNOWN">UNKNOWN (pyastrobackend.ASCOM.Mount.PierSide attribute)</a>
+</li>
+      <li><a href="pyastrobackend.Alpaca.html#pyastrobackend.Alpaca.Mount.Mount.unpark">unpark() (pyastrobackend.Alpaca.Mount.Mount method)</a>
 
       <ul>
-        <li><a href="pyastrobackend.html#pyastrobackend.ASCOMBackend.Mount.unpark">(pyastrobackend.ASCOMBackend.Mount method)</a>
+        <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.Mount.unpark">(pyastrobackend.ASCOM.Mount.Mount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount.unpark">(pyastrobackend.BaseBackend.BaseMount method)</a>
 </li>
         <li><a href="pyastrobackend.html#pyastrobackend.INDIBackend.Mount.unpark">(pyastrobackend.INDIBackend.Mount method)</a>
+</li>
+        <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.Mount.Mount.unpark">(pyastrobackend.RPC.Mount.Mount method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1298,7 +1788,13 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="pyastrobackend.RPC.html#pyastrobackend.RPC.RPCDeviceBase.RPCDevice.wait_for_response">wait_for_response() (pyastrobackend.RPC.RPCDeviceBase.RPCDevice method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pyastrobackend.html#pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface.wait_on_focuser_move">wait_on_focuser_move() (pyastrobackend.SimpleDeviceInterface.SimpleDeviceInterface method)</a>
+</li>
+      <li><a href="pyastrobackend.ASCOM.html#pyastrobackend.ASCOM.Mount.PierSide.WEST">WEST (pyastrobackend.ASCOM.Mount.PierSide attribute)</a>
 </li>
   </ul></td>
 </tr></table>

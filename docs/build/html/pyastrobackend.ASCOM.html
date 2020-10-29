@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyastrobackend.Alpaca package" href="pyastrobackend.Alpaca.html" />
+    <link rel="prev" title="pyastrobackend package" href="pyastrobackend.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -78,8 +80,30 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyastrobackend</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyastrobackend.html">pyastrobackend package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pyastrobackend.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pyastrobackend.ASCOM package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyastrobackend.Alpaca.html">pyastrobackend.Alpaca package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyastrobackend.INDI.html">pyastrobackend.INDI package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyastrobackend.RPC.html">pyastrobackend.RPC package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.ASCOMBackend">pyastrobackend.ASCOMBackend module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.AlpacaBackend">pyastrobackend.AlpacaBackend module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.BackendConfig">pyastrobackend.BackendConfig module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.BaseBackend">pyastrobackend.BaseBackend module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.INDIBackend">pyastrobackend.INDIBackend module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.RPCBackend">pyastrobackend.RPCBackend module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend.SimpleDeviceInterface">pyastrobackend.SimpleDeviceInterface module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyastrobackend.html#module-pyastrobackend">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,6 +149,10 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="modules.html">pyastrobackend</a> &raquo;</li>
+        
+          <li><a href="pyastrobackend.html">pyastrobackend package</a> &raquo;</li>
+        
       <li>pyastrobackend.ASCOM package</li>
     
     
@@ -151,27 +179,42 @@
 </div>
 <div class="section" id="module-pyastrobackend.ASCOM.Camera">
 <span id="pyastrobackend-ascom-camera-module"></span><h2>pyastrobackend.ASCOM.Camera module<a class="headerlink" href="#module-pyastrobackend.ASCOM.Camera" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="pyastrobackend.ASCOM.Camera.Camera">
-<em class="property">class </em><code class="descclassname">pyastrobackend.ASCOM.Camera.</code><code class="descname">Camera</code><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyastrobackend.ASCOM.Camera.</code><code class="sig-name descname">Camera</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">backend</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseCamera" title="pyastrobackend.BaseBackend.BaseCamera"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyastrobackend.BaseBackend.BaseCamera</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.check_exposure">
-<code class="descname">check_exposure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.check_exposure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.check_exposure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_exposure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.check_exposure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if exposure is complete.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if exposure complete.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.check_exposure_success">
+<code class="sig-name descname">check_exposure_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.check_exposure_success" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if exposure was successful - only valid if check_exposure()
+returns True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if exposure complete.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -181,146 +224,162 @@
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnect from device.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_binning">
-<code class="descname">get_binning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_binning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_binning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_binning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_binning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return pixel binning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A tuple containing the X and Y binning.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>)</p>
+<dd class="field-even"><p>(int, int)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_camera_description">
-<code class="descname">get_camera_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_camera_description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_description" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_camera_description</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_description" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the camera name - result depends on backend in use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Description for camera device.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.get_camera_gain">
+<code class="sig-name descname">get_camera_gain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks for camera specific gain - only works for ASI afaik</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_camera_name">
-<code class="descname">get_camera_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_camera_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_camera_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the camera name - result depends on backend in use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Name of camera device.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.get_camera_offset">
+<code class="sig-name descname">get_camera_offset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.get_camera_usbbandwidth">
+<code class="sig-name descname">get_camera_usbbandwidth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_camera_usbbandwidth" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_cooler_power">
-<code class="descname">get_cooler_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_cooler_power"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_cooler_power" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_cooler_power</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_cooler_power" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get cooler power use (percentage of maximum).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Cooler power level.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_cooler_state">
-<code class="descname">get_cooler_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_cooler_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_cooler_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_cooler_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_cooler_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get cooler state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if cooler is on.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_current_temperature">
-<code class="descname">get_current_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_current_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_current_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_current_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_current_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return current camera temperature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Temperature (C)</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_driver_info">
-<code class="descname">get_driver_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_driver_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_driver_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_driver_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_driver_info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get information about camera - result depends on backend in use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Driver information about camera device.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_driver_version">
-<code class="descname">get_driver_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_driver_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_driver_version" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_driver_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_driver_version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get version information about camera - result depends on backend in use.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Driver version information.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)">str</a></p>
+<dd class="field-even"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_egain">
-<code class="descname">get_egain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_egain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_egain" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_egain</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_egain" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return gain for camera as e- per ADU.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Camera gain</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_exposure_progress">
-<code class="descname">get_exposure_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_exposure_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_exposure_progress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_exposure_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_exposure_progress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get percentage completion of exposure.
 Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supports_progress" title="pyastrobackend.ASCOM.Camera.Camera.supports_progress"><code class="xref py py-meth docutils literal notranslate"><span class="pre">supports_progress()</span></code></a> to test if driver supports this call.</p>
 <dl class="field-list simple">
@@ -328,80 +387,121 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-odd"><p>Percentage completion of exposure.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_frame">
-<code class="descname">get_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_frame" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_frame</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return region of interest (ROI) for image capture.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A tuple containing the upper left (X, Y) for ROI and width/height.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>)</p>
+<dd class="field-even"><p>(int, int, int, int)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_image_data">
-<code class="descname">get_image_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_image_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_image_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_image_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_image_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get image data from camera</p>
-<dl class="simple">
-<dt>image_data<span class="classifier">numpy array</span></dt><dd><p>Data is in row-major format!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>image_data</strong> – Data is in row-major format!</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy array</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_max_binning">
-<code class="descname">get_max_binning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_max_binning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_max_binning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_max_binning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_max_binning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return maximum pixel binning supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Maximum binning value.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.get_min_max_exposure">
+<code class="sig-name descname">get_min_max_exposure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_min_max_exposure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_pixelsize">
-<code class="descname">get_pixelsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_pixelsize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_pixelsize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_pixelsize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_pixelsize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return pixel size for camera sensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A tuple containing the X and Y pixel sizes.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a>)</p>
+<dd class="field-even"><p>(float, float)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.get_settings">
+<code class="sig-name descname">get_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns most settings for camera as dict.
+Useful for RPC drivers to reduce round trips.</p>
+<dl class="simple">
+<dt>Following keys (not all will get values on all drivers):</dt><dd><ul class="simple">
+<li><p>binning: (tuple) X, Y binning</p></li>
+<li><p>framesize: (tuple) Width, height of sensor</p></li>
+<li><p>roi: (tuple) Upper left corner and width, height of roi</p></li>
+<li><p>pixelsize: (tuple) X, Y pixel size</p></li>
+<li><p>egain: (float) Gain of camera in e-/ADU</p></li>
+<li><p>camera_gain: (float) Internal gain of camera</p></li>
+<li><p>camera_offset: (float) Internal offset of camera</p></li>
+<li><p>camera_usbbandwidth: (int) Internal USB traffic settings of camera</p></li>
+<li><p>camera_current_temperature: (float) Current temperature of camera</p></li>
+<li><p>camera_target_temperature: (float) Target temperature of camera</p></li>
+<li><p>cooler_state: (bool) Cooler on/off status</p></li>
+<li><p>cooler_power: (float) Power (0-100%) level of cooler</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dictionary of settings</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_size">
-<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_size" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_size" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return size of sensor in pixels.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>A tuple containing the X and Y pixel sizes.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a>)</p>
+<dd class="field-even"><p>(int, int)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_state">
-<code class="descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get camera state.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -410,9 +510,9 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd><p>Camera State unknown</p>
 </dd>
 </dl>
-<p>0    Camera idle
-2    Camera is busy (exposing)
-5    Camera error</p>
+<p>0    Camera idle</p>
+<p>2    Camera is busy (exposing)</p>
+<p>5    Camera error</p>
 </p>
 </dd>
 <dt class="field-even">Rtype int</dt>
@@ -420,51 +520,68 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.get_target_temperature">
-<code class="descname">get_target_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.get_target_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_target_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_target_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.get_target_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return current target camera cooler temperature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Target cooler temperature (C)</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.has_chooser">
-<code class="descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.has_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.has_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.has_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device chooser UI (ie., ASCOM) is available or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if chooser available, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.is_connected">
-<code class="descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.is_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.is_connected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.is_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device is connected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if connected, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.save_image_data">
+<code class="sig-name descname">save_image_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">overwrite</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.save_image_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save image data from last image taken to file.
+NOTE: Not availale for all backends - check with supports_saveimage().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – Filename for output file</p>
+</dd>
+<dt class="field-even">Ptype str</dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Image data or None if not available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.set_binning">
-<code class="descname">set_binning</code><span class="sig-paren">(</span><em>binx</em>, <em>biny</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.set_binning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_binning" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_binning</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">binx</span></em>, <em class="sig-param"><span class="n">biny</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_binning" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set pixel binning.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -477,14 +594,20 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.set_camera_gain">
+<code class="sig-name descname">set_camera_gain</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ccd_gain</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_camera_gain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Looks for camera specific gain - only works for ASI afaik</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.set_cooler_state">
-<code class="descname">set_cooler_state</code><span class="sig-paren">(</span><em>onoff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.set_cooler_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_cooler_state" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_cooler_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">onoff</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_cooler_state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set cooler on or off</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -494,14 +617,14 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.set_frame">
-<code class="descname">set_frame</code><span class="sig-paren">(</span><em>minx</em>, <em>miny</em>, <em>width</em>, <em>height</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.set_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_frame" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_frame</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">minx</span></em>, <em class="sig-param"><span class="n">miny</span></em>, <em class="sig-param"><span class="n">width</span></em>, <em class="sig-param"><span class="n">height</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set region of interest (ROI) for image capture.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -516,14 +639,14 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.set_target_temperature">
-<code class="descname">set_target_temperature</code><span class="sig-paren">(</span><em>temp_c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.set_target_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_target_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_target_temperature</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">temp_c</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.set_target_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set target camera cooler temperature.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -533,29 +656,30 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.show_chooser">
-<code class="descname">show_chooser</code><span class="sig-paren">(</span><em>last_choice</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.show_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.show_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_chooser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">last_choice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.show_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launch chooser for driver.</p>
-<p>Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.has_chooser" title="pyastrobackend.ASCOM.Camera.Camera.has_chooser"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_chooser()</span></code></a> to test if one is available for a given backend/camera.</p>
+<p>Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.has_chooser" title="pyastrobackend.ASCOM.Camera.Camera.has_chooser"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_chooser()</span></code></a> to test if one is available for a
+given backend/camera.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.start_exposure">
-<code class="descname">start_exposure</code><span class="sig-paren">(</span><em>expos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.start_exposure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.start_exposure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start_exposure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">expos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.start_exposure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start an exposure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -567,35 +691,212 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.stop_exposure">
-<code class="descname">stop_exposure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.stop_exposure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.stop_exposure" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop_exposure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.stop_exposure" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop exposure.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Camera.Camera.supports_progress">
-<code class="descname">supports_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Camera.html#Camera.supports_progress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.supports_progress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">supports_progress</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.supports_progress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if exposure progress is supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if progress info is available.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Camera.Camera.supports_saveimage">
+<code class="sig-name descname">supports_saveimage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Camera.Camera.supports_saveimage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if drive has ‘saveimage’ method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if available, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyastrobackend.ASCOM.FilterWheel">
+<span id="pyastrobackend-ascom-filterwheel-module"></span><h2>pyastrobackend.ASCOM.FilterWheel module<a class="headerlink" href="#module-pyastrobackend.ASCOM.FilterWheel" title="Permalink to this headline">¶</a></h2>
+<p>Pure ASCOM solution</p>
+<dl class="py class">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel">
+<em class="property">class </em><code class="sig-prename descclassname">pyastrobackend.ASCOM.FilterWheel.</code><code class="sig-name descname">FilterWheel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">backend</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFilterWheel" title="pyastrobackend.BaseBackend.BaseFilterWheel"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyastrobackend.BaseBackend.BaseFilterWheel</span></code></a></p>
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.connect">
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – Name of driver.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True on success.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.disconnect">
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect from device.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_names">
+<code class="sig-name descname">get_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get names of all filter positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of filter names.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_num_positions">
+<code class="sig-name descname">get_num_positions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_num_positions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get number of filter positions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Number of filter positions</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position">
+<code class="sig-name descname">get_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get position of filter wheel.
+First position is 0!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Position of filter wheel.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position_name">
+<code class="sig-name descname">get_position_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.get_position_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get name of filter at current position.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Name of current filter.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.has_chooser">
+<code class="sig-name descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.has_chooser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if a device chooser UI (ie., ASCOM) is available or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if chooser available, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_connected">
+<code class="sig-name descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_connected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if a device is connected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if connected, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_moving">
+<code class="sig-name descname">is_moving</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.is_moving" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if filter wheel is moving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if filter wheel is moving.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position">
+<code class="sig-name descname">set_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends request to driver to move filter wheel position</p>
+<p>This DOES NOT wait for filter to move into position!</p>
+<p>Use is_moving() method to check if its done.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position_name">
+<code class="sig-name descname">set_position_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.set_position_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends request to driver to move filter wheel position</p>
+<p>This DOES NOT wait for filter to move into position!</p>
+<p>Use is_moving() method to check if its done.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.FilterWheel.FilterWheel.show_chooser">
+<code class="sig-name descname">show_chooser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">last_choice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.show_chooser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch chooser for driver.</p>
+<p>Use <a class="reference internal" href="#pyastrobackend.ASCOM.FilterWheel.FilterWheel.has_chooser" title="pyastrobackend.ASCOM.FilterWheel.FilterWheel.has_chooser"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_chooser()</span></code></a> to test if one is available for a given backend/camera.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True on success.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -606,13 +907,13 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <div class="section" id="module-pyastrobackend.ASCOM.Focuser">
 <span id="pyastrobackend-ascom-focuser-module"></span><h2>pyastrobackend.ASCOM.Focuser module<a class="headerlink" href="#module-pyastrobackend.ASCOM.Focuser" title="Permalink to this headline">¶</a></h2>
 <p>Pure ASCOM solution</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser">
-<em class="property">class </em><code class="descclassname">pyastrobackend.ASCOM.Focuser.</code><code class="descname">Focuser</code><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyastrobackend.ASCOM.Focuser.</code><code class="sig-name descname">Focuser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">backend</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseFocuser" title="pyastrobackend.BaseBackend.BaseFocuser"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyastrobackend.BaseBackend.BaseFocuser</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -622,104 +923,104 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnect from device.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.get_absolute_position">
-<code class="descname">get_absolute_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.get_absolute_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_absolute_position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_absolute_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_absolute_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get absolute position of focuser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Absolute position of focuser.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.get_current_temperature">
-<code class="descname">get_current_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.get_current_temperature"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_current_temperature" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_current_temperature</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_current_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get temperature from focuser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Temperature (C).</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.get_max_absolute_position">
-<code class="descname">get_max_absolute_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.get_max_absolute_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_max_absolute_position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_max_absolute_position</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.get_max_absolute_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get maximum possible absolute position of focuser.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>Absolute maximum possible position of focuser.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></p>
+<dd class="field-even"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.has_chooser">
-<code class="descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.has_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.has_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.has_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device chooser UI (ie., ASCOM) is available or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if chooser available, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.is_connected">
-<code class="descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.is_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.is_connected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.is_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device is connected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if connected, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.is_moving">
-<code class="descname">is_moving</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.is_moving"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.is_moving" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_moving</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.is_moving" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if focuser is moving.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if focuser is moving.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.move_absolute_position">
-<code class="descname">move_absolute_position</code><span class="sig-paren">(</span><em>abspos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.move_absolute_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.move_absolute_position" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">move_absolute_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">abspos</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.move_absolute_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move focuser to absolute position.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -729,14 +1030,14 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.show_chooser">
-<code class="descname">show_chooser</code><span class="sig-paren">(</span><em>last_choice</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.show_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.show_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_chooser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">last_choice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.show_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launch chooser for driver.</p>
 <p>Use <a class="reference internal" href="#pyastrobackend.ASCOM.Focuser.Focuser.has_chooser" title="pyastrobackend.ASCOM.Focuser.Focuser.has_chooser"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_chooser()</span></code></a> to test if one is available for a given backend/camera.</p>
 <dl class="field-list simple">
@@ -744,21 +1045,21 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Focuser.Focuser.stop">
-<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Focuser.html#Focuser.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.stop" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Focuser.Focuser.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Stop focuser motion..</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -769,41 +1070,41 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <div class="section" id="module-pyastrobackend.ASCOM.Mount">
 <span id="pyastrobackend-ascom-mount-module"></span><h2>pyastrobackend.ASCOM.Mount module<a class="headerlink" href="#module-pyastrobackend.ASCOM.Mount" title="Permalink to this headline">¶</a></h2>
 <p>Pure ASCOM solution</p>
-<dl class="class">
+<dl class="py class">
 <dt id="pyastrobackend.ASCOM.Mount.Mount">
-<em class="property">class </em><code class="descclassname">pyastrobackend.ASCOM.Mount.</code><code class="descname">Mount</code><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">pyastrobackend.ASCOM.Mount.</code><code class="sig-name descname">Mount</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">backend</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="pyastrobackend.html#pyastrobackend.BaseBackend.BaseMount" title="pyastrobackend.BaseBackend.BaseMount"><code class="xref py py-class docutils literal notranslate"><span class="pre">pyastrobackend.BaseBackend.BaseMount</span></code></a></p>
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.abort_slew">
-<code class="descname">abort_slew</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.abort_slew"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.abort_slew" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">abort_slew</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.abort_slew" title="Permalink to this definition">¶</a></dt>
 <dd><p>Abort slew.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.can_park">
-<code class="descname">can_park</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.can_park"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.can_park" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">can_park</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.can_park" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a mount can park.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if mount can park.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.connect">
-<code class="descname">connect</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.connect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">connect</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.connect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Connect to device.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -813,102 +1114,177 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-even"><p>True on success.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.disconnect">
-<code class="descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.disconnect" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">disconnect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.disconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Disconnect from device.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Mount.Mount.get_pier_side">
+<code class="sig-name descname">get_pier_side</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_pier_side" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns backend specific pier side information.
+<strong>NOTE:</strong> <strong>NOT</strong> recommended for use as ASCOM and INDI may give
+different results for different drivers - not tested extensively at all
+so use with caution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>‘EAST’, ‘WEST’ or None if unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.get_position_altaz">
-<code class="descname">get_position_altaz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.get_position_altaz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_position_altaz" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_position_altaz</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_position_altaz" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns tuple of (alt, az) in degrees</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.get_position_radec">
-<code class="descname">get_position_radec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.get_position_radec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_position_radec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_position_radec</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_position_radec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns tuple of (ra, dec) with ra in decimal hours and dec in degrees</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Mount.Mount.get_side_physical">
+<code class="sig-name descname">get_side_physical</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_side_physical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get physical side of mount.
+<strong>NOTE:</strong> <strong>NOT</strong> tested extensively with all INDI drivers so it is recommended
+to test results for ‘normal’ and ‘through the pole’ positions on both side of
+the pier with a given mount driver!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>‘EAST’, ‘WEST’ or None if unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Mount.Mount.get_side_pointing">
+<code class="sig-name descname">get_side_pointing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_side_pointing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get side of meridian where mount is pointing.
+<strong>NOTE</strong> may not be same as result from get_side_physical() if
+counterweights are pointing up, etc!
+<strong>NOTE:</strong> <strong>NOT</strong> tested extensively with all INDI drivers so it is recommended
+to test results for ‘normal’ and ‘through the pole’ positions on both side of
+the pier with a given mount driver!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>‘EAST’, ‘WEST’ or None if unknown.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Mount.Mount.get_tracking">
+<code class="sig-name descname">get_tracking</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.get_tracking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get mount tracking state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if tracking.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.has_chooser">
-<code class="descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.has_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.has_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.has_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device chooser UI (ie., ASCOM) is available or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if chooser available, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.is_connected">
-<code class="descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.is_connected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_connected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_connected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if a device is connected.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if connected, False otherwise.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.is_parked">
-<code class="descname">is_parked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.is_parked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_parked" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_parked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_parked" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if mount is parked.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if mount is parked.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.is_slewing">
-<code class="descname">is_slewing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.is_slewing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_slewing" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">is_slewing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.is_slewing" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test if mount is slewing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True if mount is slewing.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.park">
-<code class="descname">park</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.park"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.park" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">park</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.park" title="Permalink to this definition">¶</a></dt>
 <dd><p>Park mount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="pyastrobackend.ASCOM.Mount.Mount.set_tracking">
+<code class="sig-name descname">set_tracking</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">onoff</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.set_tracking" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable/disable mount tracking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>onoff</strong> – Flag to turn tracking on/off.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True on success.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.show_chooser">
-<code class="descname">show_chooser</code><span class="sig-paren">(</span><em>last_choice</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.show_chooser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.show_chooser" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show_chooser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">last_choice</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.show_chooser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Launch chooser for driver.</p>
 <p>Use <a class="reference internal" href="#pyastrobackend.ASCOM.Mount.Mount.has_chooser" title="pyastrobackend.ASCOM.Mount.Mount.has_chooser"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_chooser()</span></code></a> to test if one is available for a given backend/camera.</p>
 <dl class="field-list simple">
@@ -916,36 +1292,58 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.slew">
-<code class="descname">slew</code><span class="sig-paren">(</span><em>ra</em>, <em>dec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.slew"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.slew" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">slew</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ra</span></em>, <em class="sig-param"><span class="n">dec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.slew" title="Permalink to this definition">¶</a></dt>
 <dd><p>Slew to ra/dec with ra in decimal hours and dec in degrees</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.sync">
-<code class="descname">sync</code><span class="sig-paren">(</span><em>ra</em>, <em>dec</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.sync"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.sync" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sync</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ra</span></em>, <em class="sig-param"><span class="n">dec</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.sync" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sync to ra/dec with ra in decimal hours and dec in degrees</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="pyastrobackend.ASCOM.Mount.Mount.unpark">
-<code class="descname">unpark</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyastrobackend/ASCOM/Mount.html#Mount.unpark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.unpark" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">unpark</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.Mount.unpark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unark mount.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>True on success.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="pyastrobackend.ASCOM.Mount.PierSide">
+<em class="property">class </em><code class="sig-prename descclassname">pyastrobackend.ASCOM.Mount.</code><code class="sig-name descname">PierSide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.PierSide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt id="pyastrobackend.ASCOM.Mount.PierSide.EAST">
+<code class="sig-name descname">EAST</code><em class="property"> = 0</em><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.PierSide.EAST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyastrobackend.ASCOM.Mount.PierSide.UNKNOWN">
+<code class="sig-name descname">UNKNOWN</code><em class="property"> = -1</em><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.PierSide.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="pyastrobackend.ASCOM.Mount.PierSide.WEST">
+<code class="sig-name descname">WEST</code><em class="property"> = 1</em><a class="headerlink" href="#pyastrobackend.ASCOM.Mount.PierSide.WEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -960,6 +1358,15 @@ Use <a class="reference internal" href="#pyastrobackend.ASCOM.Camera.Camera.supp
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pyastrobackend.Alpaca.html" class="btn btn-neutral float-right" title="pyastrobackend.Alpaca package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="pyastrobackend.html" class="btn btn-neutral float-left" title="pyastrobackend package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

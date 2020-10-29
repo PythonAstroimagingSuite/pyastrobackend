@@ -323,10 +323,6 @@ class SimpleDeviceInterface:
         while True:
             logging.debug(f"Going to save {ff}")
 
-            # FIXME we only call this because the
-            # MaximDL backend needs it to save to disk
-            # RPC backend already has saved it to disk by now
-            #if BACKEND == 'INDI':
             if not cam.supports_saveimage():
                 # FIXME need better way to handle saving image to file!
                 image_data = cam.get_image_data()
