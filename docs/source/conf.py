@@ -85,6 +85,9 @@ autoclass_content = 'both'
 
 master_doc = 'index'
 
+# needed for C based modules
+autodoc_mock_imports = ['pycurl', 'comtypes', 'pythoncom', 'PyIndi', 'win32com']
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
