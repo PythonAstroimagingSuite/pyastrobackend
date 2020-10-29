@@ -1,4 +1,5 @@
 astropy >= 1.10
-numpy >= 1.15
+numpy >= 1.15c
+curl > 7.57
 pycurl >= 7.43
 pyindi-client >= 0.2.0
