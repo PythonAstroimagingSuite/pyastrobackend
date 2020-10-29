@@ -692,7 +692,7 @@ class Camera(BaseCamera):
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
-#        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return (None, None, None, None)
 
@@ -705,7 +705,7 @@ class Camera(BaseCamera):
         if None in [binx, biny]:
             logging.error('get_frame: unable to determine binning!')
             return False
-        logging.debug(f'get_frame: binning = {binx} {biny}')
+        # logging.debug(f'get_frame: binning = {binx} {biny}')
 
         return (ccd_x.value // binx, ccd_y.value // biny,
                 ccd_w.value // binx, ccd_h.value // biny)
@@ -728,19 +728,17 @@ class Camera(BaseCamera):
         ccd_y = indihelper.findNumber(ccd_frame, 'Y')
         ccd_w = indihelper.findNumber(ccd_frame, 'WIDTH')
         ccd_h = indihelper.findNumber(ccd_frame, 'HEIGHT')
-        logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} '
-                      f'{ccd_y.value} {ccd_w.value} {ccd_h.value}')
-#        if ccd_x is None or ccd_y is None or ccd_w is None or ccd_h is None:
+        # logging.debug(f'set_frame: {minx} {miny} {width} {height} {ccd_x.value} '
+        #               f'{ccd_y.value} {ccd_w.value} {ccd_h.value}')
+
         if None in [ccd_x, ccd_y, ccd_w, ccd_h]:
             return False
+
         ccd_x.value = minx * binx
         ccd_y.value = miny * biny
         ccd_w.value = width * binx
         ccd_h.value = height * biny
-        print(width, height)
-        print(binx, biny)
-        print(width*binx, height*biny)
-        print(ccd_x.value, ccd_y.value, ccd_w.value, ccd_h.value)
+
         self.backend.indiclient.sendNewNumber(ccd_frame)
         return True
 
