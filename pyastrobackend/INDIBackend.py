@@ -1073,7 +1073,7 @@ class Mount(BaseMount):
     def is_slewing(self):
         using_eqcoord = False
         if self.slew_eqcoord is not None:
-            logging.debug(f'using slew_eqcoord')
+            logging.debug('using slew_eqcoord')
             state = self.slew_eqcoord.s
             using_eqcoord = True
         else:
@@ -1081,7 +1081,9 @@ class Mount(BaseMount):
             if state is None:
                 return None
 
-        logging.debug(f'is_slewing: state = {state}')
+        # Keep eye on this have seen the end of slews not detected properly
+        if self.slew_eqcoord is not None:
+            logging.debug(f'is_slewing: state = {state}')
 
         if state != PyIndi.IPS_BUSY and using_eqcoord:
             # slew is done clear slew_eqcoord
